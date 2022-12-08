@@ -1,0 +1,522 @@
+{
+    "scripts": [
+        {
+            "id": "KSA-LTG-001",
+            "detail": "Successfully initiates Letter of guarantee consents",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "uri": "/letters-of-guarantee-consents/$post-letter-consent-id",
+            "asserts": [
+                "Assert_200"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-002",
+            "detail": "Posts a new consent",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterBody"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents",
+            "asserts": [
+                "Assert_201",
+                "Assert_LtgMessageAwaitingAuthorization"
+            ],
+            "body": "$postData",
+            "method": "post",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-003",
+            "detail": "Post Letter Consent with minimum mandatory fields",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterMinimumBody"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents",
+            "asserts": [
+                "Assert_201",
+                "Assert_LtgMessageAwaitingAuthorization"
+            ],
+            "saveToContext": {
+                "name": "KSA-LTG-003-ConsentId",
+                "value": "message.Data.ConsentId"
+            },        
+            "body": "$postData",
+            "method": "post",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-004",
+            "detail": "Retrieves Awaiting ConsentId",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts": [
+                "Assert_200"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-005",
+            "detail": "Retrieves Authorised Letter of Guarantee consent",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$post-letter-consent-id",
+            "asserts": [
+                "Assert_200"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-006",
+            "detail": "Retrieves Letter of Guarantee with invalid consent id",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/lg-fbd437b2-c48c-49db-be81-036608795d45",
+            "asserts_one_of": [
+                "Assert_400",
+                "Assert_404"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-007",
+            "detail": "Patch Letter Consent Awaiting to Authorized",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId",
+                "postData": "$ksaLetterPatchAuthorized"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts":[
+                "Assert_204"
+            ],
+            "method": "patch",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-008",
+            "detail": "Check Letter Consent Awaiting to Authorized",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId",
+                "postData": "$ksaLetterPatchAuthorized"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts_one_of": [
+                "Assert_200",
+                "Assert_LtgMessageAwaitingAuthorization"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-009",
+            "detail": "Patch Letter Consent Awaiting to Rejected",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId",
+                "postData": "$ksaLetterPatchRejected"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts":[
+                "Assert_204"
+            ],
+            "method": "patch",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-010",
+            "detail": "Check Letter Consent Awaiting to Rejected",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts_one_of": [
+                "Assert_200",
+                "Assert_LtgMessageAwaitingAuthorization"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-011",
+            "detail": "Patch Letter Consent Awaiting to Expired",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId",
+                "postData": "$ksaLetterPatchExpired"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts": [
+                "Assert_204"
+            ],
+            "method": "patch",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-012",
+            "detail": "Patch Check Letter Consent Status Changed to Expired Successfully",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts": [
+                "Assert_200",
+                "Assert_LtgMessageExpiredStatus"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-013",
+            "detail": "Patch Letter Consent Authorized to Awaiting",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterPatchAwaiting"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts":[
+                "Assert_204"
+            ],
+            "method": "patch",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-014",
+            "detail": "Check Patch Letter Consent Authorised to Awaiting",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts": [
+                "Assert_200",
+                "Assert_LtgMessageAwaitingAuthorization"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-015",
+            "detail": "Patch Letter Consent Authorised to Rejected",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterPatchRejected"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts":[
+                "Assert_204"
+            ],
+            "method": "patch",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-016",
+            "detail": "Check Patch Letter Consent Authorised to Rejected",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts": [
+                "Assert_200",
+                "Assert_LtgMessageRejected"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-017",
+            "detail": "Patch Letter Consent Authorised to Expired",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterPatchExpired"                
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "body": "$postData",
+            "asserts": [
+                "Assert_204"
+            ],
+            "method": "patch",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-018",
+            "detail": "Patch Check Letter Consent Changed Successfully",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts": [
+                "Assert_200",
+                "Assert_LtgMessageExpiredStatus"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-019",
+            "detail": "Get Consent with invalid id",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "urn:xxxx:xxx-52bc5190-6118-485c-92f9-391496d79c78"
+            },
+            "permissions": [
+                "LetterCCG"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee-consents/$consentId",
+            "asserts_one_of": [
+                "Assert_400",
+                "Assert_404"
+            ],
+            "method": "get",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-020",
+            "detail": "Post Consent Letter",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterPost"
+            },
+            "permissions": [
+                "LetterAuth"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee",
+            "body": "$postData",
+            "asserts_one_of": [
+                "Assert_201"
+            ],
+            "method": "post",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-021",
+            "detail": "Post Consent Letter repeated consentId",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$post-letter-consent-id",
+                "postData": "$ksaLetterPost"
+            },
+            "permissions": [
+                "LetterAuth"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee",
+            "body": "$postData",
+            "asserts_one_of": [
+                "Assert_400"
+            ],
+            "method": "post",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-022",
+            "detail": "Post Consent Letter awaiting authorisation consentId",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "$KSA-LTG-003-ConsentId",
+                "postData": "$ksaLetterPost"
+            },
+            "permissions": [
+                "LetterAuth"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee",
+            "body": "$postData",
+            "asserts_one_of": [
+                "Assert_400"
+            ],
+            "method": "post",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-023",
+            "detail": "Post Consent Letter invalid consentId",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "consentId": "invalidConsentId",
+                "postData": "$ksaLetterPost"
+            },
+            "permissions": [
+                "LetterAuth"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee",
+            "body": "$postData",
+            "asserts_one_of": [
+                "Assert_400"
+            ],
+            "method": "post",
+            "schemaCheck": "false"
+        },
+        {
+            "id": "KSA-LTG-024",
+            "detail": "Post Consent Letter empty Data",
+            "parameters": {
+                "tokenRequestScope": "lg",
+                "postData": "$ksaLetterEmptyBody"
+            },
+            "permissions": [
+                "LetterAuth"
+            ],       
+            "headers": {
+                "content-type":"application/json"
+            },
+            "uri": "/letters-of-guarantee",
+            "body": "$postData",
+            "asserts_one_of": [
+                "Assert_400"
+            ],
+            "method": "post",
+            "schemaCheck": "false"
+        }        
+    ]
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "Identifier": "account-information-v1.0.0",
+    "Name": "Account Information API Specification",
+    "URL": {
+      "Scheme": "https",
+      "Opaque": "",
+      "User": null,
+      "Host": "openbankinguk.github.io",
+      "Path": "/read-write-api-site3/v1.0.0/profiles/account-information-api-profile.html",
+      "RawPath": "",
+      "ForceQuery": false,
+      "RawQuery": "",
+      "Fragment": ""
+    },
+    "Version": "v2022.11.1-final",
+    "SchemaVersion": {
+      "Scheme": "https",
+      "Opaque": "",
+      "User": null,
+      "Host": "raw.githubusercontent.com",
+      "Path": "/OpenBankingUK/read-write-api-specs/v1.0.0/dist/openapi/account-info-openapi.json",
+      "RawPath": "",
+      "ForceQuery": false,
+      "RawQuery": "",
+      "Fragment": ""
+    }
+  },
+  {
+    "Identifier": "letter-guarantee-v1.0.0",
+    "Name": "Letter of Guarantee API Specification",
+    "URL": {
+      "Scheme": "https",
+      "Opaque": "",
+      "User": null,
+      "Host": "openbankinguk.github.io",
+      "Path": "/read-write-api-site3/v1.0.0/profiles/letter-guarantee-api-profile.html",
+      "RawPath": "",
+      "ForceQuery": false,
+      "RawQuery": "",
+      "Fragment": ""
+    },
+    "Version": "v2022.11.1-final",
+    "SchemaVersion": {
+      "Scheme": "https",
+      "Opaque": "",
+      "User": null,
+      "Host": "raw.githubusercontent.com",
+      "Path": "/OpenBankingUK/read-write-api-specs/v1.0.0/dist/openapi/account-info-openapi.json",
+      "RawPath": "",
+      "ForceQuery": false,
+      "RawQuery": "",
+      "Fragment": ""
+    }
+  }
+]

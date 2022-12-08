@@ -1,0 +1,226 @@
+                                                                                       {
+    "references": {
+      "Assert_200": {
+        "expect": {
+          "status-code": 200,
+          "detail": "200 OK"
+        }
+      },
+      "Assert_201": {
+        "expect": {
+          "status-code": 201,
+          "detail": "201 Created"
+        }
+      },
+      "Assert_204": {
+        "expect": {
+          "status-code": 204,
+          "detail": "204 No Content"
+        }
+      },
+      "Assert_400": {
+        "expect": {
+          "status-code": 400,
+          "detail": "400 Bad Request"
+        }
+      },
+      "Assert_401": {
+        "expect": {
+          "status-code": 401,
+          "detail": "401 Unauthorized"
+        }
+      },
+      "Assert_403": {
+        "expect": {
+          "status-code": 403,
+          "detail": "403 Forbidden"
+        }
+      },
+      "Assert_404": {
+        "expect": {
+          "status-code": 404,
+          "detail": "404 Not Found"
+        }
+      },
+      "Assert_405": {
+        "expect": {
+          "status-code": 405,
+          "detail": "405 Method Not Allowed"
+        }
+      },
+      "Assert_406": {
+        "expect": {
+          "status-code": 406,
+          "detail": "406 Not Acceptable "
+        }
+      },
+      "Assert_415": {
+        "expect": {
+          "status-code": 415,
+          "detail": "415 Unsupported Media Type"
+        }
+      },
+      "Assert_429": {
+        "expect": {
+          "status-code": 429,
+          "detail": "429 Too Many Request"
+        }
+      },
+      "Assert_500": {
+        "expect": {
+          "status-code": 500,
+          "detail": "500 Internal Server Error"
+        }
+      },
+
+      "Assert_FAPIHeader": {
+        "expect": {
+          "matches": [{
+            "header-present": "x-fapi-interaction-id",
+            "detail": "Expected RFC4122 UID used as a correlation id."
+          }]
+        }
+      },
+      "Assert_ContentType": {
+        "expect": {
+          "matches": [{
+            "header-present": "content-type",
+            "value": "application/json; charset=utf-8",
+            "detail": "Expected the correct content type application/json; charset=utf-8"
+          }]
+        }
+      },
+      "Assert_FAPIPlayBack": {
+        "expect": {
+          "status-code": 200,
+          "matches": [{
+            "header": "x-fapi-interaction-id",
+            "value": "$x-fapi-interaction-id",
+            "detail": "Expected playback of in the x-fapi-interaction-id given. An RFC4122 UID used as a correlation id."
+          }]
+        }
+      },
+      "Assert_ConsentId": {
+        "expect": {
+          "matches": [{
+            "type": "ConsentId",
+            "JSON": "Data.ConsentId",
+            "detail": "Expected a unique identification as assigned by the ASPSP to uniquely identify the consent resource."
+          }]
+        }
+      },
+      "Assert_KSAOB.AccessToken.Unauthorized": {
+        "expect": {
+          "matches": [{
+            "JSON": "Errors.#[Code=\"KSAOB.AccessToken.Unauthorized\"].Code",
+            "Value": "KSAOB.AccessToken.Unauthorized",
+            "detail": "Unauthorized access token"
+          }]
+        }
+      },
+      "Assert_AcceptedSettlementCompleted": {
+        "expect": {
+          "matches": [{
+            "JSON": "Data.Status",
+            "Value": "AcceptedSettlementCompleted",
+            "detail": "Expected status of the payment information group (AcceptedSettlementCompleted)."
+          }]
+        }
+      },
+      "Assert_AwaitingAuthorization": {
+        "expect": {
+          "matches": [{
+            "JSON": "Data.Status",
+            "Value": "AwaitingAuthorization",
+            "detail": "Expected AwaitingAuthorization, consent resource awaiting PSU authorisation."
+          }]
+        }
+      },
+      "Assert_LtgMessageAwaitingAuthorization": {
+        "expect": {
+          "matches": [{
+            "JSON": "message.Data.Status",
+            "Value": "AwaitingAuthorization",
+            "detail": "Expected AwaitingAuthorization, consent resource awaiting PSU authorisation."
+          }]
+        }
+      },
+      "Assert_LtgMessageAuthorized": {
+        "expect": {
+          "matches": [{
+            "JSON": "message.Data.Status",
+            "Value": "Authorized",
+            "detail": "Expected Authorized status."
+          }]
+        }
+      },
+      "Assert_LtgMessageRejected": {
+        "expect": {
+          "matches": [{
+            "JSON": "message.Data.Status",
+            "Value": "Rejected",
+            "detail": "Expected Rejected status."
+          }]
+        }
+      },
+      "Assert_LtgMessageExpiredStatus": {
+        "expect": {
+          "matches": [{
+            "JSON": "message.Data.Status",
+            "Value": "Expired",
+            "detail": "Expected Expired, consent resource consent authorization."
+          }]
+        }
+      },
+
+      "Assert_Authorized": {
+        "expect": {
+          "matches": [{
+            "JSON": "Data.Status",
+            "Value": "Authorized",
+            "detail": "Expected that the consent resource has been successfully authorized."
+          }]
+        }
+      },
+      "Assert_FundsAvailable": {
+        "expect": {
+          "matches": [{
+            "JSON": "Data.FundsAvailableResult.FundsAvailable",
+            "Value": "true",
+            "detail": "Expected FundsAvailable to be set to 'true'"
+          }]
+        }
+      },
+      "KSA_Assert_ResourceFieldInvalid_400": {
+        "expect": {
+          "status-code": 400,
+          "matches": [{
+            "JSON": "Errors.#[ErrorCode=\"UK.OBIE.Field.Invalid\"].ErrorCode",
+            "Value": "UK.OBIE.Field.Invalid",
+            "detail": "Expected a specific error code for an invalid field."
+          }]
+        }
+      },
+      "KSA_Assert_ResourceNotFound_400": {
+        "expect": {
+          "status-code": 400,
+          "matches": [{
+            "JSON": "Errors.#[ErrorCode=\"UK.OBIE.Resource.NotFound\"].ErrorCode",
+            "Value": "UK.OBIE.Resource.NotFound",
+            "detail": "Expected a specific error code for resource not found."
+          }]
+        }
+      },
+      "KSA_Assert_UnexpectedError_400": {
+        "expect": {
+          "status-code": 400,
+          "matches": [{
+            "JSON": "Errors.#[Code=\"KSAOB.UnexpectedError\"].Code",
+            "Value": "KSAOB.UnexpectedError",
+            "detail": "A 400 unexpected error was returned"
+          }]
+        }
+      }      
+    }
+  }
+  

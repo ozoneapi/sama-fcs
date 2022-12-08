@@ -1,0 +1,1410 @@
+openapi: "3.0.0"
+info:
+  title: "KSA Letter of Guarantee API"
+  description: "## KSA Open Banking Letter of Guarantee API Specification"
+  version: "2022.11.01-final"
+servers:
+  - url: "/open-banking/letter-of-guarantee/2022.11.01-final"  
+tags:
+  - name: Letter of Guarantee Consent
+    description: Letter of Guarantee Consent Resource
+  - name: Letter of Guarantee
+    description: Letter of Guarantee Resource
+paths:
+  /letters-of-guarantee-consents:
+    post:
+      tags:
+        - "Letter of Guarantee Consent"
+      summary: "Create a Letter of Guarantee Consent"
+      description: |
+        Initiate Letter of Guarantee Consents       
+      operationId: "CreateLetterOfGuaranteeConsent"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      requestBody:
+        description: |
+          Request Payload
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OBLetterOfGuaranteeConsentRequestSigned"
+        required: true
+      callbacks: 
+        PASP-Event:
+           '{$request.body#/Subscription/Webhook/Url}':
+            post:
+              description: |
+                **This is a generic Webhook definition and SHOULD apply to any Event that is published by the PASP**
+              parameters:
+                - $ref: "#/components/parameters/authorization"
+                - $ref: "#/components/parameters/x-fapi-interaction-id"
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                        $ref: "#/components/schemas/WebhookEventSigned"
+              responses:
+                '202':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '400':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '401':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '403':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '500':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+              security:
+                - PASPWebhookSecurity: []
+      responses:
+        '201':
+          $ref: "#/components/responses/201LetterOfGuaranteeConsentCreated"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '415':
+          $ref: "#/components/responses/415Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - TPPOAuth2Security:
+            - "openid"
+            - "payments"      
+  /letters-of-guarantee-consents/{ConsentId}:
+    get:
+      tags:
+        - "Letter of Guarantee Consent"
+      summary: "Get Letter of Guarantee Consent"
+      description: |
+        Retrieve Letter of Guarantee Consents
+      operationId: "GetLetterOfGuaranteeConsentId"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/ConsentId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200LetterOfGuaranteeConsentIdRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - TPPOAuth2Security:
+            - "openid"
+            - "payments"
+    patch:
+      tags:
+        - "Letter of Guarantee Consent"
+      summary: "Patch Consent"
+      description: |
+        Update a Letter Of Guarantee Consent
+      operationId: "PatchAccountAccessConsentsConsentId"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/ConsentId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      requestBody:
+        description: |
+          Request Payload
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OBPatchConsentSigned"
+      responses:
+        '204':
+          $ref: "#/components/responses/204LetterOfGuaranteeConsentIdDeleted"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - TPPOAuth2Security:
+            - "openid"
+            - "payments"
+  /letters-of-guarantee:
+    post:
+      tags:
+        - "Letter of Guarantee"
+      summary: "Initiate Letter of Guarantee Requests"
+      description: |
+        Initiate a Letter Of Guarantee Request
+      operationId: "PostLetterOfGuaranteeRequest"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      requestBody:
+        description: |
+          Request Payload
+        required: true        
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OBLetterOfGuaranteePostRequestSigned"
+      responses:
+        '201':
+          $ref: "#/components/responses/201LetterOfGuaranteeResponse"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '415':
+          $ref: "#/components/responses/415Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "payments"
+  /letters-of-guarantee/{LetterOfGuaranteeId}:
+    get:
+      tags:
+        - "Letter of Guarantee"
+      summary: "Retrieve the Letter of Guarantee"
+      description: |
+        Retrieve a Letter Of Guarantee
+      operationId: "GetLetterOfGuarantee"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/LetterOfGuaranteeId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200LetterOfGuaranteeRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "payments"
+        - TPPOAuth2Security:
+            - "openid"
+            - "payments"
+components:
+  ############################################
+  # RESPONSES
+  ############################################
+  responses:
+    TPPWebhookResponse:
+      description: "Response Status Code"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          schema:
+            type: "string"
+          required: true
+    403Error:
+      description: "Forbidden"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponseSigned"
+    404Error:
+      description: "Not found"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    405Error:
+      description: "Method Not Allowed"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    406Error:
+      description: "Not Acceptable"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    415Error:
+      description: "Unsupported Media Type"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    429Error:
+      description: "Too Many Requests"
+      headers:
+        Retry-After:
+          description: "Number in seconds to wait"
+          schema:
+            type: "integer"
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          schema:
+            type: "string"
+    500Error:
+      description: "Internal Server Error"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponseSigned"
+    401Error:
+      description: "Unauthorized"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    400Error:
+      description: "Bad request"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponseSigned"
+    200LetterOfGuaranteeRead:
+      description: "Letter of Guarantee Response"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadLetterOfGuaranteeResponseSigned"
+    201LetterOfGuaranteeResponse:         
+      description: "Letter of Guarantee Request Created"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBLetterOfGuaranteeResponseSigned"    
+    204LetterOfGuaranteeConsentIdDeleted:
+      description: "No Content"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    200LetterOfGuaranteeConsentIdRead:
+      description: "Letter of Guarantee Consents Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBLetterOfGuaranteeConsentResponseSigned"
+    201LetterOfGuaranteeConsentCreated:
+      description: "Letter of Guarantee Consents Created"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBLetterOfGuaranteeConsentResponseSigned"
+
+  ############################################
+  # SCHEMAS
+  ############################################
+  schemas:
+    OBPatchConsentSigned: 
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBPatchConsent'
+          additionalProperties: false
+          required: [message]              
+    OBPatchConsent:
+      title: "OBPatchConsent"
+      type: "object"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "Status"
+          properties:
+            Status:
+              $ref: "#/components/schemas/Status"
+              #example: "Revoked"
+        Subscription:
+          $ref: "#/components/schemas/EventNotification"              
+      additionalProperties: false
+    mt798request:
+      type: "object"
+      description: |
+        Schema based on a reference to the [Swift MT 798](https://www.swift.com/our-solutions/corporates/network/drive-trade-digitisation/mt-798) Standard
+      required:
+        - "CustomerReferenceNumber"
+        - "MessageCreationDateTime"
+        - "KindOfGuarantee"
+        - "TypeOfGuarantee"
+        - "FormOfGuarantee"
+        - "WordingOfGuarantee"
+        - "LanguageOfStandardWording"
+        - "Applicant"
+        - "GuaranteeAmount"
+        - "ValidityType"
+        - "DeliveryOfOriginalGuarantee"
+        - "DeliveryTo"
+        - "DeliveryAddress"
+        - "Beneficiary"
+        - "LiabilityDetails"
+        - "ReferenceDate"
+        - "TotalOrderAmount"
+        - "GuaranteeValueInPercent"
+        - "CustomerContact"
+        - "BeneficiaryContact"
+        - "TransactionReferenceNumber"
+        - "FurtherIdentification"
+        - "ApplicableRules"
+        - "LetterOfGuaranteeStartDate"
+        - "TermsAndConditions"
+        - "DetailsOfGuarantee"
+      properties:
+        CustomerReferenceNumber:
+          $ref: "#/components/schemas/CustomerReferenceNumber"          
+        MessageCreationDateTime:
+          #Message Creation Date Time
+          $ref: "#/components/schemas/MessageCreationDateTime"
+        KindOfGuarantee:
+          $ref: "#/components/schemas/KindOfGuarantee"          
+        TypeOfGuarantee:
+          $ref: "#/components/schemas/TypeOfGuarantee"          
+        FormOfGuarantee:
+          $ref: "#/components/schemas/FormOfGuarantee"          
+        WordingOfGuarantee:
+          $ref: "#/components/schemas/WordingOfGuarantee"    
+        SpecialTerms:
+          $ref: "#/components/schemas/SpecialTerms"    
+        LanguageOfStandardWording:
+          $ref: "#/components/schemas/LanguageOfStandardWording"
+        ProjectName:
+          $ref: "#/components/schemas/ProjectName"
+        ProjectNumber:
+          $ref: "#/components/schemas/ProjectNumber"
+        Applicant:
+          $ref: "#/components/schemas/Applicant"
+        GuaranteeAmount:
+          $ref: "#/components/schemas/GuaranteeAmount"
+        ValidityType:
+          $ref: "#/components/schemas/ValidityType"
+        ValidityExpiryDate:
+          $ref: "#/components/schemas/ValidityExpiryDate"
+        DeliveryOfOriginalGuarantee:
+          $ref: "#/components/schemas/DeliveryOfOriginalGuarantee"
+        DeliveryTo:
+          $ref: "#/components/schemas/DeliveryTo"
+        DeliveryAddress:
+          $ref: "#/components/schemas/DeliveryAddress"
+        Beneficiary: 
+          $ref: "#/components/schemas/Beneficiary"
+        LiabilityDetails:
+          $ref: "#/components/schemas/LiabilityDetails"
+        Reference:
+          $ref: "#/components/schemas/Reference"
+        ReferenceDate1:
+          $ref: "#/components/schemas/ReferenceDate1"
+        ReferenceDate2:
+          $ref: "#/components/schemas/ReferenceDate2"
+        TotalOrderAmount:
+          $ref: "#/components/schemas/TotalOrderAmount"
+        GuaranteeValueInPercent:
+          $ref: "#/components/schemas/GuaranteeValueInPercent"
+        CustomerContact:
+          $ref: "#/components/schemas/CustomerContact"
+        BeneficiaryContact:
+          $ref: "#/components/schemas/BeneficiaryContact"
+        BankReferenceNumber:
+          $ref: "#/components/schemas/BankReferenceNumber"
+        TransactionReferenceNumber:
+          $ref: "#/components/schemas/TransactionReferenceNumber"
+        FurtherIdentification:
+          $ref: "#/components/schemas/FurtherIdentification"
+        ApplicableRules:
+          $ref: "#/components/schemas/ApplicableRules"
+        ChargesAndFees:
+          $ref: "#/components/schemas/ChargesAndFees" 
+        DetailsOfGuarantee:
+          $ref: "#/components/schemas/DetailsOfGuarantee" 
+        TermsAndConditions:
+          $ref: "#/components/schemas/TermsAndConditions" 
+        LetterOfGuaranteeStartDate: 
+          $ref: "#/components/schemas/LetterOfGuaranteeStartDate" 
+    mt798response:
+      description: |
+        Schema based on a reference to the [Swift MT 798](https://www.swift.com/our-solutions/corporates/network/drive-trade-digitisation/mt-798) Standard
+      properties:
+        GuaranteeNumber:
+          $ref: "#/components/schemas/GuaranteeNumber"    
+        SpecialAgreements:
+          $ref: "#/components/schemas/SpecialAgreements"
+        BankContact:
+          $ref: "#/components/schemas/BankContact"
+        BankToCorporateInformation:
+          $ref: "#/components/schemas/BankToCorporateInformation"
+        SpecificationOfExpiry:
+          $ref: "#/components/schemas/SpecificationOfExpiry"
+        Refusal: 
+          $ref: "#/components/schemas/OBLetterOfGuaranteeRefusal"                     
+      allOf:
+        - $ref: '#/components/schemas/mt798request'
+    OBActiveCurrencyAndAmount_SimpleType:
+      description: "A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217."
+      type: "string"
+      pattern: "^\\d{1,13}$|^\\d{1,13}\\.\\d{1,5}$"
+    ActiveOrHistoricCurrencyCode:
+      description: "A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\"."
+      type: "string"
+      pattern: "^[A-Z]{3,3}$"
+      example: "SAR"
+    GuaranteeAmount:
+      description: "This field specifies the type of guarantee amount, the currency code of the amount and the amount of the guarantee. CODES:PRIN = PRINCIPAL LIABILITY ONLY IINT = INCLUDING INTEREST,ICST = INCLUDING COSTS,IIAC = INCLUDING INTEREST AND COSTS,XINT = PLUS INTEREST,XCST = PLUS COSTS,XIAC = PLUS INTEREST AND COSTS"
+      type: "object"
+      properties:
+        Type: 
+          type: "string"
+          enum: 
+           - "PRIN"
+           - "IINT"
+           - "ICST"
+           - "IIAC"
+           - "XINT"
+           - "XCST"
+           - "XIAC"
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode"
+    OBLetterOfGuaranteeRefusal:
+      title: "LG Refusal"
+      type: "object"
+      description: |
+        Refusal
+      properties:
+        DemandSubmissionDate:
+          $ref: "#/components/schemas/ISODateTime"
+        DemandAmount:
+          description: "DemandAmount Amount (Type)(Currency)(Amount)"
+          type: "string"
+          example: "PRIN/SAR50000"
+        ReasonForRefusal:
+          description: "Reason for Refusal"
+          type: "string"
+    Jwt:
+        title: "Jwt"
+        description: |
+          [https://www.rfc-editor.org/rfc/rfc7519](https://www.rfc-editor.org/rfc/rfc7519)
+        type: "object"
+        properties:
+          iss:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.1](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.1)          
+            type: string
+          exp:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.4](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.4)          
+            type: number
+          nbf:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.5](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.5)          
+            type: number
+          aud:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3)          
+            oneOf:
+              - type: array
+                items:
+                  type: string
+              - type: string
+          iat:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.6](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.6)          
+            type: number
+        required: [ iss, exp, nbf ]
+    OBLetterOfGuaranteeConsentRequestSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBLetterOfGuaranteeConsentRequest'
+          additionalProperties: false
+          required: [message]       
+    OBLetterOfGuaranteeConsentResponseSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBLetterOfGuaranteeConsentResponse'
+          additionalProperties: false
+          required: [message]     
+    OBLetterOfGuaranteePostRequestSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBLetterOfGuaranteePostRequest'
+          additionalProperties: false
+          required: [message]         
+    OBLetterOfGuaranteeResponseSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBLetterOfGuaranteeResponse'
+          additionalProperties: false
+          required: [message]         
+    OBReadLetterOfGuaranteeResponseSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadLetterOfGuaranteeResponse'
+          additionalProperties: false
+          required: [message]        
+    OBErrorResponseSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBErrorResponse1'
+          additionalProperties: false
+          required: [message]         
+    WebhookEventSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/WebhookEvent'
+          additionalProperties: false
+          required: [message]               
+    EventNotification:
+      type: "object"
+      description: |
+        A Webhook Subscription Schema
+      required:
+        - "Webhook"        
+      properties:
+        Webhook:
+          description: |
+            A Webhook Schema
+          type: "object"
+          properties:
+            Url: 
+              description: |
+                The TPP Callback URL being registered with the PASP 
+              type: "string"
+              example: "https://api.tpp.com/webhook/callbackUrl"
+            IsActive:
+              description: |
+                The TPP specifying whether the PASP should send (IsActive true) or not send (IsActive false) Webhook Notifications to the TPP's Webhook URL 
+              type: "boolean"
+              example: false
+    WebhookEvent:
+      type: "object"
+      required:
+      - "Data"
+      - "EventMeta"
+      properties:
+        Data:
+          type: "object"
+          description: "Event Data. This SHOULD contain the same schema as the API resource that has triggered the Event."
+        Links:
+          $ref: "#/components/schemas/Links"
+        EventMeta:
+          type: "object"
+          required: 
+          - "EventDateTime"
+          - "EventResource"
+          - "EventType"
+          - "ConsentId"
+          properties:
+            EventDateTime:
+              type: "string"
+              format: "date-time"
+              description: "Date Time of the first Event in the Message. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+            EventResource:
+              type: "string"
+              description: "The API resource to which the Event itself is associated"
+              example: "/letters-of-guarantee/123"
+            EventType:
+              type: "string"
+              enum: ["KSAOB.Resource.Created", "KSAOB.Resource.Updated", "KSAOB.Resource.Deleted"]
+              description: "The Type of Event"
+            ConsentId:
+              description: "Unique identification as assigned to identify the consents resource."
+              type: "string"
+              minLength: 1
+              maxLength: 128
+    OBLetterOfGuaranteeConsentRequest:
+      title: "OBLetterOfGuaranteeConsentRequest"
+      description: "Schema"
+      type: "object"
+      required:
+        - "Data"
+      properties: 
+        Data:
+          type: "object"
+          description: |
+            Data Schema
+          required:
+            - "mt798"
+          properties:
+            AuthExpirationDateTime:
+              $ref: "#/components/schemas/AuthExpirationDateTime"
+            mt798:
+              $ref: "#/components/schemas/mt798request" 
+        Subscription:
+              $ref: "#/components/schemas/EventNotification"                                
+      additionalProperties: false
+    OBLetterOfGuaranteeConsentResponse:
+      title: "OBLetterOfGuaranteeConsentResponse"
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "ConsentId"
+            - "CreationDateTime"
+            - "Status"
+            - "StatusUpdateDateTime"
+            - "AuthExpirationDateTime"
+          properties:
+            ConsentId:
+              $ref: "#/components/schemas/ConsentId"
+            CreationDateTime:
+              $ref: "#/components/schemas/CreationDateTime"
+            Status:
+              $ref: "#/components/schemas/Status"
+            StatusUpdateDateTime:
+              $ref: "#/components/schemas/StatusUpdateDateTime"
+            AuthExpirationDateTime:
+              $ref: "#/components/schemas/AuthExpirationDateTime"
+            mt798:
+              $ref: "#/components/schemas/mt798request" 
+        Subscription:
+          $ref: "#/components/schemas/EventNotification"        
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaMultiAuthorization"
+      additionalProperties: false      
+    OBLetterOfGuaranteePostRequest:
+      title: "OBLetterOfGuaranteePostRequest"
+      type: "object"
+      required:
+        - "Data"
+      properties: 
+        Data:
+          type: "object"
+          properties:
+            ConsentId:
+              $ref: "#/components/schemas/ConsentId"          
+    OBLetterOfGuaranteeResponse:
+      title: "OBLetterOfGuaranteeResponse"
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          description: "Data Object"
+          properties:
+            LetterOfGuaranteeId:
+              type: "string"
+              required:
+                - LetterOfGuaranteeId
+            ConsentId:
+              $ref: "#/components/schemas/ConsentId"          
+            mt798:
+              $ref: "#/components/schemas/mt798request" 
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaMultiAuthorization"
+      additionalProperties: false
+    OBReadLetterOfGuaranteeResponse:
+      title: "OBReadLetterOfGuaranteeResponse"
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          description: "Data Object"
+          required:
+            - "LetterOfGuaranteeId"
+            - "Status"
+            - "StatusUpdateDateTime"
+          properties:
+            LetterOfGuaranteeId:
+              description: "Specifies the ID of the Service Request."
+              type: "string"
+            ConsentId:
+              description: "Specifies the ID of the Consent."
+              type: "string"
+            Status:
+              description: "Specifies the status of the Letter of Guarantee Service Request."
+              type: "string"
+              enum:
+                - "Approved"
+                - "Pending"
+                - "Rejected"
+            StatusUpdateDateTime:
+              $ref: "#/components/schemas/StatusUpdateDateTime"    
+            mt798:
+              $ref: "#/components/schemas/mt798response" 
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaMultiAuthorization"
+          additionalProperties: false
+    Status:
+      description: "Specifies the status of consent resource in code form."
+      type: "string"
+      enum:
+        - "AwaitingAuthorization"
+        - "Authorized"
+        - "Rejected"
+        - "Consumed"
+        - "Expired"
+
+    ConsentId:
+      description: "Unique identification as assigned to identify the Letter of Guarantee consent resource."
+      type: "string"
+      minLength: 1
+      maxLength: 128
+    CustomerReferenceNumber:
+      description: "Customer Reference Number"
+      type: "string"
+      example: "XYZ999"
+    GuaranteeNumber:
+      description: "Reference Number that has been assigned"
+      type: "string"
+      example: "PGFFA0815"
+    KindOfGuarantee:
+      description: "This field specifies the kind of the guarantee. CODES: GUAR = GUARANTEE, STLC = STANDBY LETTER OF CREDIT, SPDM = SURETY PAYABLE ON FIRST DEMAND SURT = SURETY"
+      type: "string"
+      enum: [GUAR,STLC,SPDM,SURT]
+      example: "GUAR"
+    TypeOfGuarantee:
+      description: "Type Of Guarantee"
+      type: "string"
+      enum: [TEND,ADVP,PGDO,PGWO,PGCO,PAYM,CRED,BILL,CUST,OTHR]
+      example: "TEND"
+    FormOfGuarantee:
+      description: "This field specifies the form of the guarantee. CODES: DIRC = DIRECT, INDC = INDIRECT"
+      type: "string"
+      enum: [DIRC,INDC]
+      example: "DIRC"
+    WordingOfGuarantee:
+      description: "This field specifies the type of wording of the guarantee. STND = STANDARD WORDING OF ISSUING BANK. WDAP = WORDING DRAFTED BY APPLICANT. WDBF = WORDING DRAFTED BY BENEFICIARY. If this field consists of WDAP or WDBF then DetailsOfGuarantee must be used to specify the body text"
+      type: "string"
+      enum: [STND,WDAP,WDBF]
+      example: "STND"
+    ValidityType:
+      description: "Validity of Guarantee"
+      type: "string"
+      enum: [LIMT,UNLM]
+      example: "LIMT"
+    LiabilityDetails:
+      description: "Description of the Guaranteed Liability"
+      type: "string"
+      example: "Pumps and Equipment"
+    TransactionReferenceNumber:
+      description: "Transaction Reference Number to Identify the Message. Must be set by the TPP."
+      type: "string"
+      example: "NONREF"
+    FurtherIdentification:
+      description: "Identify the purpose of the Message"
+      type: "string"
+      example: "ISSUE"
+    ApplicableRules:
+      description: "Rules of the Guarantee"
+      type: "string"
+      enum: [ISPR,NONE,OTHR,URDG]
+      example: "NONE"
+    DetailsOfGuarantee:
+      description: |
+        Details of the Guarantee to be populated by the PASP. Only used when the WordingOfGuarantee field has values WDAP (Wording drafted by applicant) or WDBF (Wording drafted by beneficiary) otherwise a fixed value of NOT APPLICABLE should be used. MUST be returned using appropriate Markdown Syntax [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)
+      type: "string"
+      example: "Performance Guarantee No . PGFFA0815.We have been informed that you, Mining PLC, Main Road, Riyadh, hereinafter called the BUYER have concluded the contract No. ABC123 of 05th February 2022, hereinafter called the CONTRACT, with Pumps Riyadh, KSA, hereinafter called the SELLER, according to which the SELLER will deliver to the BUYER pumps and equipment, in the total value of SAR 500.000,00. As agreed the SELLER has to provide a bank guarantee in favour of the BUYER, amounting to 10 percent of the total value, i.e. SAR 50.000,00 , to cover the fulfilment of the SELLERâ€™s obligations under the CONTRACT.In consideration of the aforesaid, we, Bank of Acme, Riyadh, hereby issue the guarantee on behalf of the SELLER towards the BUYER to the maximum amount of SAR 50.000,00 (in words: SAR fifty thousand 00/100) and undertake irrevocably without consideration of any objections and defences of the SELLER or third parties and irrespective of the validity and legal effect of the CONTRACT and waiving any objections arising there from to pay to the BUYER any amount claimed from us by the BUYER up to the maximum amount of this guarantee upon receipt of the BUYER's first demand in writing, in which the BUYER simultaneously confirms that the SELLER is in breach of its obligations towards the BUYER under the CONTRACT.The obligation under this guarantee shall expire on 31st December 2022.Any claim for payment complying with the above conditions must be received by us within the validity period of this guarantee. This guarantee shall be governed by the law of KSA. Exclusive place of jurisdiction shall be KSA, Saudi Arabia."
+    TermsAndConditions:
+      description: |
+       Terms And Conditions of the Guarantee. MUST be returned using appropriate Markdown Syntax [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)
+      type: "string"
+    SpecialTerms:
+      description: "This field specifies any special terms that should apply to the guarantee in case that the wording of the guarantee should be the standard wording of the Issuing Bank. CODES: EFCT = INCL. TERMS OF EFFECTIVENESS, REDC = INCL. TERMS OF REDUCTION, EFRE = INCL. TERMS OF EFFECTIVENESS AND TERMS OF REDUCTION. this field may only be present if field WordingOfGuarantee contains code STND (STANDARD WORDING OF ISSUING BANK). MUST be returned using appropriate Markdown Syntax [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)"
+      type: "string"
+      enum: [EFCT,REDC,EFRE]
+      example: "EFCT"
+    SpecialAgreements:
+      description: "Special Agreements between Applicant and PASP of the Guarantee"
+      type: "string"
+    BankContact:
+      description: "Contact Details at the Bank"
+      type: "string"
+    BankToCorporateInformation:
+      description: "Additional Information for the Receiver"
+      type: "string"
+    SpecificationOfExpiry:
+      description: "Expiry of the Guarantee in Free Text Form where it cannot be expressed as a Date"
+      type: "string"
+    LanguageOfStandardWording:
+      description: "Language of wording of the Issuing Bank"
+      type: "string"
+      example: "en"
+    ProjectName:
+      description: "Project Name as provided by the TPP"
+      type: "string"
+      minLength: 1
+      maxLength: 300
+    ProjectNumber:
+      description: "Project Number as provided by the TPP"
+      type: "string"
+      minLength: 1
+      maxLength: 100
+
+    ValidityExpiryDate:
+      description: "This field specifies the expiry date of the guarantee. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    DeliveryOfOriginalGuarantee:
+      description: "Method by which the Guarantee will be delivered"
+      type: "string"
+      enum: [COUR,MAIL,REGM,MESS]
+      example: "COUR"
+    DeliveryTo:
+      description: "Whom will receive the Guarantee "
+      type: "string"
+      enum: [BENE,APPL,ALTA,SPEC]
+      example: "BENE"
+    DeliveryAddress:
+      type: object
+      description: "Delivery Address"
+      properties:
+        Name: 
+          description: "Address of whom will receive the Guarantee "
+          type: "string"
+        Address:
+          $ref: "#/components/schemas/OBPostalAddress6"  
+    Reference:
+      description: "This field defines a reference associated with the guarantee. CODES: TEND =TENDER, ORDR= ORDER, CONT=CONTRT, OFFR = OFFER, DEL=DELIVERY, PINV = PROFORMA INVOICE, PROJ = PROJECT"
+      type: "string"
+      enum: [TEND,ORDR,CONT,OFFR,DELV,PINV,PROJ]
+      example: "TEND"
+    AuthExpirationDateTime:
+      description: |
+        The datetime by which all parties at the PSU must have authorized the LG request, in the case where this request requires more than one person to authorize.
+        All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"              
+    ReferenceDate1:
+      description: "This field specifies the date of the reference. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"              
+    ReferenceDate2:
+      description: "This field may only be used when field Reference consists of TEND (tender) to specify the tender closing date. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"              
+    LetterOfGuaranteeStartDate:
+      description: "The start date for the Letter Of Guarantee. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"              
+    TotalOrderAmount:
+      description: "This field specifies the currency and total amount of the order/contract. The currency must be the same currency as in field GuaranteeAmount."
+      type: "object"
+      properties: 
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode"
+    GuaranteeValueInPercent:
+      description: "Guarantee Value in Percent in relation to the Total Order Contract Value"
+      type: "number"
+      example: 10              
+    CustomerContact:
+      description: "Contact Details of the Corporate"
+      type: "string"
+      example: "John Doe"              
+    BeneficiaryContact:
+      description: "Contact Details of the Beneficiary"
+      type: "string"
+      example: "Jane Bloggs"            
+    BankReferenceNumber:
+      description: "This field specifies the reference number of the bank. For example, when the application is a resubmission of a previously rejected submission, this number is the bank reference number conveyed in the rejection message."
+      type: "string"      
+    Applicant:
+      type: object
+      description: "Schema"
+      properties:
+        Name: 
+          description: "Name of Applicant"
+          type: "string"
+        CommercialRegistrationNumber: 
+          description: "Commercial Registration Number"
+          type: "number"
+        ApplicantIdentifierType:
+          $ref: "#/components/schemas/ApplicantIdentifierType"
+        ApplicantNumber:
+          $ref: "#/components/schemas/ApplicantNumber"
+        Address:
+          $ref: "#/components/schemas/OBPostalAddress6"         
+    ApplicantIdentifierType:
+      type: "string"
+      description: "Applicant Identifier Type as specified by the TPP"
+    ApplicantNumber:
+      type: "string"
+      description: "Applicant Number as specified by the TPP"
+    Beneficiary:
+      type: object
+      description: |
+        Beneficiary
+      properties:
+        Name: 
+          description: "Name of Beneficiary"
+          type: "string"
+        CommercialRegistrationNumber: 
+          description: "Commercial Registration Number"
+          type: "number"
+        BeneficiaryIdentifierType:                          
+          $ref: "#/components/schemas/BeneficiaryIdentifierType"   
+        BeneficiaryNumber:
+          $ref: "#/components/schemas/BeneficiaryNumber"   
+        Address:
+          $ref: "#/components/schemas/OBPostalAddress6"
+    BeneficiaryIdentifierType:
+      type: "string"
+      description: "Beneficiary Identifier Type as specified by the TPP"
+    BeneficiaryNumber:
+      type: "string"
+      description: "Beneficiary Number as specified by the TPP"
+    OBPostalAddress6:
+      type: "object"
+      description: "Postal Address specifies Information that locate and identify a specific address, as defined by postal services."
+      properties:
+        AddressType:
+          $ref: "#/components/schemas/OBAddressTypeCode"
+        ShortAddress:
+          $ref: "#/components/schemas/ShortAddress"
+        BuildingNumber:
+          $ref: "#/components/schemas/BuildingNumber"
+        UnitNumber:
+          $ref: "#/components/schemas/OBUnitNumber"
+        StreetName:
+          $ref: "#/components/schemas/StreetName"
+        SecondaryNumber:
+          $ref: "#/components/schemas/SecondaryNumber"
+        District:
+          $ref: "#/components/schemas/District"
+        PostalCode:
+          $ref: "#/components/schemas/PostCode"
+        City:
+          $ref: "#/components/schemas/City"          
+        Country:
+          $ref: "#/components/schemas/OBCountry"          
+    OBAddressTypeCode:
+      description: "Postal Address type specifies the the nature of the postal address."
+      type: "string"
+      enum:
+        - "KSAOB.Business"
+        - "KSAOB.Correspondence"
+        - "KSAOB.DeliveryTo"
+        - "KSAOB.MailTo"
+        - "KSAOB.POBox"
+        - "KSAOB.Postal"
+        - "KSAOB.Residential"
+        - "KSAOB.Statement"
+    OBUnitNumber:
+      description: "This is the unit number of the business premises or dwelling"
+      type: "number"
+      example: 10
+    OBCountry:
+      description: "Identifies a county either by full name or country code"
+      type: "string"
+      pattern: "^[A-Z]{2,2}$"
+    PostCode:
+      description: "Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail."
+      type: "string"
+      minLength: 1
+      maxLength: 16                    
+    StreetName:
+      description: "Name of a street or thoroughfare."
+      type: "string"
+      minLength: 1
+      maxLength: 70
+    SecondaryNumber:
+      description: "Secondary Number"
+      type: "string"
+      minLength: 4
+      maxLength: 4
+    City:
+      description: "Identifies the City of a Country"
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    District:
+      description: "Name of a built-up area, with defined boundaries, and a local government."
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    ShortAddress:
+      description: "8 Letter Unique Address Code."
+      type: "string"
+      minLength: 1
+      maxLength: 8
+    BuildingNumber:
+      description: "Number that identifies the position of a building on a street."
+      type: "string"
+      minLength: 1
+      maxLength: 16
+    OBErrorResponse1:
+      title: "OBErrorResponse1"
+      description: "An array of detail error codes, and messages, and URLs to documentation to help remediation."
+      type: "object"
+      properties:
+        Errors:
+          items:
+            $ref: "#/components/schemas/OBError1"
+          type: "array"
+          minItems: 1
+      required:
+        - "Errors"
+      additionalProperties: false
+    OBError1:
+      title: "OBError1"
+      type: "object"
+      properties:
+        Code:
+          description: "Low level textual error code, e.g., KSAOB.Field.Missing"
+          type: "string"
+          enum:
+            - "KSAOB.AccessToken.Unauthorized"
+            - "KSAOB.AccessToken.InvalidScope"
+            - "KSAOB.Consent.Revoked"
+            - "KSAOB.Consent.Invalid"
+            - "KSAOB.JWS.InvalidSignature"
+            - "KSAOB.JWS.Malformed"
+            - "KSAOB.JWS.InvalidClaim"
+            - "KSAOB.JWS.InvalidHeader"
+            - "KSAOB.GenericRecoverableError"
+            - "KSAOB.GenericError"
+            - "KSAOB.JWE.DecryptionError"
+            - "KSAOB.JWE.InvalidHeader"
+            - "KSAOB.Event.UnexpectedEvent"
+            - "KSAOB.Body.InvalidFormat"
+            - "KSAOB.Resource.InvalidResourceId"
+            - "KSAOB.Resource.InvalidFormat"
+            - "KSAOB.Consent.BusinessRuleViolation"
+        Message:
+          description: "A description of the error that occurred. e.g., 'A mandatory field isn't supplied' or 'RequestedExecutionDateTime must be in future'\nOBIE doesn't standardise this field"
+          type: "string"
+          minLength: 1
+          maxLength: 500
+        Path:
+          description: "Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency"
+          type: "string"
+          minLength: 1
+          maxLength: 500
+        Url:
+          description: "URL to help remediate the problem, or provide more information, or to API Reference, or help etc"
+          type: "string"
+      required:
+        - "Code"
+        - "Message"
+      additionalProperties: false
+      minProperties: 1      
+    Links:
+      title: "Links"
+      type: "object"
+      description: "Links relevant to the payload"
+      properties:
+        Self:
+          description: "A link to the resource"
+          type: "string"
+          format: "uri"
+      additionalProperties: false
+      required:
+        - "Self"
+    ChargesAndFees:
+      title: "ChargesAndFees"
+      type: "string"
+      description: |
+        Supplementary Information regarding the Charges and Fees to initiate and complete the Letter of Guarantee. MUST be returned using appropriate Markdown Syntax [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)
+    MetaMultiAuthorization:
+      title: "MetaDataMultiAuthorization"
+      type: "object"
+      description: |
+        Meta Data with Multi-Authorization relevant to the payload. 
+        For a consent, it represents any Authorizers within the TPP domain that are involved in approving the consent request.
+        For a letter of guarantee, it represents any Authorizers within the PASP domain that are involved in approving the letter of guarantee.
+      properties:
+        MultipleAuthorizers:
+          type: "object"
+          description: "MultpleAuthorizers Schema"
+          properties:
+            TotalRequired:
+              description: |
+                The total number of Authorizers required to process the request 
+              type: "number"
+            Authorizations:
+              type: "array"
+              items: 
+                description: |
+                  Authorizer
+                type: "object"
+                properties:
+                  AuthorizerId: 
+                    description: |
+                      The Authorizer's Identifier
+                    type: "number"
+                  AuthorizerName: 
+                    description: |
+                      The Authorizer's Name
+                    type: "number"
+                  AuthorizerType: 
+                    description: |
+                      The Type of Authorizer. For example, Financial, Management, etc. 
+                    type: "string"
+                  AuthorizationDate:
+                    description: |
+                      The DateTime of when the Authorization occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00
+                    type: "string"
+                    format: "date-time"
+                  AuthorizationStatus: 
+                    description: |
+                      The Status reflecting the Authorizer's final decision regarding the request
+                    type: "string"
+                    enum:
+                      - "Pending"
+                      - "Approved"
+                      - "Rejected"
+      additionalProperties: false      
+    MessageCreationDateTime:
+      title: "MessageCreationDateTime"
+      description: "Date and time at which the message was created. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    ISODateTime:
+      title: "ISODateTime"
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. All date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    CreationDateTime:
+      title: "CreationDateTime"
+      description: "Date and time at which the resource was created. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"  
+    StatusUpdateDateTime:
+      title: "StatusUpdateDateTime" 
+      description: "Date and time at which the resource status was updated. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"    
+  ############################################
+  # PARAMETERS
+  ############################################
+  parameters:
+    #################################################
+    # HEADER PARAMETERS
+    #################################################
+    authorization:
+      in: "header"
+      name: "authorization"
+      required: true
+      description: "An authorization Token as per https://tools.ietf.org/html/rfc6750"
+      schema:
+        type: "string"
+    x-customer-user-agent:
+      in: "header"
+      name: "x-customer-user-agent"
+      description: "Indicates the user-agent that the PSU is using."
+      required: false
+      schema:
+        type: "string"
+    x-fapi-customer-ip-address:
+      in: "header"
+      name: "x-fapi-customer-ip-address"
+      required: false
+      description: "The PSU's IP address if the PSU is currently logged in with the TPP."
+      schema:
+        type: "string"
+    x-fapi-auth-date:
+      in: "header"
+      name: "x-fapi-auth-date"
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      schema:
+        type: "string"
+        pattern: "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \\d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \\d{4} \\d{2}:\\d{2}:\\d{2} (GMT|UTC)$"
+    x-fapi-interaction-id:
+      in: "header"
+      name: "x-fapi-interaction-id"
+      required: false
+      description: "An RFC4122 UID used as a correlation id."
+      schema:
+        type: "string"
+    #################################################
+    # PATH PARAMETERS
+    #################################################
+    ConsentId:
+      name: "ConsentId"
+      in: "path"
+      description: "ConsentId"
+      required: true
+      schema:
+        type: "string"
+    LetterOfGuaranteeId:
+      name: "LetterOfGuaranteeId"
+      in: "path"
+      description: "LetterOfGuaranteeId"
+      required: true
+      schema:
+        type: "string"
+  ############################################
+  # SECURITY SCHEMES
+  ############################################
+  securitySchemes:
+    TPPOAuth2Security:
+      type: oauth2
+      description: "TPP confidential client authorization with the PASP to stage a consent. **Please refer to [OpenID FAPI Security Profile 1.0 -Part 2 Advanced](https://openid.net/specs/openid-financial-api-part-2-1_0.html#authorization-server) - 5.2.2 point 14 - shall authenticate the confidential client using one of the following methods private_key_jwt and [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication) 9. Client Authentication private_key_jwt**"      
+      flows:
+        clientCredentials:
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            openid: Activates OpenID Connect Support          
+            lg: Ability to initiate letter of guarantee request 
+    PSUOAuth2Security:
+      type: oauth2
+      description: "[OAuth2 PAR flow](https://datatracker.ietf.org/doc/html/rfc9126), it is required when the PSU needs to perform SCA with the PASP when a TPP wants to access an PASP resource owned by the PSU. **Please refer to [OpenID FAPI Security Profile 1.0 -Part 2 Advanced](https://openid.net/specs/openid-financial-api-part-2-1_0.html#authorization-server) - 5.2.2 point 14 - shall authenticate the confidential client using one of the following methods private_key_jwt and [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication) 9. Client Authentication private_key_jwt**"
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            openid: Activates OpenID Connect Support
+            "lg:<consentId>": Ability to initiate letter of guarantee request. This is a parameterized scope with the ConsentId
+    PASPWebhookSecurity:
+      type: http
+      description: "The PASP generates a Self Signed JWT Authorization Token for Client Authentication with the TPP. **Please refer to Self-Signed JWT Authorization Token Specification in the KSA Standard API User Guide**"
+      scheme: bearer
+      bearerFormat: JWT             

@@ -1,0 +1,40 @@
+{
+  "discoveryModel": {
+    "name": "ksa-ais",
+    "description": "KSA UAT Open Banking Letter of Guarantee",
+    "tokenAcquisition": "psu",
+    "discoveryItems": [
+      {
+        "apiSpecification": {
+          "name": "KSA Open Banking Letter of Guarantee API Specification",
+          "version": "v2022.11.1-final"
+        },
+        "openidConfigurationUri": "https://auth1.uat.openbanking.sa/.well-known/openid-configuration",
+        "resourceBaseUri": "https://rs1.uat.openbanking.sa/open-banking/letter-of-guarantee/2022.11.01-final",
+        "manifest": "file://testdefs/ksa_1.0_letter_of_guarantee.json",
+        "endpoints": [
+          {
+            "method": "POST",
+            "path": "/letters-of-guarantee-consents"
+          },
+          {
+            "method": "GET",
+            "path": "/letters-of-guarantee-consents/{ConsentId}"
+          },
+          {
+            "method": "PATCH",
+            "path": "/letters-of-guarantee-consents/{ConsentId}"
+          },
+          {
+            "method": "POST",
+            "path": "/letters-of-guarantee"
+          },
+          {
+            "method": "GET",
+            "path": "/letter-of-guaranteeaccounts/{LetterOfGuaranteeId}"
+          }
+        ]
+      }
+    ]
+  }
+}

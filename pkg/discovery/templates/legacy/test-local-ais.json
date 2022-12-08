@@ -1,0 +1,72 @@
+{
+    "discoveryModel": {
+      "name": "ksa-ais",
+      "description": "KSA Dummy Tests AIS/LG",
+      "tokenAcquisition": "psu",
+      "discoveryItems": [
+        {
+          "apiSpecification": {
+            "name": "KSA Open Banking Account Information API Specification",
+            "version": "v2022.11.1-final"
+          },
+          "openidConfigurationUri": "http://localhost:5700/.well-known/openid-configuration",
+          "resourceBaseUri": "http://localhost:4700/open-banking/v1.1/ais",
+          "tests": "file://testdefs/ksa-ais-onetest.json",
+          "endpoints": [
+            {
+              "method": "POST",
+              "path": "/account-access-consents"
+            },
+            {
+              "method": "GET",
+              "path": "/account-access-consents/{ConsentId}"
+            },
+            {
+              "method": "PATCH",
+              "path": "/account-access-consents/{ConsentId}"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/balances"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/beneficiaries"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/direct-debits"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/parties"
+            },
+            {
+              "method": "GET",
+              "path": "/parties"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/scheduled-payments"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/standing-orders"
+            },
+            {
+              "method": "GET",
+              "path": "/accounts/{AccountId}/transactions"
+            }
+          ]
+        }
+      ]
+    }
+  }

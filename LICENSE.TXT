@@ -1,0 +1,68 @@
+Copyright Saudi Central Bank. All Rights Reserved | 2022
+
+This Open License and Contribution Agreement sets out the terms and conditions which apply to any natural person or legal entity, 
+("Contributor"), who accesses or implements the KSA Open Banking Standards, including associated specifications, guidelines, 
+documentation files and downloadable applications, (the "Standards"), or who contributes to the development of this KSA Open Banking Standards.
+
+Open License
+
+Copyright 2022 Saudi Central Bank (SAMA)
+
+Saudi Central Bank (SAMA) grants to any contributor, developer, implementer, or other interested party a non-exclusive, royalty free, 
+worldwide copyright license to reproduce, prepare derivative works from, distribute, perform and display, the KSA Open Banking Standards, 
+solely for the purposes of developing and implementing the Standards, provided that attribution be made to SAMA as the source of the material, 
+but that such attribution does not indicate the endorsement by SAMA.
+
+The Standards is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, 
+fitness for a particular purpose and non-infringement. In no event shall the authors or copyright holder be liable for any claim, damages or other liability, 
+whether in an action of contract, tort or otherwise, arising from, out of or in connection with the Standards or the use or other dealings in the Standards.
+
+The Standards, any amendments and any contributions (as defined in the Contribution Agreement below) are considered as "Collective Work" as described in Copyright Law 
+that is issued by Royal Decree No. M/41 dated August 30, 2003. 
+
+Portions of the Standards are based on the UK Open Banking Standards, which is subject to the Open License (https://www.openbanking.org.uk/open-licence/) 
+and the Conformance Suite (https://github.com/OpenBankingUK/conformance-suite) which is subject to the MIT License (https://raw.githubusercontent.com/OpenBankingUK/conformance-suite/develop/LICENSE.md)
+
+Contribution Agreement
+
+As defined in the Open License above, SAMA intends to make the Standards available for implementation by any Contributor without a fee. 
+To facilitate this, any Contributor who is providing feedback, comments, suggestions or other submissions regarding the Standards, ("Contribution"), 
+continuously represents and warrants that: 
+
+1) If the Contributor is a legal entity, its representatives are, and at all times material will be, either its employees (who will provide Contributions within their scope of employment and who are legally obligated to assign to Contributor all intellectual property created within the scope of their employment), or its independent contractors (who are under written obligation to assign to Contributor all rights in any intellectual property created within the scope of their engagement).
+
+2) Contributor has no obligation to any third party (e.g., an obligation to assign inventions) that would preclude or limit: 
+
+a) participating in any working group or consultation process; 
+
+b) making any Contributions to the Standards; or 
+
+c) granting rights in (or making commitments related to) intellectual property in any Contribution.
+
+3) Contributor, itself, and through its representatives (if Contributor is a legal entity), has the unfettered right to make any Contributions, fully in accordance with the SAMA Open License and this Agreement.
+
+4) All Contributions are considered as Collective Work.
+
+5) All Contributions, and other materials shared with SAMA and/or any other Contributors for the purpose of developing the Standards (but not including materials shared with Contributors for any purpose other than developing the Standards), will be considered non-confidential information, regardless of any markings to the contrary included thereon or related thereto. 
+
+6) Some Contributions may not be subject to copyright. To the extent, however, that a Contribution is or may be subject to copyright, the Contributor hereby grants a perpetual, irrevocable (except in case of breach of this license), nonexclusive, royalty-free, worldwide license in such copyright to SAMA, and to other Contributors, to reproduce, prepare derivative works from, distribute, perform, and display the Contribution and derivative works thereof solely for purposes of developing and implementing the Standards. 
+
+7) Contributor represents that Contributions comprised of written submissions submitted by such a Contributor to SAMA comply with any copyright attribution requirements relating to third party content. 
+
+8) Subject to each Contributor's rights in individual Contributions, the copyright in any draft or final version of the Standards will be owned solely by SAMA. Each Contributor will execute and deliver such instruments and take such other actions as and when SAMA may reasonably request to perfect or protect its copyright in the Standards.
+
+9) Subject to any licensing obligations herein, Contributor retains all rights in and to its Contribution, and there are no other limitations whatsoever on Contributor's ability to exercise any copyright rights in its Contribution or any portion thereof.
+
+10) There is no requirement or expectation by others that Contributors should disclose patents or patent applications, however SAMA hereby disclaims any responsibility for identifying the existence, or for evaluating the applicability, of any patents, patent applications, or other rights (including copyrights) claimed to be applicable to the Standards and will take no position on the validity or scope of any such rights.
+
+11) Contributor acknowledges that SAMA has no duty to publish or otherwise use or disseminate any Contribution. 
+
+12) Contributor hereby grants permission to SAMA to reference their name(s) and email address(es), but only in association with the Contribution(s) of Contributor and not with respect to any work derived from such Contribution(s), without the prior written consent of Contributor. 
+
+13) Contributions and Contributor's personal details (e.g. names and email addresses) may be stored on cloud services hosted outside the Kingdom of Saudi Arabia.
+
+14) The laws of the Kingdom of Saudi Arabia shall govern the construction, validity and operation of this Agreement and the performance of all obligations hereunder. 
+
+15) The courts of the Kingdom of Saudi Arabia shall have exclusive jurisdiction in relation to any dispute or matter arising under or in connection with this Agreement.
+
+By accessing or implementing the Standards, or by providing any Contribution to the Standards, you agree to be bound by the terms of this SAMA Open License and Contribution Agreement.

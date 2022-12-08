@@ -1,0 +1,3772 @@
+openapi: "3.0.0"
+info:
+  title: "KSA Account Information API"
+  description: "## KSA Open Banking Account Information API Specification"
+  version: "2022.11.01-final"
+servers:
+  - url: "/open-banking/account-information/2022.11.01-final"
+tags:
+  - name: Account Access
+    description: Account Access Consents Resource
+  - name: Accounts
+    description: Accounts Resource
+  - name: Balances
+    description: Balances Resource
+  - name: Beneficiaries
+    description: Beneficiaries Resource
+  - name: Direct Debits
+    description: Direct Debits Resource
+  - name: Parties
+    description: Parties Resource
+  - name: Scheduled Payments
+    description: Scheduled Payments Resource
+  - name: Standing Orders
+    description: Standing Orders Resource
+  - name: Transactions
+    description: Transactions Resource
+paths:
+  /account-access-consents:
+    post:
+      tags:
+        - "Account Access"
+      summary: "Create Account Access Consents"
+      description: |
+        Initiate Account Access Consents               
+      operationId: "CreateAccountAccessConsents"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      requestBody:
+        description: |
+          Request Body               
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/OBReadConsent"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OBReadConsent"
+          application/jwt:
+            schema:
+              $ref: "#/components/schemas/OBReadConsentSigned"
+        required: true
+      callbacks: 
+        PASP-Event:
+           '{$request.body#/Subscription/Webhook/Url}':
+            post:
+              description: |
+                **This is a generic Webhook definition and SHOULD apply to any Event that is published by the PASP**
+              parameters:
+                - $ref: "#/components/parameters/authorization"
+                - $ref: "#/components/parameters/x-fapi-interaction-id"
+              requestBody:
+                required: true
+                content:
+                  application/jwt:
+                    schema:
+                      $ref: "#/components/schemas/WebhookEventSigned"                        
+              responses:
+                '202':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '400':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '401':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '403':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+                '500':
+                  $ref: "#/components/responses/TPPWebhookResponse"
+              security:
+                - PASPWebhookSecurity: []
+      responses:
+        '201':
+          $ref: "#/components/responses/201AccountAccessConsentsCreated"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '415':
+          $ref: "#/components/responses/415Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - TPPOAuth2Security: 
+            - "openid"
+            - "accounts"
+  /account-access-consents/{ConsentId}:
+    get:
+      tags:
+        - "Account Access"
+      summary: "Get Account Access Consents"
+      description: |
+        Retrieve Account Access Consents               
+      operationId: "GetAccountAccessConsentsConsentId"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/ConsentId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountAccessConsentsConsentIdRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - TPPOAuth2Security:
+            - "openid"
+            - "accounts"    
+    patch:
+      tags:
+        - "Account Access"
+      summary: "Patch Consent"
+      description: |
+        Update and Account Access Consent Status or Webhook Subscription               
+      operationId: "PatchAccountAccessConsentsConsentId"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/ConsentId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      requestBody:
+        description: |
+          Request Body               
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/OBPatchConsent"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OBPatchConsent"
+          application/jwt:
+            schema:
+              $ref: "#/components/schemas/OBPatchConsentSigned"
+      responses:
+        '204':
+          $ref: "#/components/responses/204AccountAccessConsentsConsentIdDeleted"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        415:
+          $ref: "#/components/responses/415Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - TPPOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts:
+      get:
+        tags:
+          - "Accounts"
+        summary: "Get Accounts"
+        description: |
+          **The list below outlines the Consent Permissions that are applicable to this resource:**          
+          * ReadAccountsBasic 
+          * ReadAccountsDetail
+          * ReadPAN (where PAN is available)
+
+          Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+        operationId: "GetAccounts"
+        parameters:
+          - $ref: "#/components/parameters/authorization"
+          - $ref: "#/components/parameters/x-fapi-auth-date"
+          - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+          - $ref: "#/components/parameters/x-fapi-interaction-id"
+          - $ref: "#/components/parameters/x-customer-user-agent"
+        responses:
+          '200':
+            $ref: "#/components/responses/200AccountsRead"
+          '400':
+            $ref: "#/components/responses/400Error"
+          '401':
+            $ref: "#/components/responses/401Error"
+          '403':
+            $ref: "#/components/responses/403Error"
+          '405':
+            $ref: "#/components/responses/405Error"
+          '406':
+            $ref: "#/components/responses/406Error"
+          '429':
+            $ref: "#/components/responses/429Error"
+          '500':
+            $ref: "#/components/responses/500Error"
+        security:
+          - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}:
+    get:
+      tags:
+        - "Accounts"
+      summary: "Get an Account"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadAccountsBasic
+        * ReadAccountsDetail
+        * ReadPAN (where PAN is available)
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetAccountsAccountId"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}/balances:
+    get:
+      tags:
+        - "Balances"
+      summary: "Get Balances"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadBalances
+        * ReadPAN (where PAN is available)
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetAccountsAccountIdBalances"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdBalancesRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}/beneficiaries:
+      get:
+        tags:
+          - "Beneficiaries"
+        summary: "Get Beneficiaries"
+        description: |
+          **The list below outlines the Consent Permissions that are applicable to this resource:**          
+          * ReadBeneficiariesBasic
+          * ReadBeneficiariesDetail
+
+          Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+        operationId: "GetAccountsAccountIdBeneficiaries"
+        parameters:
+          - $ref: "#/components/parameters/authorization"
+          - $ref: "#/components/parameters/AccountId"
+          - $ref: "#/components/parameters/x-fapi-auth-date"
+          - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+          - $ref: "#/components/parameters/x-fapi-interaction-id"
+          - $ref: "#/components/parameters/x-customer-user-agent"
+        responses:
+          '200':
+            $ref: "#/components/responses/200AccountsAccountIdBeneficiariesRead"
+          '400':
+            $ref: "#/components/responses/400Error"
+          '401':
+            $ref: "#/components/responses/401Error"
+          '403':
+            $ref: "#/components/responses/403Error"
+          '405':
+            $ref: "#/components/responses/405Error"
+          '406':
+            $ref: "#/components/responses/406Error"
+          '429':
+            $ref: "#/components/responses/429Error"
+          '500':
+            $ref: "#/components/responses/500Error"
+        security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}/direct-debits:
+    get:
+      tags:
+        - "Direct Debits"
+      summary: "Get Direct Debits"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadDirectDebits
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetAccountsAccountIdDirectDebits"
+      parameters:
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdDirectDebitsRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}/parties:
+    get:
+      tags:
+        - "Parties"
+      summary: "Get Parties for an Account"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadParty
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetAccountsAccountIdParties"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdPartiesRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /parties:
+    get:
+      tags:
+        - "Parties"
+      summary: "Get current PSU Information"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadPartyPSU
+        * ReadPartyPSUIdentity
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetParties"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200PartiesRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}/scheduled-payments:
+    get:
+      tags:
+        - "Scheduled Payments"
+      summary: "Get Scheduled Payments"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadScheduledPaymentsBasic
+        * ReadScheduledPaymentsDetail
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetScheduledPayments"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdScheduledPaymentsRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"             
+  /accounts/{AccountId}/standing-orders:
+    get:
+      tags:
+        - "Standing Orders"
+      summary: "Get Standing Orders"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadStandingOrdersBasic
+        * ReadStandingOrdersDetail
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetAccountsAccountIdStandingOrders"
+      parameters:
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdStandingOrdersRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '404':
+          $ref: "#/components/responses/404Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+  /accounts/{AccountId}/transactions:
+    get:
+      tags:
+        - "Transactions"
+      summary: "Get Transactions"
+      description: |
+        **The list below outlines the Consent Permissions that are applicable to this resource:**          
+        * ReadTransactionsBasic
+        * ReadTransactionsDetail
+        * ReadTransactionsCredits
+        * ReadTransactionsDebits
+
+        Refer to *Customer Experience Guidelines*, *Account Information*, *Data Groups* for further information.
+      operationId: "GetAccountsAccountIdTransactions"
+      parameters:
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/AccountId"
+        - $ref: "#/components/parameters/x-fapi-auth-date"
+        - $ref: "#/components/parameters/x-fapi-customer-ip-address"
+        - $ref: "#/components/parameters/x-fapi-interaction-id"
+        - $ref: "#/components/parameters/x-customer-user-agent"
+        - $ref: "#/components/parameters/FromBookingDateTimeParam"
+        - $ref: "#/components/parameters/ToBookingDateTimeParam"
+      responses:
+        '200':
+          $ref: "#/components/responses/200AccountsAccountIdTransactionsRead"
+        '400':
+          $ref: "#/components/responses/400Error"
+        '401':
+          $ref: "#/components/responses/401Error"
+        '403':
+          $ref: "#/components/responses/403Error"
+        '405':
+          $ref: "#/components/responses/405Error"
+        '406':
+          $ref: "#/components/responses/406Error"
+        '429':
+          $ref: "#/components/responses/429Error"
+        '500':
+          $ref: "#/components/responses/500Error"
+      security:
+        - PSUOAuth2Security:
+            - "openid"
+            - "accounts"
+components:
+  ############################################
+  # RESPONSES
+  ############################################
+  responses:
+    TPPWebhookResponse:
+      description: "Response Status Code"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          schema:
+            type: "string"
+          required: true
+    403Error:
+      description: "Forbidden"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponse"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponse"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponseSigned"
+    404Error:
+      description: "Not found"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    405Error:
+      description: "Method Not Allowed"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    406Error:
+      description: "Not Acceptable"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    415Error:
+      description: "Unsupported Media Type"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    429Error:
+      description: "Too Many Requests"
+      headers:
+        Retry-After:
+          description: "Number in seconds to wait"
+          schema:
+            type: "integer"
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          schema:
+            type: "string"
+    500Error:
+      description: "Internal Server Error"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponse"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponse"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponseSigned"
+    401Error:
+      description: "Unauthorized"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    400Error:
+      description: "Bad request"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponse"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponse"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBErrorResponseSigned"
+    200AccountsAccountIdDirectDebitsRead:
+      description: "Direct Debits Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadDirectDebit"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadDirectDebit"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadDirectDebitSigned"
+    200AccountsAccountIdStandingOrdersRead:
+      description: "Standing Orders Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadStandingOrder"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadStandingOrder"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadStandingOrderSigned"
+    200AccountsAccountIdScheduledPaymentsRead:
+      description: "Scheduled Payments Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadScheduledPayment"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadScheduledPayment"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadScheduledPaymentSigned"
+    200AccountsAccountIdBeneficiariesRead:
+      description: "Beneficiaries Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadBeneficiary"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadBeneficiary"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadBeneficiarySigned"
+    200PartiesRead:
+      description: "Get Party Details of the Authorized PSU"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadParty3"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadParty3"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadParty3Signed"
+    200AccountsAccountIdTransactionsRead:
+      description: "Transactions Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadTransaction"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadTransaction"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadTransactionSigned"
+    200AccountsAccountIdPartiesRead:
+      description: "Parties Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadParty2"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadParty2"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadParty2Signed"
+    200AccountsAccountIdBalancesRead:
+      description: "Balances Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadBalance"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadBalance"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadBalanceSigned"
+    200AccountsAccountIdRead:
+      description: "Account ID Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadAccountId"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadAccountId"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadAccountIdSigned"
+    204AccountAccessConsentsConsentIdDeleted:
+      description: "No Content"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+    200AccountAccessConsentsConsentIdRead:
+      description: "Account Access Consents Read"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadConsentResponse"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadConsentResponse"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadConsentResponseSigned"        
+    200AccountsRead:
+          description: "Accounts Read"
+          headers:
+            x-fapi-interaction-id:
+              description: "An RFC4122 UID used as a correlation id."
+              required: true
+              schema:
+                type: "string"
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/OBReadAccount"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OBReadAccount"
+            application/jwt:
+              schema:
+                $ref: "#/components/schemas/OBReadAccountSigned"  
+    201AccountAccessConsentsCreated:
+      description: "Account Access Consents Created"
+      headers:
+        x-fapi-interaction-id:
+          description: "An RFC4122 UID used as a correlation id."
+          required: true
+          schema:
+            type: "string"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/OBReadConsentResponse"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OBReadConsentResponse"
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/OBReadConsentResponseSigned"
+
+  ############################################
+  # SCHEMAS
+  ############################################
+  schemas:
+    Jwt:
+        title: "Jwt"
+        description: |
+          [https://www.rfc-editor.org/rfc/rfc7519](https://www.rfc-editor.org/rfc/rfc7519)
+        type: "object"
+        properties:
+          iss:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.1](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.1)          
+            type: string
+          exp:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.4](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.4)          
+            type: number
+          nbf:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.5](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.5)          
+            type: number
+          aud:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3)          
+            oneOf:
+              - type: array
+                items:
+                  type: string
+              - type: string
+          iat:
+            description: |
+              [https://www.rfc-editor.org/rfc/rfc7519#section-4.1.6](https://www.rfc-editor.org/rfc/rfc7519#section-4.1.6)          
+            type: number
+        required: [ iss, exp, nbf ]
+    OBReadConsentSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadConsent'
+          additionalProperties: false
+          required: [message]        
+    OBReadConsentResponseSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadConsentResponse'
+          additionalProperties: false
+          required: [message]               
+    OBErrorResponseSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBErrorResponse'
+          additionalProperties: false
+          required: [message]               
+    WebhookEventSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/WebhookEvent'
+          additionalProperties: false
+          required: [message]               
+    OBReadAccountSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadAccount'
+          additionalProperties: false
+          required: [message]   
+    OBReadAccountIdSigned:
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadAccountId'
+          additionalProperties: false
+          required: [message]   
+    OBReadBalanceSigned:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadBalance'
+          additionalProperties: false
+          required: [message]   
+    OBReadBeneficiarySigned:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadBeneficiary'
+          additionalProperties: false
+          required: [message]   
+    OBReadDirectDebitSigned:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadDirectDebit'
+          additionalProperties: false
+          required: [message]   
+    OBReadParty3Signed:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadParty3'
+          additionalProperties: false
+          required: [message]   
+    OBReadParty2Signed:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadParty2'
+          additionalProperties: false
+          required: [message]   
+    OBReadScheduledPaymentSigned:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadScheduledPayment'
+          additionalProperties: false
+          required: [message]     
+    OBReadStandingOrderSigned:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadStandingOrder'
+          additionalProperties: false
+          required: [message]     
+    OBReadTransactionSigned:                
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBReadTransaction'
+          additionalProperties: false
+          required: [message]     
+    EventNotification:
+      type: "object"      
+      description: |
+        A Webhook Subscription Schema
+      required:
+        - "Webhook"
+      properties:
+        Webhook:
+          description: |
+            A Webhook Schema
+          type: "object"
+          properties:
+            Url: 
+              description: |
+                The TPP Callback URL being registered with the PASP 
+              type: "string"
+              example: "https://api.tpp.com/webhook/callbackUrl"
+            IsActive:
+              description: |
+                The TPP specifying whether the PASP should send (IsActive true) or not send (IsActive false) Webhook Notifications to the TPP's Webhook URL 
+              type: "boolean"
+              example: false
+    WebhookEvent:
+      type: "object"
+      description: "Webhook Event"
+      required:
+      - "Data"
+      - "EventMeta"
+      properties:
+        Data:
+          type: "object"
+          description: "Event Data. This Data Object will contain the same API resource and Schema that has triggered the Event."
+        Links:
+          $ref: "#/components/schemas/LinksSelf"
+        EventMeta:
+          type: "object"
+          description: "Event Metadata"
+          required: 
+          - "EventDateTime"
+          - "EventResource"
+          - "EventType"
+          - "ConsentId"
+          properties:
+            EventDateTime:
+              type: "string"
+              format: "date-time"
+              description: "Date Time of the first Event in the Message"
+            EventResource:
+              type: "string"
+              description: "The API resource to which the Event itself is associated"
+              example: "/accounts/123"
+            EventType:
+              type: "string"
+              enum: ["KSAOB.Resource.Created", "KSAOB.Resource.Updated", "KSAOB.Resource.Deleted"]
+              description: "The Type of Event"
+            ConsentId:
+              description: "Unique identification as assigned to identify the consents resource."
+              type: "string"
+              minLength: 1
+              maxLength: 128
+    Purpose:
+      description: "Purpose" 
+      type: "string"
+      enum: [Account Aggregation, Personal Finance Manager, Electronic Verification,E-Statement, Credit Assessment, Tax Filing, Enterprise Financial Management, Letter Of Guarantee, Other]
+    OnBehalfOf:
+      type: "object"
+      description: "On Behalf Of"
+      properties:
+        TradingName:
+          type: "string"
+          example: "Acme Accounting Trading Name"
+        LegalName:
+          type: "string"
+          example: "Acme Accounting Legal Name"
+        IdentifierType:
+          type: "string"
+          enum: ["Other"]
+        Identifier:
+          type: "string"
+          example: "abcd1234"
+    OBErrorResponse:
+      title: "OBErrorResponse"
+      description: "An array of detail error codes, and messages, and URLs to documentation to help remediation."
+      type: "object"
+      properties:
+        Errors:
+          items:
+            $ref: "#/components/schemas/OBError"
+          type: "array"
+          minItems: 1
+      required:
+        - "Errors"
+      additionalProperties: false
+    OBError:
+      title: "OBError"
+      type: "object"
+      properties:
+        Code:
+          description: "Low level textual error code, e.g., KSAOB.Field.Missing"
+          type: "string"
+          enum:
+            - "KSAOB.AccessToken.Unauthorized"
+            - "KSAOB.AccessToken.InvalidScope"
+            - "KSAOB.Consent.Revoked"
+            - "KSAOB.Consent.TransientAccountAccessFailure"
+            - "KSAOB.Consent.AccountTemporarilyBlocked"
+            - "KSAOB.Consent.PermanentAccountAccessFailure"
+            - "KSAOB.Consent.Invalid"
+            - "KSAOB.JWS.InvalidSignature"
+            - "KSAOB.JWS.Malformed"
+            - "KSAOB.JWS.InvalidClaim"
+            - "KSAOB.JWS.InvalidHeader"
+            - "KSAOB.GenericRecoverableError"
+            - "KSAOB.GenericError"
+            - "KSAOB.JWE.DecryptionError"
+            - "KSAOB.JWE.InvalidHeader"
+            - "KSAOB.Event.UnexpectedEvent"
+            - "KSAOB.Body.InvalidFormat"
+            - "KSAOB.Resource.InvalidResourceId"
+            - "KSAOB.Resource.InvalidFormat"
+            - "KSAOB.Consent.BusinessRuleViolation"
+        Message:
+          description: "A description of the error that occurred. e.g., 'A mandatory field isn't supplied' or 'RequestedExecutionDateTime must be in future'\nOBIE doesn't standardise this field"
+          type: "string"
+          minLength: 1
+          maxLength: 500
+        Path:
+          description: "Recommended but optional reference to the JSON Path of the field with error, e.g., Data.Initiation.InstructedAmount.Currency"
+          type: "string"
+          minLength: 1
+          maxLength: 500
+        Url:
+          description: "URL to help remediate the problem, or provide more information, or to API Reference, or help etc"
+          type: "string"
+      required:
+        - "Code"
+        - "Message"
+      additionalProperties: false
+      minProperties: 1                
+    LinksSelf:
+      title: "Links"
+      type: "object"
+      description: "Links relevant to the resource"
+      properties:
+        Self:
+          type: "string"
+          format: "uri"
+      additionalProperties: false
+      required:
+        - "Self"            
+    Links:
+      allOf:
+        - $ref: "#/components/schemas/LinksSelf"
+        - type: "object"
+          properties:
+            First:
+              description: "A link to the first page in a paginated result set"
+              type: "string"
+              format: "uri"
+            Prev:
+              description: "A link to the previous page in a paginated result set"
+              type: "string"
+              format: "uri"
+            Next:
+              description: "A link to the next page in a paginated result set"
+              type: "string"
+              format: "uri"
+            Last:
+              description: "A link to the last page in a paginated result set"
+              type: "string"
+              format: "uri"
+          additionalProperties: false
+    Meta:
+      title: "MetaData"
+      type: "object"
+      description: "Meta Data relevant to the payload"
+      additionalProperties: false   
+    MetaTotalPages:
+     allOf:     
+      - $ref: "#/components/schemas/Meta"
+      - type: "object"
+        properties:
+          TotalPages:
+            type: "integer"
+            format: "int32"
+            minimum: 1
+        additionalProperties: false            
+    MetaTransactions:
+     allOf:     
+      - $ref: "#/components/schemas/Meta"
+      - type: "object"
+        properties:
+          TotalPages:
+            type: "integer"
+            format: "int32"
+            minimum: 1
+          FirstAvailableDateTime:
+            $ref: "#/components/schemas/ISODateTime"
+          LastAvailableDateTime:
+            $ref: "#/components/schemas/ISODateTime"
+        additionalProperties: false      
+    TransactionDateTime:
+      title: "TransactionDateTime"
+      description: |
+        The Date Time of when the transaction occurred.
+        All dates in the JSON payloads are represented in ISO 8601 date-time format. 
+        All date-time fields in responses must include the timezone. 
+        An example is below: 2017-04-05T10:43:07+00:00        
+      type: "string"
+      format: "date-time"
+    PaymentMode:
+      title: "PaymentModes"
+      description: "The mode of payment"
+      type: "string"
+      enum:
+        - "KSAOB.Online"
+        - "KSAOB.Offline"
+        - "KSAOB.Batch"
+    TransactionType:
+      title: "TransactionType"
+      description: "The type of transaction"
+      type: "string"
+      enum:
+        - "KSAOB.POS"
+        - "KSAOB.ECommerce"
+        - "KSAOB.ATM"
+        - "KSAOB.BillPayments"
+        - "KSAOB.LocalBankTransfer"
+        - "KSAOB.SameBankTransfer"
+        - "KSAOB.InternationalTransfer"
+        - "KSAOB.Teller"
+    SubTransactionType:
+      title: "SubTransactionType"
+      description: "The sub-type of a transaction"
+      type: "string"
+      enum:
+        - "KSAOB.Purchase"
+        - "KSAOB.Reversal"
+        - "KSAOB.Refund"
+        - "KSAOB.Withdrawal"
+        - "KSAOB.WithdrawalReversal"
+        - "KSAOB.Deposit"
+        - "KSAOB.DepositReversal"
+        - "KSAOB.MoneyTransfer"
+        - "KSAOB.NotApplicable"
+    Flags:
+      title: "Flags"
+      description: "The flag of a transaction"
+      type: "string"
+      enum:
+        - "KSAOB.Cashback"
+        - "KSAOB.Payroll"
+        - "KSAOB.DirectDebit"
+        - "KSAOB.StandingOrder"
+        - "KSAOB.Loan"
+        - "KSAOB.Dividend"
+    AccountHolderName:
+      type: "string"
+      description: |
+        The Account Holder Name is the name or names of the Beneficiary account owner(s) represented at the account level, as displayed by the Creditor Agent's online channels and as provided by the Beneficiary to the PSU 1 when adding the Beneficiary in the Beneficiary list. 
+        Note, the Account Holder Name is not the product name or the nickname of the account.              
+    AccountHolderShortName:
+      type: "string"
+      description: |
+        The Beneficiary account holder nick name
+    StatementReference:
+      description: "Unique reference for the statement. This reference may be optionally populated if available."
+      type: "string"
+      minLength: 1
+      maxLength: 35            
+    LocalTimeZone:
+      title: "LocalTimeZone"
+      description: |
+        The UTC offset of the local date and time of where the transaction occurred
+        E.g. UTC+03:00      
+      type: "string"
+      format: "date-time"
+    ISODateTime:
+      title: "ISODateTime"
+      description: "All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    StandingOrderId:
+      description: "A unique and immutable identifier produced by the PASP to identify the account resource. This identifier has no meaning to the account owner."
+      type: "string"
+      minLength: 1
+      maxLength: 40
+    StandingOrderType:
+      description: "The type of Standing Order."
+      type: "string"
+      enum:
+        - "KSAOB.BetweenMyAccounts"
+        - "KSAOB.SameBankTransfer"
+        - "KSAOB.LocalBankTransfer"
+        - "KSAOB.InternationalTransfer"
+        - "KSAOB.Charity"
+    Frequency:
+      description: |
+        #### The frequency that the Standing Order payments are executed from the PSU1s account. Encoded with allowable values as follows:
+
+        ##### Individual Definitions:
+        NotKnown - SO frequency is not known (i.e. not provided) 
+        EveryDay - SO frequence is Every day
+        EveryWorkingDay - SO frequency is every working day 
+        IntervalDay - SO frequency is an interval specified in number of calendar days (2 to 31) 
+        IntervalWeekDay - SO frequency is an interval specified in weeks (1 to 51), and the day within the week (1 to 7) 
+        WeekInMonthDay - SO frequency is a monthly interval, specifying the week of the month (1 to 5) and day within the week (1 to 7) 
+        IntervalMonthDay - SO frequency is an interval specified in months (between 1 to 6, 12, 24), specifying the day within the month (-5 to -1, 1 to 31) 
+        QuarterDay - SO frequency is quarterly RECEIVED
+        BiAnnual - SO frequency is every 6 months
+        Annual - SO frequency is every year
+        RECEIVED = Paid on the 20th March, 19th June, 24th September and 20th December. 
+
+        ##### Individual Patterns:
+        NotKnown (ScheduleCode)
+        EveryDay (ScheduleCode)
+        EveryWorkingDay (ScheduleCode)
+        IntervalDay:NoOfDay (ScheduleCode + NoOfDay)
+        IntervalWeekDay:IntervalInWeeks:DayInWeek (ScheduleCode + IntervalInWeeks + DayInWeek)
+        WeekInMonthDay:WeekInMonth:DayInWeek (ScheduleCode + WeekInMonth + DayInWeek)
+        IntervalMonthDay:IntervalInMonths:DayInMonth (ScheduleCode + IntervalInMonths + DayInMonth)
+        QuarterDay: + either (RECEIVED) ScheduleCode + QuarterDay
+
+        ##### The regular expression for this element combines five smaller versions for each permitted pattern. To aid legibility - the components are presented individually here:
+        NotKnown
+        EveryDay
+        EveryWorkingDay
+        IntervalDay:(([2-9])|([1-2][0-9])|3[0-1])
+        IntervalWeekDay:[1-51]:[1-7]
+        WeekInMonthDay:[1-5]:[1-7]
+        IntervalMonthDay:([1-6]|12|24):(-[1-5]|[1-9]|[12][0-9]|3[01])
+        QuarterDay:(RECEIVED)
+        ##### Full Regular Expression:
+        ^(NotKnown)$|^(EveryDay)$|^(EveryWorkingDay)$|^(IntervalDay:(([2-9])|([1-2][0-9])|3[0-1]))$|^(IntervalWeekDay:[1-51]:[1-7])$|^(WeekInMonthDay:[1-5]:[1-7])$|^(IntervalMonthDay:([1-6]|12|24):(-[1-5]|[1-9]|[12][0-9]|3[01]))$|^(QuarterDay:(RECEIVED))$"
+        type: "string"
+        pattern: "^(NotKnown)$|^(EveryDay)$|^(EveryWorkingDay)$|^(IntervalDay:(([2-9])|([1-2][0-9])|3[0-1]))$|^(IntervalWeekDay:[1-51]:[1-7])$|^(WeekInMonthDay:[1-5]:[1-7])$|^(IntervalMonthDay:([1-6]|12|24):(-[1-5]|[1-9]|[12][0-9]|3[01]))$|^(QuarterDay:(RECEIVED))$"   
+    PurposeSO:
+      description: |      
+        The purpose of the Standing Order payment.
+        A free format string in the form of transaction categorisation.
+        Example: "Bills and expenses", "Government payment", "Personal Expenses".       
+      type: "string"
+      minLength: 1
+      maxLength: 50       
+    FirstPaymentDateTime:
+      description: "The date on which the first payment for a Standing Order schedule will be made.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"       
+    NextPaymentDateTime:
+      description: "The date on which the next payment for a Standing Order schedule will be made.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"      
+    LastPaymentDateTime:
+      description: "The date on which the last (most recent) payment for a Standing Order schedule was made.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"      
+    FinalPaymentDateTime:
+      description: "The date on which the final payment for a Standing Order schedule will be made.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"     
+    NumberOfPayments:
+      description: "Number of the payments that will be made in completing this frequency sequence including any executed since the sequence start date."
+      type: "string"
+      minLength: 1
+      maxLength: 35       
+    OBExternalStandingOrderStatusCode:
+      description: "Specifies the status of the standing order in code form."
+      type: "string"
+      enum:
+        - "KSAOB.Active"
+        - "KSAOB.Inactive"
+    DirectDebitId:
+      description: "A unique and immutable identifier used to identify the direct debit resource. This identifier has no meaning to the account owner."
+      type: "string"
+      minLength: 1
+      maxLength: 40
+    MandateIdentification:
+      description: "This is the unique and immutable reference to the PSU 1 for the Direct Debit mandate."
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    OBExternalDirectDebitStatusCode:
+      description: "Specifies the status of the direct debit. Encoded with allowable values of: 'Active', 'Inactive'"
+      type: "string"
+      enum:
+        - "Active"
+        - "Inactive"
+    FrequencyDD:
+      description: "Specifies the frequency of the Direct Debit collections to the PSU 1 account."
+      type: "string"
+      enum:
+        - "KSAOB.Annual"
+        - "KSAOB.Daily"
+        - "KSAOB.Fortnightly"
+        - "KSAOB.HalfYearly"
+        - "KSAOB.Monthly"
+        - "KSAOB.NotKnown"
+        - "KSAOB.Quarterly"
+        - "KSAOB.Weekly"
+    PreviousPaymentDateTime:
+      description: "The date of most recent direct debit collection to the PSU 1 account. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"      
+    OBActiveOrHistoricCurrencyAndAmount_0:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "This is the value of the last direct debit collection from the PSU 1 account."
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBActiveOrHistoricCurrencyAndAmount_1:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: |
+        The amount of money that was moved between the PSU 1 (Debtor) and the payment beneficiary (Creditor) by the PASP, before adding any charges from the sending PASP.
+        It is expressed in the currency as ordered by the PSU 1 (i.e. the initiating party of the payment). This amount is transported unchanged through the transaction chain.
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBActiveOrHistoricCurrencyAndAmount_2:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "The amount of the first Standing Order"
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBActiveOrHistoricCurrencyAndAmount_3:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "The amount of the next Standing Order."
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBActiveOrHistoricCurrencyAndAmount_4:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "The amount of the final Standing Order"
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"    
+    OBActiveOrHistoricCurrencyAndAmount_5:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "Amount of money in the transaction entry."
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBActiveOrHistoricCurrencyAndAmount_6:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "Transaction charges to be paid by the charge bearer."
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+        ChargeIncluded:
+          description: |
+            If true then the value in the Amount has the ChargeAmount deducted from it
+          type: "boolean"
+    OBActiveOrHistoricCurrencyAndAmount_7:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: "The amount of the last (most recent) Standing Order instruction."
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBActiveOrHistoricCurrencyAndAmount_8:
+      type: "object"
+      required:
+        - "Amount"
+        - "Currency"
+      description: " The VAT associated with the ChargeAmount"
+      properties:
+        Amount:
+          $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBReadDirectDebit:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"
+            - "DirectDebit"
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            DirectDebit:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBDirectDebit"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false     
+    OBDirectDebit:     
+      type: "object"
+      description: "Account to or from which a cash entry is made."
+      required:
+        - "DirectDebitId"
+        - "MandateIdentification"
+        - "DirectDebitStatusCode"
+        - "Name"
+        - "Frequency"
+      properties:
+        DirectDebitId:
+          $ref: "#/components/schemas/DirectDebitId"
+        MandateIdentification:
+          $ref: "#/components/schemas/MandateIdentification"
+        DirectDebitStatusCode:
+          $ref: "#/components/schemas/OBExternalDirectDebitStatusCode"
+        Name:
+          $ref: "#/components/schemas/Name_2"
+        Frequency:
+          $ref: "#/components/schemas/FrequencyDD"
+        PreviousPaymentDateTime:
+          $ref: "#/components/schemas/PreviousPaymentDateTime"
+        PreviousPaymentAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_0"
+    OBReadStandingOrder:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"          
+            - "AccountHolderName"
+            - "StandingOrder"          
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            AccountHolderName:
+              $ref: "#/components/schemas/AccountHolderName"
+            AccountHolderShortName:
+              $ref: "#/components/schemas/AccountHolderShortName"
+            StandingOrder:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBStandingOrder"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBStandingOrder:
+      type: "object"
+      required:
+        - "Frequency"
+        - "StandingOrderId"
+        - "FirstPaymentDateTime"
+        - "FinalPaymentDateTime"
+        - "NumberOfPayments"
+        - "StandingOrderStatusCode"
+        - "FirstPaymentAmount"
+        - "FinalPaymentAmount"
+      properties:
+        StandingOrderId:
+          $ref: "#/components/schemas/StandingOrderId"
+        StandingOrderType:
+          $ref: "#/components/schemas/StandingOrderType"
+        Frequency:
+          $ref: "#/components/schemas/Frequency"
+        CreditorReference:
+          $ref: "#/components/schemas/Reference"
+        Purpose:
+          $ref: "#/components/schemas/PurposeSO"
+        FirstPaymentDateTime:
+          $ref: "#/components/schemas/FirstPaymentDateTime"
+        NextPaymentDateTime:
+          $ref: "#/components/schemas/NextPaymentDateTime"
+        LastPaymentDateTime:
+          $ref: "#/components/schemas/LastPaymentDateTime"
+        FinalPaymentDateTime:
+          $ref: "#/components/schemas/FinalPaymentDateTime"
+        NumberOfPayments:
+          $ref: "#/components/schemas/NumberOfPayments"
+        StandingOrderStatusCode:
+          $ref: "#/components/schemas/OBExternalStandingOrderStatusCode"
+        FirstPaymentAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_2"
+        NextPaymentAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_3"
+        LastPaymentAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_7"
+        FinalPaymentAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_4"
+        CreditorAgent:
+          type: "array"
+          description: |
+            Creditor Agent refers to the Financial Institution that manages the account on behalf of the scheduled payment beneficiary party, managing registration, booking of entries on the account, calculating balances on the account and providing information about the account. This is the servicing Financial Institution of the Beneficiary account.
+          items:
+            $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification5_1"
+        CreditorAccount:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/OBCashAccount5_1"
+        SupplementaryData:
+          $ref: "#/components/schemas/OBSupplementaryData"
+      additionalProperties: false
+    OBCashAccount5_1:
+      type: "object"
+      required:
+        - "IdentificationType"
+        - "Identification"
+      description: "Provides the details to identify the beneficiary account."
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalAccountIdentificationCode"
+        Identification:
+          description: "Beneficiary account identification."
+          type: "string"
+          minLength: 1
+          maxLength: 256
+    OBBranchAndFinancialInstitutionIdentification5_1:
+      type: "object"
+      required:
+        - "IdentificationType"
+        - "Identification"
+      description: |
+        Creditor Agent refers to the Financial Institution that manages the account on behalf of the scheduled payment beneficiary party, managing registration, booking of entries on the account, calculating balances on the account and providing information about the account. This is the servicing Financial Institution of the Beneficiary account.
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalFinancialInstitutionIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/Identification_1"      
+    DebtorReference:
+      description: |
+        Reference in the context of the PSU 1 (i.e. the Debtor) to refer to the payment transaction. 
+        Usage: If available, the initiating party (i.e. Debtor) generates this reference for internal purposes (e.g. to enable reconciliation, refer to a PO, invoice etc). This field is captured by the PASP and is not transmitted via the payment rails to the Creditor of the payment.      type: "string"
+      minLength: 1
+      maxLength: 35      
+    OBExternalScheduleTypeCode:
+      description: |
+        Specifies the type of scheduled payment date provided under ScheduledPaymentDateTime. 
+          Encoded with allowable values of:
+          "Arrival" - PSU1 specifies the date for the arrival of funds in the beneficiary (Creditor) account
+          "Execution" - PSU1 specifies the date which the payment needs to be executed from the PSU 1 (Debtor) account.
+      type: "string"
+      enum:
+        - "KSAOB.Arrival"
+        - "KSAOB.Execution"
+    ScheduledPaymentDateTime:
+      description: "Date (and time) information related to the scheduled payment (Arrival or Execution) based on the ScheduleType field. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    ScheduledPaymentId:
+      description: "A unique and immutable identifier produced by the PASP to identify the scheduled payment resource. This identifier has no meaning to the account owner."
+      type: "string"
+      minLength: 1
+      maxLength: 40
+    BeneficiaryId:
+      description: "A unique and immutable identifier used to identify the beneficiary resource. This identifier has no meaning to the account owner."
+      type: "string"
+      minLength: 1
+      maxLength: 40
+    OBBeneficiaryTypeCode:
+      description: "Specifies the Beneficiary Type. Encoded with allowable values of: 'Activated' - Beneficiary has been added to the beneficiary list using SCA. 'NotActivated' - Beneficiary has been added to the beneficiary list without SCA"
+      type: "string"
+      enum:
+        - "KSAOB.Activated"
+        - "KSAOB.NotActivated"
+    OBBranchAndFinancialInstitutionIdentification6_0:
+      type: "object"
+      description: "Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account.\nThis is the servicer of the beneficiary account."
+      required:
+        - "IdentificationType"
+        - "Identification"
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalFinancialInstitutionIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/Identification_1"
+        Name:
+          $ref: "#/components/schemas/Name_1"
+        PostalAddress:
+          $ref: "#/components/schemas/OBPostalAddress6"        
+    OBCashAccount5_0:
+      type: "object"
+      required:
+        - "IdentificationType"
+        - "Identification"
+      description: "Provides the details to identify the beneficiary account."
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalAccountIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/Identification_0"
+    Reference:
+      description: "Unique reference in the context of the creditor, provided by the creditor to the PSU1 (Debtor), to unambiguously refer to the payment transaction. Usage: If available, the initiating party (i.e. Debtor) provides this reference in the structured remittance information, to enable reconciliation by the Creditor upon receipt of the amount of money. This field is populated by the PSU 1 (who is the initiating party of the payment e.g. the Debtor). Field is free format text"
+      type: "string"
+      minLength: 1
+      maxLength: 35        
+    TransactionId:
+      description: "Unique identifier for the transaction within an servicing institution. This identifier is both unique and immutable."
+      type: "string"
+      minLength: 1
+      maxLength: 210
+    TransactionReference:
+      description: |
+        Unique reference for the transaction.
+        When processed through a national payment system, it is mandatory to be populated by the PASP.
+        As an example, it may be a reference code for the local payment scheme e.g. mada, SARIE."      
+      type: "string"
+      minLength: 1
+      maxLength: 210    
+    OBCreditDebitCode_1:
+      description: "Indicates whether the transaction is a credit or a debit entry."
+      type: "string"
+      enum:
+        - "KSAOB.Credit"
+        - "KSAOB.Debit"
+    OBEntryStatusCode:
+      description: "Status of a transaction entry on the books of the account servicer."
+      type: "string"
+      enum:
+        - "KSAOB.Booked"
+        - "KSAOB.Pending"
+        - "KSAOB.Rejected"       
+    OBTransactionMutabilityCode:
+      description: "Specifies the Mutability of the Transaction record."
+      type: "string"
+      enum:
+        - "KSAOB.Mutable"
+        - "KSAOB.Immutable"
+    BookingDateTime:
+      description: |
+        Date and time when a transaction entry is posted to an account on the account servicer's books.
+        Usage: Booking date is the expected booking date, unless the status is booked, in which case it is the actual booking date.
+        All dates in the JSON payloads are represented in ISO 8601 date-time format. 
+        All date-time fields in responses must include the timezone. An example is below: 2017-04-05T10:43:07+00:00
+      type: "string"
+      format: "date-time"    
+    ValueDateTime:
+      description: |
+        Date and time at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner in case of a debit transaction entry. 
+        Usage: If transaction entry status is pending and value date is present, then the value date refers to an expected/requested value date. 
+        For transaction entries subject to availability/float and for which availability information is provided, the value date must not be used. In this case the availability component identifies the number of availability days.
+        Availability float refers to the time period between fund deposits and clearing.
+        The float is essentially double-counted money: a paid sum which, due to delays in processing, appears simultaneously in the accounts of the payer and the payee.
+        All dates in the JSON payloads are represented in ISO 8601 date-time format. All date-time fields in responses must include the timezone. An example is below: 2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    TransactionInformation:
+      description: "Further details of the transaction. This is the transaction narrative, which is unstructured text."
+      type: "string"
+      minLength: 1
+      maxLength: 500  
+    PartyId:
+      description: "A unique and immutable identifier used to identify the customer resource. This identifier has no meaning to the account owner."
+      type: "string"
+      minLength: 1
+      maxLength: 40
+    PartyNumber:
+      description: "Number assigned by an agent to identify its customer."
+      type: "string"
+      minLength: 1
+      maxLength: 35      
+    OBExternalPartyTypeCode:
+      description: |
+        Specifies the party type.
+        Encoded with allowable values: 
+        "Delegate" - Used for business accounts when user has delegated authority to access the account , 
+        "Joint" - Party is a joint owner of the account 
+        "Sole" - Party is the sole owner of the account
+      type: "string"
+      enum:
+        - "KSAOB.Delegate"
+        - "KSAOB.Joint"
+        - "KSAOB.Sole"
+    OBExternalAccountRoleCode:
+      description: "Specifies the Party's role with respect to the related account."
+      type: "string"
+      enum:
+        - "KSAOB.Administrator"
+        - "KSAOB.Beneficiary"
+        - "KSAOB.CustodianForMinor"
+        - "KSAOB.Granter"
+        - "KSAOB.LegalGuardian"
+        - "KSAOB.OtherParty"
+        - "KSAOB.PowerOfAttorney"
+        - "KSAOB.Principal"
+        - "KSAOB.Protector"
+        - "KSAOB.RegisteredShareholderName"
+        - "KSAOB.SecondaryOwner"
+        - "KSAOB.SeniorManagingOfficial"
+        - "KSAOB.Settlor"
+        - "KSAOB.SuccessorOnDeath"
+    StreetName:
+      description: "Name of a street or thoroughfare."
+      type: "string"
+      minLength: 1
+      maxLength: 70
+    ShortAddress:
+      description: "8 character Unique alphanumeric Code."
+      type: "string"
+      minLength: 1
+      maxLength: 8
+    BuildingNumber:
+      description: "Number that identifies the position of a building on a street."
+      type: "string"
+      minLength: 4
+      maxLength: 4
+    SecondaryNumber:
+      description: "Secondary Number, if required"
+      type: "string"
+      minLength: 4
+      maxLength: 4
+    PostalCode:
+      description: "Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail."
+      type: "string"
+      minLength: 5
+      maxLength: 5
+    District:
+      description: "Identifies the District of a City"
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    OBCountry:
+      description: "Identifies a county either by full name or country code"
+      type: "string"
+      pattern: "^[A-Z]{2,2}$"
+    City:
+      description: "Identifies the City of a Country"
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    AccountId:
+          title: "AccountId"
+          description: "A unique and immutable identifier produced by the PASP to identify the account resource.This identifier has no meaning to the account owner (PSU 1)."
+          type: "string"
+          minLength: 1
+          maxLength: 40
+    CountryCode:
+      description: "Nation with its own government, occupying a particular territory."
+      type: "string"
+      pattern: "^[A-Z]{2,2}$"          
+    StatusUpdateDateTime:
+      title: "StatusUpdateDateTime" 
+      description: "Date and time at which the account resource status was updated. All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    OBUnitNumber:
+      description: "This is the unit number of the business premises or dwelling"
+      type: "number"
+      example: 10
+    OBAddressTypeCode:
+      description: "Postal Address type specifies the the nature of the postal address."
+      type: "string"
+      enum:
+        - "KSAOB.Business"
+        - "KSAOB.Correspondence"
+        - "KSAOB.DeliveryTo"
+        - "KSAOB.MailTo"
+        - "KSAOB.POBox"
+        - "KSAOB.Postal"
+        - "KSAOB.Residential"
+        - "KSAOB.Statement"
+    OBAccountStatusCode:
+      title: "OBAccountStatusCode"
+      description: "Specifies the status of account resource in code form. [Active]: It means that the account is exist and active. [NotActive]: It means that the account has been not active for 6 to 12 months. [Dormant]: It means that the accounts has been Inactive for 1 to 5 years.[Unclaimed]: It means that the accounts has been Inactive for more than 5 years.[Deceased]: Indicates that the account holder has passed away.[Suspended]: If the account is suspended do to any reason. E.g: SAMA requested the bank to suspend the account for security reason. [Closed]: If the account is closed"
+      type: "string"
+      enum:
+        - "Active"
+        - "NotActive"
+        - "Dormant"
+        - "Unclaimed"
+        - "Deceased"
+        - "Suspended"
+        - "Closed"
+    ActiveOrHistoricCurrencyCode_0:
+      title: "ActiveOrHistoricCurrencyCode_0"
+      description: "Identification of the currency in which the account is held. A code allocated to a currency under an international currency identification scheme, as described in the latest edition of the international standard ISO 4217 'Codes for the representation of currencies and funds'."
+      type: "string"
+      pattern: "^[A-Z]{3,3}$"
+      example: "SAR"
+    ActiveOrHistoricCurrencyCode_1:
+      description: "A 3 character alphabetic code allocated to a currency under an international currency identification scheme, as described in the latest edition of the international standard ISO 4217 'Codes for the representation of currencies and funds'."
+      type: "string"
+      pattern: "^[A-Z]{3,3}$"
+      example: "SAR"
+    OBExternalAccountTypeCode:
+      title: "OBExternalAccountTypeCode"
+      description: "Specifies the type of account (Retail or Corporate)."
+      type: "string"
+      enum:
+        - "KSAOB.Retail"
+        - "KSAOB.Corporate"
+    OBExternalAccountSubTypeCode:
+      title: "OBExternalAccountSubTypeCode"
+      description: "Specifies the sub type of account (product family group). Examples values include: CurrentAccount, Savings, CreditCard, PrePaidCard, EMoney, ChargeCard, Other"
+      type: "string"
+      x-namespaced-enum:
+        - "CurrentAccount"
+        - "Savings"
+        - "CreditCard"
+        - "PrePaidCard"
+        - "EMoney"
+        - "ChargeCard"
+        - "Other"
+    Description_0:
+      title: "Description_0"
+      description: "Specifies the description of the account sub-type."
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    Nickname:
+      title: "Nickname"
+      description: "The nickname of the account, assigned by PSU 1 to provide an additional and easier means of identification of the account at the PASP."
+      type: "string"
+      minLength: 1
+      maxLength: 70
+    OpeningDate:
+      title: "OpeningDate"
+      description: "Date on which the account and its related basic services by PASP started to be operational for PSU 1. All dates in the JSON payloads are represented in ISO 8601 date-time format. All date-time fields in responses must include the timezone. An example is below: 2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    MaturityDate:
+      title : "MaturityDate"
+      description: "Maturity date of the account. All dates in the JSON payloads are represented in ISO 8601 date-time format. All date-time fields in responses must include the timezone. An example is below: 2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"
+    OBExternalAccountIdentificationCode:
+      title: "OBExternalAccountIdentificationCode"
+      description: "Name of the identification scheme for the account. Encoded with allowable values published in an external list."
+      type: "string"
+      enum:
+        - "KSAOB.IBAN"
+        - "KSAOB.MaskedPAN"
+    Identification_0:
+      title: "Identification_0"
+      description: "Identification for the account assigned by the PASP based on the Account Scheme Name. This identification is known by the PSU 1 account owner. For IBAN, refer to the ISO Standard 13616. For MASKEDPAN, masked details as follows:  - First 4 numbers are exposed, last 4 numbers are exposed, everyting else is masked with an asterix"
+      type: "string"
+      minLength: 1
+      maxLength: 256
+    Identification_1:
+      title: "Identification_1"
+      description: |
+        ### /accounts resource
+        Unique and unambiguous identification of the PASP as the account servicing institution for the Open Banking Services. 
+
+        ### /beneficiaries resource
+        Unique and unambiguous identification of the Creditor Agency as the servicing institution of the Beneficiary.
+
+        ### /scheduled-payments resource 
+        Unique and unambiguous identification of the PASP as the account servicing institution for the Open Banking Services. 
+
+        ### /standing-orders resource 
+        Unique and unambiguous identification of the PASP as the account servicing institution for the Open Banking Services. 
+
+        ### /transactions resource 
+         Unique and unambiguous identification of the PASP as the account servicing institution for the Open Banking Services. 
+
+        ### Notes:
+        Based on the value of the field **IdentificationType**, this entry may be :
+        * KSAOB.BICFI: The BIC/SWIFT Code        
+        * KSAOB.OTHER: The ID; A Country Code followed by a Bank Code (KSAOB 4 character code). The full list of PASP names and 6 digits IDs are as follows:        
+        
+        | PASP NAME|ID| 
+        |----------|--| 
+        |ALINMA BANK|SAINMA|
+        |AL RAJHI BANK|SARJHI|
+        |ARAB NATIONAL BANK|SAARNB|
+        |BANK AL BILAD|SAALBI|
+        |BANK AL-JAZIRA|SABJAZ|
+        |BANK MUSCAT|SABMUS|
+        |BANQUE SAUDI FRANSI|SABSFR|
+        |BNP PARIBAS SAUDI ARABIA|SABNPA|
+        |CREDIT SUISSE SAUDI ARABIA|SACRES|
+        |DEUTSCHE BANK AG, RIYADH BRANCH|SADEUT|
+        |EMIRATES NBD PJSC|SAEBIL|
+        |GULF INTERNATIONAL BANK B.S.C., RIYADH|SAGULF|
+        |INDUSTRIAL AND COMMERCIAL BANK OF CHINA RIYADH BRANCH, SA|SAICBK|
+        |ISLAMIC DEVELOPMENT BANK|SAISLD|
+        |J.P.MORGAN SAUDI ARABIA LIMITED|SAJPMG|
+        |J.P MORGAN CHASE BANK, N.A RIYADH|SACHAS|        
+        |MERILL LYNCH KINGDOM OF SAUDIA ARABIA|SAMLSA|
+        |NATIONAL BANK OF BAHRAIN|SANBOB|
+        |NATIONAL BANK OF KUWAIT|SANBOK|
+        |NATIONAL BANK OF PAKISTAN|SANBPA|
+        |SAUDI NATIONAL BANK|SANCBK|
+        |RIYAD BANK|SARIBL|
+        |SAUDI ARABIAN MONETARY AUTHORITY|SASAMA|
+        |SAUDI BRITISH BANK|SASABB|
+        |SAUDI INVESTMENT BANK|SASIBC|
+        |STANDARD CHARTERED CAPITAL (SAUDI ARABIA)|SASCBL|
+        |T.C. ZIRAAT BANKASI A.S|SATCZB|
+        |STC PAY|SASTCP|
+        |NEOLEAP|SANEOL|     
+      type: "string"
+      minLength: 1
+      maxLength: 35
+    OBExternalFinancialInstitutionIdentificationCode:
+      title: "OBExternalFinancialInstitutionIdentificationCode"
+      description: |
+        ### /accounts resource 
+        The name of the identification scheme for the PASP as the account services provider. Encoded with allowable value as published in an external list.
+      
+        ### /beneficiaries resource 
+        Refers to the Financial Institution that manages the account on behalf of the Beneficiary party, managing registration, booking of entries on the account, calculating balances on the account and providing information about the account. This is the servicing Financial Institution of the Beneficiary account.
+
+        ### /scheduled-payments resource 
+        Refers to the identification scheme for uniquely identifying the Creditor Agent.
+
+        ### /standing-orders resource 
+        Refers to the identification scheme for uniquely identifying the Creditor Agent.
+
+        ### /transactions resource 
+        Refers to the identification scheme for uniquely identifying the Creditor Agent.                
+      type: "string"
+      enum:
+        - "KSAOB.BICFI"
+        - "KSAOB.OTHER"
+    AccountIdentifiers:
+      type: "array"
+      items:
+        type: "object"
+        description: "Provides the details to identify an account."
+        required:
+          - "IdentificationType"
+          - "Identification"
+        properties:
+          IdentificationType:
+            $ref: "#/components/schemas/OBExternalAccountIdentificationCode"
+          Identification:
+            $ref: "#/components/schemas/Identification_0"
+          Name:
+            $ref: "#/components/schemas/Name_0"
+
+    OBBranchAndFinancialInstitutionIdentification5_0:
+      title: "OBBranchAndFinancialInstitutionIdentification5_0"
+      type: "object"
+      required:
+        - "IdentificationType"
+        - "Identification"
+      description: "Party that manages the account on behalf of the account owner, that is manages the registration and booking of entries on the account, calculates balances on the account and provides information about the account."
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalFinancialInstitutionIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/Identification_1"
+    CreationDateTime:
+      title: "CreationDateTime"
+      description: "Date and time at which the resource was created.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+      type: "string"
+      format: "date-time"    
+    OBConsentPermissions:
+      type: "array"
+      description: "Specifies the Open Banking account access data types. This is a list of the data groups being consented by the PSU, and requested for authorization with the PASP."
+      items:
+        type: "string"
+        enum:
+          - "ReadAccountsBasic"             # Ability to read basic account information
+          - "ReadAccountsDetail"            # Ability to read account identification details
+          - "ReadBalances"                  # Ability to read all balance information
+          - "ReadParty"                     # Required to access GET /accounts/{AccountId}/parties. Ability to read party information on the account owner. 
+          - "ReadPartyPSU"                  # Required to access GET /parties. Ability to read party information on the account owner.
+          - "ReadPartyPSUIdentity"          # Required to access GET /parties. Include the above and additional information to fulfil KYC information e.g. The account name, address, date of birth, national ID and residency number 
+          - "ReadBeneficiariesBasic"        # Ability to read basic beneficiary details
+          - "ReadBeneficiariesDetail"       # Ability to read account identification details for the beneficiary
+          - "ReadTransactionsBasic"         # Ability to read basic transaction information
+          - "ReadTransactionsDetail"        # Ability to read transaction data elements which may hold silent party details
+          - "ReadTransactionsCredits"       # Ability to read only credit transactions
+          - "ReadTransactionsDebits"        # Ability to read only debit transactions
+          - "ReadScheduledPaymentsBasic"    # Ability to read basic scheduled payment details
+          - "ReadScheduledPaymentsDetail"   # Ability to read additional scheduled payment details
+          - "ReadDirectDebits"              # Ability to read all direct debit information
+          - "ReadStandingOrdersBasic"       # Ability to read basic standing order Information
+          - "ReadStandingOrdersDetail"      # Ability to read additional Standing order Information
+      minItems: 1
+    OBReadBeneficiary:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"        
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"
+            - "AccountHolderName"
+            - "Beneficiary"
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            AccountHolderName:
+              $ref: "#/components/schemas/AccountHolderName"
+            AccountHolderShortName:
+              $ref: "#/components/schemas/AccountHolderShortName"
+            Beneficiary:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBBeneficiary"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBBeneficiary:
+      type: "object"
+      required:
+        - "BeneficiaryId"
+        - "BeneficiaryType"
+      properties:
+        BeneficiaryId:
+          $ref: "#/components/schemas/BeneficiaryId"
+        BeneficiaryType:
+          $ref: "#/components/schemas/OBBeneficiaryTypeCode"
+        Reference:
+          $ref: "#/components/schemas/Reference"
+        SupplementaryData:
+          $ref: "#/components/schemas/OBSupplementaryData"
+        CreditorAgent:
+          $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_0"
+        CreditorAccount:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/OBCashAccount5_0"
+      additionalProperties: false
+    OBReadAccount:
+      title: "OBReadAccount"
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "Account"
+          properties:
+            Account:
+              type: "array"
+              items:
+                allOf:
+                  - $ref: "#/components/schemas/OBAccountArrayId"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBReadAccountId:
+      title: "OBReadAccountId"
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"        
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"
+            - "Account"
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            Account:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBAccountId"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBActiveCurrencyAndAmount_SimpleType:
+      description: "A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217."
+      type: "string"
+      pattern: "^\\d{1,13}$|^\\d{1,13}\\.\\d{1,5}$"
+    OBCreditDebitCode_2:
+      description: "Indicates whether the balance of the account is a credit or a debit balance. Encoded with allowable values: 'Credit', 'Debit' Usage: A zero balance is considered to be a credit balance."
+      type: "string"
+      enum:
+        - "KSAOB.Credit"
+        - "KSAOB.Debit"
+    OBBalanceTypeCode:
+      description: |
+        The type of balance for the account. 
+        Encoded with allowable values of: 'ClosingAvailable' - end of day balance specifying the amount available to PSU 1 to withdraw or use. 
+        'ClosingBooked' - end of day balance including value of payments for cheques or payments which have not been cleared yet. 
+        'ClosingCleared' - end of day balance including value of payments for cheques or payments which have been cleared. 
+        'Expected' - intra day balance including value of payments for cheques or payments which have been cleared. 
+        'ForwardAvailable' - intraday balance specifying the amount available to PSU 1 to withdraw or use considering forward dated payments or other intraday payments or cheques that will be clearing to the account. 
+        'Information' - TBC. 
+        'InterimAvailable' - intraday balance specifying the amount available to PSU 1 to withdraw or use (most probably real-time.'InterimBooked' - intraday balance including value of payments for cheques or payments which have not been cleared yet. 
+        'InterimCleared' - intraday balance including value of payments for cheques or payments which have been cleared (probably real-time). 
+        'OpeningAvailable' - start of day balance specifying the amount available to PSU 1 to withdraw or use. 
+        'OpeningBooked' - start of day balance including value of payments for cheques or payments which have not been cleared yet. 
+        'OpeningCleared' - start of day balance including value of payments for cheques or payments which have been cleared.
+        'PreviouslyClosedBooked' -TBC. 
+        Note: PASPs support different types for presenting account balance, so this list is used to support different PASP systmes in KSA.
+      type: "string"
+      enum:
+        - "KSAOB.ClosingAvailable"
+        - "KSAOB.ClosingBooked"
+        - "KSAOB.ClosingCleared"
+        - "KSAOB.Expected"
+        - "KSAOB.ForwardAvailable"
+        - "KSAOB.Information"
+        - "KSAOB.InterimAvailable"
+        - "KSAOB.InterimBooked"
+        - "KSAOB.InterimCleared"
+        - "KSAOB.OpeningAvailable"
+        - "KSAOB.OpeningBooked"
+        - "KSAOB.OpeningCleared"
+        - "KSAOB.PreviouslyClosedBooked"
+    ProprietaryBankTransactionCodeStructure1:
+      type: "object"
+      required:
+        - "Code"
+      description: |
+        #### ProprietaryBankTransactionCode is mandatory when the BankTransactionCode (with code specifying the Domain, Family and SubFamily as per External Codes ISO20022) is absent.        
+        Set of elements to fully identify a proprietary bank transaction code
+      properties:
+        Code:
+          description: "Proprietary bank transaction code to identify the underlying transaction."
+          type: "string"
+          minLength: 1
+          maxLength: 35
+        Issuer:
+          description: "Identification of the issuer of the proprietary bank transaction code."
+          type: "string"
+          minLength: 1
+          maxLength: 35
+      additionalProperties: false   
+    Name_0:
+      title: "Name_0"
+      description: "The account name is the name or names of the PSU 1 account owner(s) represented at an account level, as displayed by the PASP's online channels. Note: The account name is not the product name or the nickname of the account."
+      type: "string"
+      minLength: 1
+      maxLength: 350
+    Name_1:
+      description: |
+        #### Beneficiary
+        Name by which an agent is known and which is usually used to identify that agent
+        
+        #### Creditor agent
+        Name by which the Financial institution(FI) which is the creditor is known and which is usually used to identify that FI.
+
+        #### DebtorAgent
+        Name by which an financial institution of the debtor is known and which is usually used to identify that financial institution.
+      
+      type: "string"
+      minLength: 1
+      maxLength: 140     
+    Name_2:
+      description: "This is the name of the regulated beneficiary entity that initiates the Direct Debit collection."
+      type: "string"
+      minLength: 1
+      maxLength: 70
+    OBBranchAndFinancialInstitutionIdentification6_1:
+      type: "object"
+      description: |
+          Financial institution servicing an account for the creditor in case the transaction is a Debit transaction.
+          These are optional because there are situations where this cannot be populated for the following Debit transactions
+          - Cash withdrawals (no creditor account/agent)
+          - Cheques and DDs may not have this information at least during the process of clearing and sometimes (e.g. for agency banks) may not be reconciled ever
+          - Some corner situations with international payments 
+          - For card payments (instead merchant information fields should be populated) 
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalFinancialInstitutionIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/Identification_1"
+        Name:
+          $ref: "#/components/schemas/Name_1"
+        PostalAddress:
+          $ref: "#/components/schemas/OBPostalAddress6"
+    PostCode:
+      description: "Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail."
+      type: "string"
+      minLength: 1
+      maxLength: 16                    
+    OBPostalAddress6:
+      type: "object"
+      description: "Postal Address specifies Information that locate and identify a specific address, as defined by postal services."
+      properties:
+        AddressType:
+          $ref: "#/components/schemas/OBAddressTypeCode"
+        ShortAddress:
+          $ref: "#/components/schemas/ShortAddress"
+        BuildingNumber:
+          $ref: "#/components/schemas/BuildingNumber"
+        UnitNumber:
+          $ref: "#/components/schemas/OBUnitNumber"
+        StreetName:
+          $ref: "#/components/schemas/StreetName"
+        SecondaryNumber:
+          $ref: "#/components/schemas/SecondaryNumber"
+        District:
+          $ref: "#/components/schemas/District"
+        PostalCode:
+          $ref: "#/components/schemas/PostCode"
+        City:
+          $ref: "#/components/schemas/City"          
+        Country:
+          $ref: "#/components/schemas/OBCountry"          
+    OBMerchantDetails1:
+      type: "object"
+      description: |
+        Details of the Merchant involved in the transaction.
+        Merchant Details are specified only for those merchant categories that are generally expected to originate retail financial transactions
+      properties:
+        MerchantId:
+          description: "MerchantId"
+          type: "integer"
+          minLength: 8
+          maxLength: 20
+        MerchantName:
+          description: "Name by which the merchant is known."
+          type: "string"
+          minLength: 1
+          maxLength: 350
+        MerchantCategoryCode:
+          description: |
+            Category code values are used to enable the classification of merchants into specific categories based on the type of business, trade or services supplied. 
+            Category code conforms to ISO 18245, related to the type of services or goods the merchant provides for the transaction."
+          type: "string"
+          minLength: 3
+          maxLength: 4
+    OBTransactionCashBalance:
+      type: "object"
+      required:
+        - "CreditDebitIndicator"
+        - "Type"
+        - "Amount"
+      description: "Set of elements used to define the balance as a numerical representation of the net increases and decreases in an account after a transaction entry is applied to the account."
+      properties:
+        CreditDebitIndicator:
+          $ref: "#/components/schemas/OBCreditDebitCode_2"
+        Type:
+          $ref: "#/components/schemas/OBBalanceTypeCode"
+        Amount:
+          type: "object"
+          required:
+            - "Amount"
+            - "Currency"
+          description: "Amount of money of the cash balance after a transaction entry is applied to the account.."
+          properties:
+            Amount:
+              $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+            Currency:
+              $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+      additionalProperties: false
+    OBBankTransactionCodeStructure:
+      type: "object"
+      description: |
+        #### BankTransactionCode is mandatory (with code specifying the Domain, Family and SubFamily as per External Codes ISO20022) when the ProprietaryBankTransactionCode is absent.        
+        Specifies the domain, the family and the sub-family of the bank transaction code, in a structured and hierarchical format.
+        Usage: If a specific family or sub-family code cannot be provided, the generic family code defined for the domain or the generic sub-family code defined for the family should be provided.
+        [https://www.iso20022.org/sites/default/files/2022-05/BTC_Codification_31May2022.xls](https://www.iso20022.org/sites/default/files/2022-05/BTC_Codification_31May2022.xls)        
+      properties:
+        Domain:
+          description: "Specifies the Domain"
+          type: "string"
+        DomainCode:
+          description: "Specifies the Domain Code."
+          type: "string"
+        Family:
+          description: "Specifies the Family"
+          type: "string"
+        FamilyCode:
+          description: "Specifies the Family Code"
+          type: "string"
+        SubFamily:
+          description: "Specifies the Sub-Family"
+          type: "string"
+        SubFamilyCode:
+          description: "Specifies the Sub-family Code"
+          type: "string"          
+    OBCurrencyExchange:
+      type: "object"
+      required:
+        - "SourceCurrency"
+        - "TargetCurrency"
+        - "UnitCurrency"
+        - "ExchangeRate"
+        - "ContractIdentification"
+        - "QuotationDate"
+        - "InstructedAmount"
+      description: "Set of elements used to provide details on the currency exchange."
+      properties:
+        SourceCurrency:
+          description: "Currency from which an amount is to be converted in a currency conversion. A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\"."
+          type: "string"
+          pattern: "^[A-Z]{3,3}$"
+        TargetCurrency:
+          description: "Currency into which an amount is to be converted in a currency conversion.A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\"."
+          type: "string"
+          pattern: "^[A-Z]{3,3}$"
+        UnitCurrency:
+          description: "Currency in which the rate of exchange is expressed in a currency exchange. In the example 1SAR = xxxCUR, the unit currency is SAR.A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\"."
+          type: "string"
+          pattern: "^[A-Z]{3,3}$"
+        ExchangeRate:
+          description: "Factor used to convert an amount from one currency into another. This reflects the price at which one currency was bought with another currency.\nUsage: ExchangeRate expresses the ratio between UnitCurrency and QuotedCurrency (ExchangeRate = UnitCurrency/QuotedCurrency)."
+          type: "number"
+        ContractIdentification:
+          description: "Unique identification to unambiguously identify the foreign exchange contract."
+          type: "string"
+          minLength: 1
+          maxLength: 35
+        QuotationDate:
+          description: "Date and time at which an exchange rate is quoted.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+          type: "string"
+          format: "date-time"
+        InstructedAmount:
+          type: "object"
+          required:
+            - "Amount"
+            - "Currency"
+          description: "Amount of money to be moved between the debtor and creditor, before deduction of charges, expressed in the currency as ordered by the initiating party."
+          properties:
+            Amount:
+              $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+            Currency:
+              $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBReadParty2:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"
+            - "Party"
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            Party:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBPartyIdentityAssurance"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBReadParty3:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "Party"
+          properties:
+            Party:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBPartyIdentityAssurance"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBPartyIdentityAssurance: 
+      description: |
+        Party Identity Assurance (Response) Schema 
+        Based on the [OpenID Connect for Identity Assurance 1.0 Specification](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html)
+      type: "object"
+      required:
+        - "PartyId"
+        - "PartyType"
+        - "AccountRole"
+        - "VerifiedClaims"
+      properties:
+        PartyId:
+          $ref: "#/components/schemas/PartyId"
+        PartyNumber:
+          $ref: "#/components/schemas/PartyNumber"
+        PartyType:
+          $ref: "#/components/schemas/OBExternalPartyTypeCode"      
+        AccountRole:
+          $ref: "#/components/schemas/OBExternalAccountRoleCode"
+        VerifiedClaims:
+          type: "array"
+          description: "Container object containing entries for the trust framework and the evidence used to verify the PSU 1 claims"
+          items:
+            $ref: "#/components/schemas/VerifiedClaim"
+    VerifiedClaim:
+      description: |
+        Verified Claims
+        Container object containing entries for the trust framework and the evidence used to verify the PSU 1 claims
+        [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-representing-verified-claim](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-representing-verified-claim)
+      type: "object"
+      required:
+        - "Verification"
+        - "Claims"
+      properties:
+        Verification:
+          description: |
+            Verification
+            [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-verification-element](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-verification-element)
+          type: "object"
+          required:
+            - "TrustFramework"
+          properties:
+            TrustFramework:
+              type: "string"
+              enum: [SA_IAM, SA_AML, SA_MyAddress, SA_MobileTelecoms]
+              description: |            
+                Identifies the trust framework used for PSU 1 verification. This consists of a set of rules and standards and sets out requirements so that organisations know what ‘good’ identity verification looks like.
+                Trust Frameworks: [https://bitbucket.org/openid/ekyc-ida/wiki/identifiers](https://bitbucket.org/openid/ekyc-ida/wiki/identifiers)
+                SA_IAM, SA_AML, SA_MYAddress, SA_MobileTelecoms are to be confirmed as the finalised list from SAMA
+            AssuranceLevel:
+              type: "string"
+              description: |
+                Determines the assurance level associated with the PSU1 in the respective VerifiedClaims. The value range depends on the respective TrustFramework value.
+                Assurance Level: [https://bitbucket.org/openid/ekyc-ida/wiki/identifiers](https://bitbucket.org/openid/ekyc-ida/wiki/identifiers)
+            AssuranceProcess:
+              type: "object"
+              description: |
+                Determines the assurance process that was followed. This reflects how the evidence meets the requirements of the TrustFramework and AssuranceLevel. The factual record of the evidence and the procedures followed are recorded in the evidence element, this element is used to cross reference the evidence to the AssuranceLevel followed
+                OpenID Connect for Identity Assurance 1.0: [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-verification-element](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-verification-element)                
+              properties:
+                Policy:
+                  type: "string"
+                  description: "Representing the standard or policy that was followed."
+                Procedure:
+                  type: "string"
+                  description: "Representing a specific procedure from the policy that was followed."
+                AssuranceDetails:
+                  type: "array"
+                  description: "Denoting the details about how the evidence complies with the policy"
+                  items:
+                    type: "object"
+                    properties:
+                      AssuranceType:
+                        description: "String denoting which part of the assurance_process the evidence fulfils"
+                        type: "string"
+                      AssuranceClassification:
+                        description: "String reflecting how the evidence has been classified or measured as required by the TrustFramework"
+                        type: "string"
+                      EvidenceRef:
+                        description: "Evidence being referred to"
+                        type: "array"
+                        items:
+                          type: "object"
+                          required:
+                            - "Txn"
+                          properties:
+                            Txn:
+                              description: "Identifier referring to the txn used in the CheckDetails."
+                              type: "string"
+                            EvidenceMetadata:
+                              description: "Object indicating any meta data about the evidence that is required by the AssuranceProcess in order to demonstrate compliance with the TrustFramework. It has the following sub-elements"
+                              type: "object"
+                              properties:
+                                EvidenceClassification:
+                                  type: "string"
+                                  description: "String indicating how the process demonstrated by the check_details for the evidence is classified by the AssuranceProcess in order to demonstrate compliance with the TrustFramework."
+            Time:
+              type: "string"
+              format: "date-time"
+              description: |
+                Representing the date and time when the identity verification process took place. All dates in the JSON payloads are represented in ISO 8601 date-time format. All date-time fields in responses must include the timezone. An example is below: 2017-04-05T10:43:07+00:00
+            VerificationProcess:
+              type: "string"
+              description: |
+                Unique reference to the identity verification process as performed by the OP. Used for identifying and retrieving details in case of disputes or audits. Presence of this element might be required for certain trust frameworks.
+            Evidence:
+              description: |
+                The type of evidence allowed for providing PSU 1 verification.
+                OpenID Connect for Identity Assurance 1.0: [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-element](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-element)                
+              type: "array"
+              items:
+                anyOf:
+                  - $ref: "#/components/schemas/OBPartyIdentityEvidenceTypeDocument"
+                  - $ref: "#/components/schemas/OBPartyIdentityEvidenceTypeElectronicRecord"
+        Claims:
+          description: |
+            Standard Claims: 
+            [https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims)
+            IdentityAssurance Claims:
+            [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-claims](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-claims)
+          type: "object"
+          properties:
+            Sub:
+              description: |
+                Subject - Identifier for the PSU 1 at the Issuer.
+              type: "string"
+            Name:
+              description: |
+                The PSU 1 name claim that has been verified by the PASP
+              type: "string"
+            GivenName:
+              description: |
+                The PSU 1 given name claim that has been verified by the PASP.
+                Given name (also called forename) is used to differentiate from the surname or family name. Also called first name to distinguish it from the family name. Some people have two or more given names or acquired names that they use before the family name.                
+              type: "string"
+            FamilyName:
+              description: |
+                The PSU 1 family name claim that has been verified by the PASP.
+              type: "string"
+            MiddleName:
+              description: |
+                The PSU 1 middle name claim that has been verified by the PASP.
+              type: "string"
+            Nickname:
+              description: |
+                The PSU 1 nickname claim that has been verified by the PASP.
+              type: "string"
+            PreferredUsername:
+              description: |
+                The PSU 1 preferred username claim that has been verified by the PASP.
+              type: "string"
+            Profile:
+              description: |
+                The PSU 1 profile id claim that has been verified by the PASP.
+              type: "string"
+            Picture:
+              description: |
+                The PSU 1 photo claim that has been verified by the PASP.
+              type: "string"
+            Website:
+              description: |
+                The PSU 1 website claim that has been verified by the PASP.
+              type: "string"
+            Email:
+              description: |
+                The PSU 1 Email claim that has been verified by the PASP.
+              type: "string"
+            EmailVerified:
+              description: |
+                The PSU 1 Email Verified claim that has been verified by the PASP.
+              type: "boolean"
+            Gender:
+              description: |
+                The PSU 1 Gender claim that has been verified by the PASP.
+              type: "string"
+            BirthDate:
+              description: |
+                The PSU 1 date of birth claim that has been verified by the PASP.
+              type: "string"
+              format: "date"
+            ZoneInfo:
+              description: |
+                The PSU 1 timezone claim that has been verified by the PASP.
+              type: "string"
+            Locale: 
+              description: |
+                The PSU 1 locale claim that has been verified by the PASP.
+              type: "string"
+            PhoneNumber: 
+              description: |
+                The PSU 1 phone number claim that has been verified by the PASP.
+              type: "string"
+            PhoneNumberVerified:
+              description: |
+                The PSU 1 verified phone number claim that has been verified by the PASP.
+              type: "boolean"
+            Salutation:
+              description: |
+                The PSU 1 Salutation claim that has been verified by the PASP.
+              type: "string"
+            Title:
+              description: |
+                The PSU 1 Title claim that has been verified by the PASP.
+              type: "string"
+            MSISDN:
+              description: |
+                The PSU 1 MSISDN claim that has been verified by the PASP.
+                The MSISDN uniquely identifies a mobile subscriber across the globe. It is the phone number digits along with other protocol information.
+              type: "string"
+            BirthFamilyName:
+              description: |
+                The PSU 1 birth family name claim that has been verified by the PASP.
+              type: "string"
+            BirthGivenName:
+              description: |
+                The PSU 1 birth given name claim that has been verified by the PASP.
+              type: "string"
+            BirthMiddleName:
+              description: |
+                The PSU 1 birth middle name claim that has been verified by the PASP.
+              type: "string"
+            AlsoKnownAs:
+              description: |
+                The PSU 1 other name claim that has been verified by the PASP.
+              type: "string"
+            PlaceOfBirth:
+              description: |
+                Place of Birth Claim
+              type: "object"
+              properties:
+                Country: 
+                  # The PSU 1 country of birth claim that has been verified by the PASP.
+                  $ref: "#/components/schemas/CountryCode"
+                Region:
+                  description: |
+                    The PSU 1 region of birth claim that has been verified by the PASP.
+                  type: "string"
+                Locality:
+                  description: |
+                    The PSU 1 locality (village, town, city etc) of birth claim that has been verified by the PASP.
+                  type: "string"
+            Nationalities:
+              type: "array"
+              description: |
+                The PSU 1 nationality claim that has been verified by the PASP.
+                This is an array which may contain multiple entries
+              items: 
+                type: string
+            Address: 
+              $ref: "#/components/schemas/OBPartyIdentityAddressClaim"
+            UpdatedAt:
+              description: |
+                Time the PSU1's information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
+              type: "number"
+    OBPartyIdentityEvidenceAttachments:
+      description: |
+        Attachments
+        [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-attachments](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-attachments)
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          Desc:
+            description: |
+              Description of the document. This can be the filename or just an explanation of the content.
+            type: "string"
+          ContentType:
+            description: |
+              Content (MIME) type of the document            
+            type: "string"
+          Content:
+            description: |
+              Base64 encoded representation of the document content
+            type: "string"
+          Txn:
+            description: |
+              Identifier referring to the transaction
+            type: "string"
+    OBPartyIdentityEvidenceTypeElectronicRecord:
+      description: |
+        Electronic Record Evidence
+        [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-type-electronic_re](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-type-electronic_re)
+      type: "object"
+      properties:
+        Type:
+          description: "The type of evidence allowed for providing PSU 1 verification."
+          type: "string"
+          enum: [electronic_record]
+        CheckDetails:
+          $ref: "#/components/schemas/OBPartyIdentityCheckDetails"
+        Time:
+          #Date and time at which the the evidence was verified by the PASP
+          $ref: "#/components/schemas/ISODateTime"
+        Record:
+          description: |
+            Representing the record used to perform the identity verification.
+          type: "object"
+          properties:
+            Type: 
+              description: |
+                String denoting the type of electronic record
+                "[https://bitbucket.org/openid/ekyc-ida/wiki/identifiers](https://bitbucket.org/openid/ekyc-ida/wiki/identifiers)"
+              type: "string"
+              enum: [bank_account, mortgage_account, loan_account]
+            PersonalNumber:
+              description: |
+                String representing an identifier that is assigned to the PSU1 and is not limited to being used in one record, for example a national identification number, personal identity number, citizen number, social security number, driver number, account number, customer number, licensee number, etc.
+              type: "string"
+            CalendarType:
+              $ref: "#/components/schemas/OBPartyCalendarType"
+            CreatedAt:              
+              # The time the record was created 
+              $ref: "#/components/schemas/ISODateTime"
+            DateOfExpiry:
+              # The date the evidence will expire 
+              $ref: "#/components/schemas/ISODateTime"
+            Source:
+              type: "object"
+              description: |
+                 Information about the source of this record
+              properties:
+                Name: 
+                  description: |
+                    Designation of the source of the electronic_record
+                  type: "string"
+                Address:
+                  # All elements of the OpenID Connect address Claim
+                  $ref: "#/components/schemas/OBPartyIdentityAddressClaim"
+                CountryCode: 
+                  description: |
+                    String denoting the country or supranational organization that issued the evidence as ISO 3166
+                  type: "string"
+                Jurisdiction:
+                  description: |
+                     String containing the name of the region(s) / state(s) / province(s) / municipality(ies) that source has jurisdiction over (if it's not common knowledge or derivable from the address)
+                  type: "string"
+        Attachments:
+          $ref: "#/components/schemas/OBPartyIdentityEvidenceAttachments"
+    OBPartyCalendarType:
+      description: |
+        The type of calendar used for the date of issuance and date of expiry in the document evidence
+        Allowable values:
+        "Islamic Calendar"
+        "Gregorian Calendar"
+        Both calendars must follow YYYY-MM-DD
+      type: "string"
+      enum: [KSAOB.IslamicCalendar, KSAOB.GregorianCalendar]
+
+    OBPartyIdentityEvidenceTypeDocument:
+      description: |
+        Document Evidence
+        [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-type-document](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-type-document)
+      type: "object"
+      properties:
+        Type:
+          description: "The type of evidence allowed for providing PSU 1 verification."
+          type: "string"
+          enum: [document]
+        CheckDetails:
+          $ref: "#/components/schemas/OBPartyIdentityCheckDetails"
+        Verifier:
+          type: "object"
+          properties:
+            Organization:
+              type: "string"
+            Txn:
+              type: "string"
+        Time:
+          # Date and time at which the the evidence was verified by the PASP
+          $ref: "#/components/schemas/ISODateTime"
+        DocumentDetails:
+          type: "object"
+          properties:
+            Type: 
+              description: |
+                The type of document used for evidence checking by the PASP
+                [https://bitbucket.org/openid/ekyc-ida/wiki/identifiers](https://bitbucket.org/openid/ekyc-ida/wiki/identifiers)"
+              type: "string"
+              enum: [passport, driving_permit, idcard, residence_permit]
+            DocumentNumber:
+              description: "The unique id number in the evidence used for verification checking"
+              type: "string"
+            PersonalNumber:
+              description: |
+                An identifier that is assigned to the End-User and is not limited to being used in one document, for example a national identification number, personal identity number, citizen number, social security number, driver number, account number, customer number, licensee number, etc
+              type: "string"
+            SerialNumber:
+              description: |
+                An identifier/number that identifies the document irrespective of any personalization information (this usually only applies to physical artifacts and is present before personalization).
+              type: "string"
+            CalendarType:
+              $ref: "#/components/schemas/OBPartyCalendarType"
+            DateOfIssuance:
+              # The issuing date of the document used for verification checking.
+              $ref: "#/components/schemas/ISODateTime"
+            DateOfExpiry:
+              # The expiry date of the document used for verification checking
+              $ref: "#/components/schemas/ISODateTime"
+            Issuer:
+              type: "object"
+              properties:
+                Name: 
+                  description: |
+                    Designation of the issuer of the document.
+                  type: "string"
+                Address:
+                  # All elements of the OpenID Connect address Claim 
+                  $ref: "#/components/schemas/OBPartyIdentityAddressClaim"
+                CountryCode: 
+                  description: |
+                    String denoting the country or supranational organization that issued the document as ISO 3166
+                  type: "string"
+                Jurisdiction:
+                  description: |
+                    String containing the name of the region(s)/state(s)/province(s)/municipality(ies) that issuer has jurisdiction over (if this information is not common knowledge or derivable from the address)
+                  type: "string"
+        Attachments:
+          $ref: "#/components/schemas/OBPartyIdentityEvidenceAttachments"
+    OBPartyIdentityAddressClaim:
+      description: |
+        Address object as per OpenID Connect Core 1.0 Address Claim
+        [https://openid.net/specs/openid-connect-core-1_0.html#AddressClaim](https://openid.net/specs/openid-connect-core-1_0.html#AddressClaim)
+      type: "object"
+      properties:
+        Formatted:
+          description: |
+            The PSU 1 address number and street claim that has been verified by the PASP.
+          type: "string"
+        StreetAddress:
+          description: |
+            The PSU 1 address street claim that has been verified by the PASP.
+          type: "string"
+        Locality:
+          description: |
+            The PSU 1 address locality (village, town, city etc) claim that has been verified by the PASP.
+          type: "string"
+        Region:
+          description: |
+            The PSU 1 address region claim that has been verified by the PASP.
+          type: "string"
+        PostalCode:
+          # The PSU 1 address postcode claim that has been verified by the PASP.
+          $ref: "#/components/schemas/PostalCode"
+        Country:
+          $ref: "#/components/schemas/CountryCode"    
+    OBPartyIdentityCheckDetails:
+      description: |
+        Identifes the method used by PASP for checking the PSU 1 evidence for verification.
+        Representing the checks done in relation to the evidence
+        OpenID Connect for Identity Assurance 1.0: [https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-element](https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html#name-evidence-element)                
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          CheckMethod:
+            description: |
+              Identifes the method used by PASP for checking the PSU 1 evidence for verification
+              String representing the check done, this includes processes such as checking the authenticity of the document, or verifying the user's biometric against an identity document.
+            type: "string"
+          Organization:
+            description: |
+              String denoting the legal entity that performed the check. This SHOULD be included if the OP did not perform the check itself
+            type: "string"
+          Txn:
+            description: |
+              Identifier referring to the identity verification transaction. The OP MUST ensure that this is present when EvidenceRef element is used. The OP MUST ensure that the transaction identifier can be resolved into transaction details during an audit
+            type: "string"
+          Time:
+            $ref: "#/components/schemas/ISODateTime"
+    OBReadTransaction:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          $ref: "#/components/schemas/OBReadDataTransaction"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTransactions"
+      additionalProperties: false
+    OBReadDataTransaction:
+      type: "object"
+      required:
+        - "AccountId"
+        - "Transaction"
+      properties:
+        AccountId:
+          $ref: "#/components/schemas/AccountId"
+        Transaction:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/OBTransaction"
+      additionalProperties: false
+    OBTransactionCardInstrument:
+      type: "object"
+      required:
+        - "CardSchemeName"
+        - "InstrumentType"
+      description: "Set of elements to describe the card instrument used in the transaction."
+      properties:
+        CardSchemeName:
+          description: "Name of the card scheme."
+          type: "string"
+          enum:
+            - "KSAOB.AmericanExpress"
+            - "KSAOB.Diners"
+            - "KSAOB.Discover"
+            - "KSAOB.GCC"
+            - "KSAOB.MasterCard"
+            - "KSAOB.UPI"
+            - "KSAOB.VISA"
+            - "KSAOB.mada"
+        InstrumentType:
+          description: "The card instrument type."
+          type: "string"
+          enum:
+            - "KSAOB.ApplePay"
+            - "KSAOB.madaPay"
+            - "KSAOB.Contactless"
+            - "KSAOB.MagStripe"
+            - "KSAOB.Chip"
+            - "KSAOB.Other"
+        Name:
+          description: "Name of the cardholder using the card instrument."
+          type: "string"
+          minLength: 1
+          maxLength: 70
+        Identification:
+          description: "Identification assigned by an institution to identify the card instrument used in the transaction. This identification is known by the account owner, and MUST be masked."
+          type: "string"
+          minLength: 1
+          maxLength: 16
+          example: "1234********4321"          
+      additionalProperties: false
+    OBSupplementaryData:
+      type: "object"
+      properties: { }
+      additionalProperties: true
+      description: "Additional information that can not be captured in the structured fields and/or any other specific block."
+    OBCashAccount6_1:
+      type: "object"
+      description: |
+        Account details of the Debtor in case the transaction is a Credit transaction.
+
+        These are optional because there are situations where this cannot be populated for the following Credit transactions
+        - cash deposits (no creditor account/agent)
+        - cheques and DDs may not have this information at least during the process of clearing and sometimes (e.g. for agency banks) may not be reconciled ever
+        - some corner situations with international payments 
+        - for refunds with card payments  (instead merchant information fields should be populated)
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalAccountIdentificationCode"
+        Identification:        
+          $ref: "#/components/schemas/OBDebtorAccountCreditorAccountSchemeIdentifier"
+        Name:
+          $ref: "#/components/schemas/Name_0"
+    OBBranchAndFinancialInstitutionIdentification6_2:
+      type: "object"
+      description: |
+        Financial institution servicing an account for the Debtor in case the transaction is a Credit transaction.
+        These are optional because there are situations where this cannot be populated for the following Credit transactions
+        - cash deposits (no creditor account/agent)
+        - cheques and DDs may not have this information at least during the process of clearing and sometimes (e.g. for agency banks) may not be reconciled ever
+        - some corner situations with international payments 
+        - for refunds with card payments  (instead merchant information fields should be populated)
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalFinancialInstitutionIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/Identification_1"
+        Name:
+          $ref: "#/components/schemas/Name_1"
+        PostalAddress:
+          $ref: "#/components/schemas/OBPostalAddress6"      
+    OBCashAccount6_0:
+      type: "object"
+      description: |
+        Creditor account details available in case the transaction is a Debit transaction.
+        These are optional because there are situations where this cannot be populated for the following Debit transactions:
+        - cash withdrawals (no creditor account/agent)
+        - cheques and DDs may not have this information at least during the process of clearing and sometimes (e.g. for agency banks) may not be reconciled ever
+        - some corner situations with international payments 
+        - for card payments (instead merchant information fields should be populated)       
+      properties:
+        IdentificationType:
+          $ref: "#/components/schemas/OBExternalAccountIdentificationCode"
+        Identification:
+          $ref: "#/components/schemas/OBDebtorAccountCreditorAccountSchemeIdentifier"
+        Name:
+          $ref: "#/components/schemas/Name_0"
+    OBTransaction:
+      type: "object"
+      description: "Provides further details on an entry in the report."
+      required:
+        - "TransactionId"
+        - "CreditDebitIndicator"
+        - "Status"
+        - "BookingDateTime"
+        - "Amount"
+        - "TransactionDateTime"
+        - "TransactionType"
+        - "SubTransactionType"
+        - "PaymentModes"
+      properties:
+        TransactionId:
+          $ref: "#/components/schemas/TransactionId"
+        TransactionDateTime:
+          $ref: "#/components/schemas/TransactionDateTime"
+        LocalTimeZone:
+          $ref: "#/components/schemas/LocalTimeZone"
+        StatementReference:
+          $ref: "#/components/schemas/StatementReference"
+        TransactionReference:
+          $ref: "#/components/schemas/TransactionReference"
+        TransactionType:
+          $ref: "#/components/schemas/TransactionType"
+        SubTransactionType:
+          $ref: "#/components/schemas/SubTransactionType"  
+        TerminalId:
+          $ref: "#/components/schemas/TerminalId"
+        Flags:
+          type: "array"
+          items:        
+            $ref: "#/components/schemas/Flags"                                    
+        PaymentModes: 
+          $ref: "#/components/schemas/PaymentMode"  
+        CreditDebitIndicator:
+          $ref: "#/components/schemas/OBCreditDebitCode_1"
+        Status:
+          $ref: "#/components/schemas/OBEntryStatusCode"
+        TransactionMutability:
+          $ref: "#/components/schemas/OBTransactionMutabilityCode"
+        BookingDateTime:
+          $ref: "#/components/schemas/BookingDateTime"
+        ValueDateTime:
+          $ref: "#/components/schemas/ValueDateTime"
+        TransactionInformation:
+          $ref: "#/components/schemas/TransactionInformation"
+        Amount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_5"
+        ChargeAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_6"
+        ChargeAmountVat:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_8"
+        CurrencyExchange:
+          $ref: "#/components/schemas/OBCurrencyExchange"
+        BankTransactionCode:
+          $ref: "#/components/schemas/OBBankTransactionCodeStructure"
+        ProprietaryBankTransactionCode:
+          $ref: "#/components/schemas/ProprietaryBankTransactionCodeStructure1"
+        Balance:
+          $ref: "#/components/schemas/OBTransactionCashBalance"
+        MerchantDetails:
+          $ref: "#/components/schemas/OBMerchantDetails1"
+        CreditorAgent:
+          $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_1"
+        CreditorAccount:
+          $ref: "#/components/schemas/OBCashAccount6_0"
+        DebtorAgent:
+          $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification6_2"
+        DebtorAccount:
+          $ref: "#/components/schemas/OBCashAccount6_1"
+        CardInstrument:
+          $ref: "#/components/schemas/OBTransactionCardInstrument"
+        SupplementaryData:
+          $ref: "#/components/schemas/OBSupplementaryData"
+        BillDetails:
+          $ref: "#/components/schemas/BillDetails"        
+      additionalProperties: false                      
+    OBAccountId:
+      title: "OBAccount" 
+      type: "object"
+      description: "Unambiguous identification of the account to which credit and debit entries are made. The following fields are optional only for accounts that are switched:\n\n  * Data.Currency  \n  * Data.AccountType  \n  * Data.AccountSubType\n\nFor all other accounts, the fields must be populated by the PASP."
+      properties:
+        Status:
+          $ref: "#/components/schemas/OBAccountStatusCode"
+        StatusUpdateDateTime:
+          $ref: "#/components/schemas/StatusUpdateDateTime"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_0"
+        AccountType:
+          $ref: "#/components/schemas/OBExternalAccountTypeCode"
+        AccountSubType:
+          $ref: "#/components/schemas/OBExternalAccountSubTypeCode"
+        Description:
+          $ref: "#/components/schemas/Description_0"
+        Nickname:
+          $ref: "#/components/schemas/Nickname"
+        OpeningDate:
+          $ref: "#/components/schemas/OpeningDate"
+        MaturityDate:
+          $ref: "#/components/schemas/MaturityDate"
+        AccountIdentifiers:
+          $ref: "#/components/schemas/AccountIdentifiers"         
+        Servicer:
+          $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification5_0"
+      additionalProperties: false      
+    OBAccountArrayId:
+      title: "OBAccount" 
+      type: "object"
+      description: "Unambiguous identification of the account to which credit and debit entries are made. The following fields are optional only for accounts that are switched:\n\n  * Data.Currency  \n  * Data.AccountType  \n  * Data.AccountSubType\n\nFor all other accounts, the fields must be populated by the PASP."
+      required:
+        - "AccountId"
+      properties:
+        AccountId:
+          $ref: "#/components/schemas/AccountId"
+        Status:
+          $ref: "#/components/schemas/OBAccountStatusCode"
+        StatusUpdateDateTime:
+          $ref: "#/components/schemas/StatusUpdateDateTime"
+        Currency:
+          $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_0"
+        AccountType:
+          $ref: "#/components/schemas/OBExternalAccountTypeCode"
+        AccountSubType:
+          $ref: "#/components/schemas/OBExternalAccountSubTypeCode"
+        Description:
+          $ref: "#/components/schemas/Description_0"
+        Nickname:
+          $ref: "#/components/schemas/Nickname"
+        OpeningDate:
+          $ref: "#/components/schemas/OpeningDate"
+        MaturityDate:
+          $ref: "#/components/schemas/MaturityDate"
+        AccountIdentifiers:
+          $ref: "#/components/schemas/AccountIdentifiers"         
+        Servicer:
+          $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification5_0"
+      additionalProperties: false      
+    OBReadConsent:
+      title: "OBReadConsent"
+      type: "object"
+      required:
+        - "Data"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "Permissions"
+          properties:
+            Permissions:
+              $ref: "#/components/schemas/OBConsentPermissions"
+            ExpirationDateTime:
+              description: "Specified date and time the permissions will expire.\nIf this is not populated, the permissions will be open ended.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+              type: "string"
+              format: "date-time"
+            TransactionFromDateTime:
+              description: "Specified start date and time for the transaction query period.\nIf this is not populated, the start date will be open ended, and data will be returned from the earliest available transaction.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+              type: "string"
+              format: "date-time"
+            TransactionToDateTime:
+              description: "Specified end date and time for the transaction query period.\nIf this is not populated, the end date will be open ended, and data will be returned to the latest available transaction.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+              type: "string"
+              format: "date-time"
+            AccountType:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBExternalAccountTypeCode"
+            AccountSubType:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBExternalAccountSubTypeCode"
+            OnBehalfOf:
+               $ref: "#/components/schemas/OnBehalfOf"
+            Purpose:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Purpose"
+        Subscription:
+          $ref: "#/components/schemas/EventNotification"              
+      additionalProperties: false
+    OBPatchConsentSigned: 
+      allOf:
+        - $ref: '#/components/schemas/Jwt'
+        - type: object
+          properties:
+            message:
+              $ref: '#/components/schemas/OBPatchConsent'
+          additionalProperties: false
+          required: [message]              
+    OBPatchConsent:
+      title: "OBPatchConsent"
+      type: "object"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "Status"
+          properties:
+            Status:
+              $ref: "#/components/schemas/ConsentStatus"
+        Subscription:
+          $ref: "#/components/schemas/EventNotification"              
+      additionalProperties: false
+    OBReadConsentResponse:
+      title: "OBReadConsentResponse"
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "ConsentId"
+            - "CreationDateTime"
+            - "Status"
+            - "StatusUpdateDateTime"
+            - "Permissions"
+          properties:
+            ConsentId:
+              description: "Unique identification as assigned to identify the account access consent resource."
+              type: "string"
+              minLength: 1
+              maxLength: 128
+            CreationDateTime:
+              $ref: "#/components/schemas/CreationDateTime"
+            Status:
+              $ref: "#/components/schemas/ConsentStatus"
+            StatusUpdateDateTime:
+              $ref: "#/components/schemas/StatusUpdateDateTime"
+            Permissions:
+              $ref: "#/components/schemas/OBConsentPermissions"
+            ExpirationDateTime:
+              description: "Specified date and time the permissions will expire.\nIf this is not populated, the permissions will be open ended.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+              type: "string"
+              format: "date-time"
+            TransactionFromDateTime:
+              description: "Specified start date and time for the transaction query period.\nIf this is not populated, the start date will be open ended, and data will be returned from the earliest available transaction.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+              type: "string"
+              format: "date-time"
+            TransactionToDateTime:
+              description: "Specified end date and time for the transaction query period.\nIf this is not populated, the end date will be open ended, and data will be returned to the latest available transaction.All dates in the JSON payloads are represented in ISO 8601 date-time format. \nAll date-time fields in responses must include the timezone. An example is below:\n2017-04-05T10:43:07+00:00"
+              type: "string"
+              format: "date-time"
+            AccountType:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBExternalAccountTypeCode"
+            AccountSubType:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBExternalAccountSubTypeCode"
+            OnBehalfOf:
+               $ref: "#/components/schemas/OnBehalfOf"
+            Purpose:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Purpose"
+        Subscription:
+          $ref: "#/components/schemas/EventNotification"
+        Links:
+          $ref: "#/components/schemas/LinksSelf"
+        Meta:
+          $ref: "#/components/schemas/Meta"
+      additionalProperties: false          
+    OBReadBalance:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"
+            - "Balance"
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            Balance:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBBalance"
+              minItems: 1
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBBalance:
+      type: "object"
+      description: "Set of elements used to define the balance details."
+      required:
+        - "CreditDebitIndicator"
+        - "Type"
+        - "DateTime"
+        - "Amount"
+      properties:
+        CreditDebitIndicator:
+          $ref: "#/components/schemas/OBCreditDebitCode_2"
+        Type:
+          $ref: "#/components/schemas/OBBalanceTypeCode"
+        DateTime:
+          description: "Indicates the date (and time) that the account balance was checked.All dates in the JSON payloads are represented in ISO 8601 date-time format. All date-time fields in responses must include the timezone. An example is below: 2017-04-05T10:43:07+00:00"
+          type: "string"
+          format: "date-time"
+        Amount:
+          type: "object"
+          required:
+            - "Amount"
+            - "Currency"
+          description: "Amount of money of the cash balance."
+          properties:
+            Amount:
+              $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+            Currency:
+              $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+        CreditLine:
+          type: "array"
+          items:
+            type: "object"
+            description: "Set of elements used to provide details on the credit line."
+            required:
+              - "Included"
+            properties:
+              Included:
+                description: "Boolean flag to Indicate whether or not a credit line is included in the balance of the account. Usage: If not present, credit line is not included in the balance amount of the account."
+                type: "boolean"
+              Type:
+                description: "Type of credit line provided to the account. Encoded with allowable values of: Available, Credit, Emergency, Pre-Agreed, Temporary. Note: PASPs support different types of credit lines on accounts, so this list is used to support different PASP systmes in KSA."
+                type: "string"
+                enum:
+                  - "KSAOB.Available"
+                  - "KSAOB.Credit"
+                  - "KSAOB.Emergency"
+                  - "KSAOB.Pre-Agreed"
+                  - "KSAOB.Temporary"
+              Amount:
+                type: "object"
+                required:
+                  - "Amount"
+                  - "Currency"
+                description: "Amount of money of the credit line."
+                properties:
+                  Amount:
+                    $ref: "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+                  Currency:
+                    $ref: "#/components/schemas/ActiveOrHistoricCurrencyCode_1"
+    OBReadScheduledPayment:
+      type: "object"
+      required:
+        - "Data"
+        - "Links"
+        - "Meta"
+      properties:
+        Data:
+          type: "object"
+          required:
+            - "AccountId"
+            - "AccountHolderName"
+            - "ScheduledPayment"
+          properties:
+            AccountId:
+              $ref: "#/components/schemas/AccountId"
+            AccountHolderName:
+              $ref: "#/components/schemas/AccountHolderName"
+            AccountHolderShortName:
+              $ref: "#/components/schemas/AccountHolderShortName"
+            ScheduledPayment:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/OBScheduledPayment"
+        Links:
+          $ref: "#/components/schemas/Links"
+        Meta:
+          $ref: "#/components/schemas/MetaTotalPages"
+      additionalProperties: false
+    OBScheduledPayment:
+      type: "object"
+      required:
+        - "ScheduledPaymentId"
+        - "ScheduledPaymentDateTime"
+        - "ScheduledType"
+        - "InstructedAmount"
+      properties:
+        ScheduledPaymentId:
+          $ref: "#/components/schemas/ScheduledPaymentId"
+        ScheduledType:
+          $ref: "#/components/schemas/OBExternalScheduleTypeCode"
+        ScheduledPaymentDateTime:
+          $ref: "#/components/schemas/ScheduledPaymentDateTime"
+        CreditorReference:
+          $ref: "#/components/schemas/Reference"
+        DebtorReference:
+          $ref: "#/components/schemas/DebtorReference"
+        InstructedAmount:
+          $ref: "#/components/schemas/OBActiveOrHistoricCurrencyAndAmount_1"
+        CreditorAgent:
+          $ref: "#/components/schemas/OBBranchAndFinancialInstitutionIdentification5_1"
+        CreditorAccount:
+          $ref: "#/components/schemas/OBCashAccount5_1"
+      additionalProperties: false      
+    OBDebtorAccountCreditorAccountSchemeIdentifier:
+      description: |
+        Identification assigned by an institution to identify an account. 
+        This identification is known by the account owner."
+      type: "string"
+      enum:
+        -  "KSAOB.AccountNumber"
+        -  "KSAOB.CommercialRegistrationNumber"
+        -  "KSAOB.Email"
+        -  "KSAOB.MobileNumber"
+        -  "KSAOB.NationalID"
+        -  "KSAOB.IqamaNumber"
+        -  "KSAOB.PassportNumber"            
+    TerminalId:
+      description: "ID of the Terminal if the transaction was initiated from a retail POS"
+      type: "integer"
+      minLength: 8
+      maxLength: 20
+    BillDetails:
+      description : "Bill Details"
+      type: "object"
+      properties:
+        BillerID:
+          description: "This should be 'BillerCode' as per SP-SADAD specifications. It is a unique biller identifier within SADAD that could be used by the end-user to refer to a specific SADAD biller (e.g. STC biller code is 001, water services biller code is 015, etc.)"
+          type: "number"
+        BillNumber:
+          description: "Unique bill identifier within the account."
+          type: "string"
+        BillPaymentType:
+          description: |
+            Indicates whether the bill could be a One-off payment, Recurring payment, Postpaid, Pre-paid, etc. Example values:
+            - "KSAOB.Post-Paid"
+            - "KSAOB.AdvancePaymentForRoaming"
+            - "KSAOB.Recharge"
+            - "KSAOB.Renewal"
+            - "KSAOB.RoamingDeposit"
+            - "KSAOB.One-Off"
+            - "KSAOB.RecurringPayment"
+          type: "string"
+          x-namespaced-enum:
+            - "KSAOB.Post-Paid"
+            - "KSAOB.AdvancePaymentForRoaming"
+            - "KSAOB.Recharge"
+            - "KSAOB.Renewal"
+            - "KSAOB.RoamingDeposit"
+            - "KSAOB.One-Off"
+            - "KSAOB.RecurringPayment"
+    ConsentStatus:
+      description: "Specifies the status of consent resource in code form."
+      type: "string"
+      enum:
+        - "Authorized"
+        - "AwaitingAuthorization"
+        - "Rejected"
+        - "Revoked"
+        - "Expired"
+  ############################################
+  # PARAMETERS
+  ############################################
+  parameters:
+    #################################################
+    # HEADER PARAMETERS
+    #################################################
+    authorization:
+      in: "header"
+      name: "authorization"
+      required: true
+      description: "An authorization Token as per https://tools.ietf.org/html/rfc6750"
+      schema:
+        type: "string"
+    x-customer-user-agent:
+      in: "header"
+      name: "x-customer-user-agent"
+      description: "Indicates the user-agent that the PSU is using."
+      required: false
+      schema:
+        type: "string"
+    x-fapi-customer-ip-address:
+      in: "header"
+      name: "x-fapi-customer-ip-address"
+      required: false
+      description: "The PSU's IP address if the PSU is currently logged in with the TPP."
+      schema:
+        type: "string"
+    x-fapi-auth-date:
+      in: "header"
+      name: "x-fapi-auth-date"
+      required: false
+      description: "The time when the PSU last logged in with the TPP. \nAll dates in the HTTP headers are represented as RFC 7231 Full Dates. An example is below: \nSun, 10 Sep 2017 19:43:31 UTC"
+      schema:
+        type: "string"
+        pattern: "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \\d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \\d{4} \\d{2}:\\d{2}:\\d{2} (GMT|UTC)$"
+    x-fapi-interaction-id:
+      in: "header"
+      name: "x-fapi-interaction-id"
+      required: false
+      description: "An RFC4122 UID used as a correlation id."
+      schema:
+        type: "string"
+    #################################################
+    # PATH PARAMETERS
+    #################################################
+    ConsentId:
+      name: "ConsentId"
+      in: "path"
+      description: "ConsentId"
+      required: true
+      schema:
+        type: "string"
+    AccountId:
+      name: "AccountId"
+      in: "path"
+      description: "AccountId"
+      required: true
+      schema:
+        type: "string"
+    #################################################
+    # QUERY PARAMETERS
+    #################################################
+    FromBookingDateTimeParam:
+      in: "query"
+      name: "fromBookingDateTime"
+      description: "The UTC ISO 8601 Date Time to filter transactions FROM\nNB Time component is optional - set to 00:00:00 for just Date.\nIf the Date Time contains a timezone, the PASP must ignore the timezone component."
+      schema:
+        type: "string"
+        format: "date-time"
+    ToBookingDateTimeParam:
+      in: "query"
+      name: "toBookingDateTime"
+      description: "The UTC ISO 8601 Date Time to filter transactions TO\nNB Time component is optional - set to 00:00:00 for just Date.\nIf the Date Time contains a timezone, the PASP must ignore the timezone component."
+      schema:
+        type: "string"
+        format: "date-time"
+  ############################################
+  # SECURITY SCHEMES
+  ############################################
+  securitySchemes:
+    TPPOAuth2Security:
+      type: oauth2
+      description: "TPP confidential client authorization with the PASP to stage a consent. **Please refer to [OpenID FAPI Security Profile 1.0 -Part 2 Advanced](https://openid.net/specs/openid-financial-api-part-2-1_0.html#authorization-server) - 5.2.2 point 14 - shall authenticate the confidential client using one of the following methods private_key_jwt and [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication) 9. Client Authentication private_key_jwt**"      
+      flows:
+        clientCredentials:
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            openid: Activates OpenID Connect Support
+            accounts: Ability to read Accounts Information
+    PSUOAuth2Security:
+      type: oauth2
+      description: "[OAuth2 PAR flow](https://datatracker.ietf.org/doc/html/rfc9126), it is required when the PSU needs to perform SCA with the PASP when a TPP wants to access an PASP resource owned by the PSU. **Please refer to [OpenID FAPI Security Profile 1.0 -Part 2 Advanced](https://openid.net/specs/openid-financial-api-part-2-1_0.html#authorization-server) - 5.2.2 point 14 - shall authenticate the confidential client using one of the following methods private_key_jwt and [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication) 9. Client Authentication private_key_jwt**"
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            openid: Activates OpenID Connect Support
+            "accounts:<consentId>": Ability to read Accounts Information. This is a parameterized scope with the ConsentId
+    PASPWebhookSecurity:
+      type: http
+      description: "The PASP generates a Self Signed JWT Authorization Token for Client Authentication with the TPP. **Please refer to Self-Signed JWT Authorization Token Specification in the KSA Standard API User Guide**"
+      scheme: bearer
+      bearerFormat: JWT

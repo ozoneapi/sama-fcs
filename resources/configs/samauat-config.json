@@ -1,0 +1,56 @@
+{
+  "signing_private": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIEowIBAAKCAQEA8A0U+HBQpSSpEGRXXhtc1R0x2Kr7gaaMn52ZHFCZa070omA5\r\nx/XiHofPH3Yr5zF3dhod1upP71YpPAF4hHYWtSEW3UvdGjMqIGsSIPMdvIxrZxTR\r\nzUm2CHLYv/T4w2AOMJ/6a5a2l+i6U46ZhS8KFZb1Lbb8stwLaZZ3dz6ERDofxE7F\r\nBeK+4fImVRDmiyyRTkIQQ+R9Rci4H3ZPJo+e5MRuLbyUvWBvYAX7isyW6ZkW3+6V\r\nEfMpeSYDiVvPs5EsE8cmp66e8Lp6yS3a1DZ9qLgTyl9oHlqK+IcMc3Fvh24tzm9N\r\noAyZeS5KlrwinOUAE6UQAsrVsfWAKHMnIbLkmwIDAQABAoIBAQCZR1Enndfwyyrk\r\n251p6sDpF743Yl48GBPc663Thaeg/IZ6lETw6JFc+00HAtbfxhdIoz6Ad5dY9MRZ\r\nm3rP4fN37swBvCpPS3JPxu6JeZN4TJVb+dBJbBK+7E54q7yYTGJjLBOj1VV8RE+N\r\ngRWIFFQ1GvItIZXTw2vKHRjlXFbqlJIPECuJ74I13SDAgY7c5I3cpeiCeglA/6yM\r\n48reQhw3d+bcbf29ieZetGqA/DYRNAjn/yf3rZM5O+zY/Od66ausub9iRSmKa50R\r\nMff08bAkPxW6rJkUripEhJa3XF9pkU3kr/jQVbKHzfT7JCZrm0oLwuw+u21olbbm\r\niS2r67fxAoGBAPr3MIY8jBpCW4bPSoF+pPO2Hii7Bt9EhInGoTq+mDTthDz9plKr\r\nWVI13fWziWWHRZsV1oKEwhC7yye4Mh9sfl9EUpcv8VUqkIRj5ihlb+UFnMDYXZQs\r\nDrFg4oFPWR5JaxX7gPmjdDLLNgeYDIXkGpkCwWSTNODrwEDIeHb8+KhDAoGBAPTd\r\n15DaN2Zkx08JWto+5h1PACPy7Y+lm6CvqZE3LFiQZWcsRtFlBsQKeAhaS6KALEHf\r\n6KMtSkh4Qa8+y+dyUsq3O8PBDGhCn718SB/SGI7sQ8qkbDaQu4aSyUvRnjT0hiVc\r\nsTqze06V7+mflQjD0PHBi5VajkP73sLbeSRhxZjJAoGAcoVuPTNP84OoZIIfS6xQ\r\n9W17obaG0kdf+8cKN9ZVeoGQQIy24y6R2fP+z2oYHp514uk6M+EE9cHcWMmzBafq\r\nmuqAjcEw7V45CFDV7EUtpGLFPzL8sOrR4ZuGgN+GmU2DckqMdl5iXfNhOmHmBQss\r\nH/qj6ZNLJAAwgN96KUIS7iUCgYAD0YnRCnYetKefBehSyvRPtLGt3dXyjYSVxueA\r\nCjo4z1elej1IeqjWWctxZecUC6elB1bbZJNp+eYcU4BehZvg6WaXMOV+ortW+x8s\r\nz9vuLqUH/fRqDWu/N37IHea3sLB+2Kky3yWnHhN1szVhw5v4iSoiFB1v1fetVjrX\r\nZGbucQKBgCaUzlSDTJltK532PeiTox/2qfyr97EsI1ClhqqOoKLoHJYXuje4Ccr+\r\njeSzA1w/c/PUUebQStMIWfPVKy85El/ObhZ8BhW7/e/vuuE250rqJYwzgq7TASWc\r\nLdRAIgQlDSo1p/QnsIwIJBnLi52uL8utOa50qeJfRDknHCtcNFXh\r\n-----END RSA PRIVATE KEY-----\r\n",
+  "signing_public": "-----BEGIN CERTIFICATE-----\nMIIFLTCCBBWgAwIBAgIEWcY46TANBgkqhkiG9w0BAQsFADBTMQswCQYDVQQGEwJH\nQjEUMBIGA1UEChMLT3BlbkJhbmtpbmcxLjAsBgNVBAMTJU9wZW5CYW5raW5nIFBy\nZS1Qcm9kdWN0aW9uIElzc3VpbmcgQ0EwHhcNMjEwNzIzMDk0MjA5WhcNMjIwODIz\nMTAxMjA5WjBhMQswCQYDVQQGEwJHQjEUMBIGA1UEChMLT3BlbkJhbmtpbmcxGzAZ\nBgNVBAsTEjAwMTU4MDAwMDEwNDFSSEFBWTEfMB0GA1UEAxMWSFF1WlBJdDNpcGto\nMzNVeHl0b3gxRTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOGrIgsw\nieQU3SZbYnEHBD7BwD+0AECOZojs+T8fuxb6mYFrjNohiv8sMuI9b+2RnYscYs5Q\ntNXPiiJzHmDQluhHGG21yzTmuiSB6qdP7p93P9nykkEgwcx8Bj98zMr+tkx64fDW\nEZ+ZV7ynxQLVh5WBBRTqZDpe4VwZ9Zi9/M7JlHbNx+lnWWx1/LklepydzyzCjdcz\nQ084CgAsEbDG+G8p2/9Xa09kflNRJqXIJa7LW6ch+hsZbY2lLq3stxJcbOxxt5GZ\nkmpJZzyliVQ5m1r59nnU3q4sOlmhWILune2cGoV2zXrJ5iHgJUfWojw+VZA0TnVO\nYSQX2/hlG8qyFQMCAwEAAaOCAfkwggH1MA4GA1UdDwEB/wQEAwIGwDAVBgNVHSUE\nDjAMBgorBgEEAYI3CgMMMIHgBgNVHSAEgdgwgdUwgdIGCysGAQQBqHWBBgFkMIHC\nMCoGCCsGAQUFBwIBFh5odHRwOi8vb2IudHJ1c3Rpcy5jb20vcG9saWNpZXMwgZMG\nCCsGAQUFBwICMIGGDIGDVXNlIG9mIHRoaXMgQ2VydGlmaWNhdGUgY29uc3RpdHV0\nZXMgYWNjZXB0YW5jZSBvZiB0aGUgT3BlbkJhbmtpbmcgUm9vdCBDQSBDZXJ0aWZp\nY2F0aW9uIFBvbGljaWVzIGFuZCBDZXJ0aWZpY2F0ZSBQcmFjdGljZSBTdGF0ZW1l\nbnQwbQYIKwYBBQUHAQEEYTBfMCYGCCsGAQUFBzABhhpodHRwOi8vb2IudHJ1c3Rp\ncy5jb20vb2NzcDA1BggrBgEFBQcwAoYpaHR0cDovL29iLnRydXN0aXMuY29tL29i\nX3BwX2lzc3VpbmdjYS5jcnQwOgYDVR0fBDMwMTAvoC2gK4YpaHR0cDovL29iLnRy\ndXN0aXMuY29tL29iX3BwX2lzc3VpbmdjYS5jcmwwHwYDVR0jBBgwFoAUUHORxiFy\n03f0/gASBoFceXluP1AwHQYDVR0OBBYEFGo6GcEYYe0534LrsM27EIXfvr8zMA0G\nCSqGSIb3DQEBCwUAA4IBAQCfZ9nax4FP3F05mwbAb0BU3HJnWX63WxSKfRMOkwu/\ngVIxMuD+tL+7g10VduPL3BHqB6baL7hsX0NlQ3FypNZ7sxoAH8GnVyYebhzE7sNU\nSA/4haLZHFTc5Vq/Y477nMYxG077RKwfBaPYDHNvmf5tl8qpubOZY4h78G4FYj/k\nzyJu5xqQAl+jC6jA7I4IbwO9npwh/1b3jPDiisWBy2o8hNv5sdvpAmnFk97BUHS4\nkTR7JBvJJsbRRZ5I7EmiJY7rWWjA63CBa5agVZJPYXjv3pQp+tArqpSxywabsxU8\nqj4GvATJ5afpbolq/kIB5zuvDImI3UxPCR3t1Y0a+xbg\n-----END CERTIFICATE-----\n",
+  "transport_private": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIEowIBAAKCAQEA8A0U+HBQpSSpEGRXXhtc1R0x2Kr7gaaMn52ZHFCZa070omA5\r\nx/XiHofPH3Yr5zF3dhod1upP71YpPAF4hHYWtSEW3UvdGjMqIGsSIPMdvIxrZxTR\r\nzUm2CHLYv/T4w2AOMJ/6a5a2l+i6U46ZhS8KFZb1Lbb8stwLaZZ3dz6ERDofxE7F\r\nBeK+4fImVRDmiyyRTkIQQ+R9Rci4H3ZPJo+e5MRuLbyUvWBvYAX7isyW6ZkW3+6V\r\nEfMpeSYDiVvPs5EsE8cmp66e8Lp6yS3a1DZ9qLgTyl9oHlqK+IcMc3Fvh24tzm9N\r\noAyZeS5KlrwinOUAE6UQAsrVsfWAKHMnIbLkmwIDAQABAoIBAQCZR1Enndfwyyrk\r\n251p6sDpF743Yl48GBPc663Thaeg/IZ6lETw6JFc+00HAtbfxhdIoz6Ad5dY9MRZ\r\nm3rP4fN37swBvCpPS3JPxu6JeZN4TJVb+dBJbBK+7E54q7yYTGJjLBOj1VV8RE+N\r\ngRWIFFQ1GvItIZXTw2vKHRjlXFbqlJIPECuJ74I13SDAgY7c5I3cpeiCeglA/6yM\r\n48reQhw3d+bcbf29ieZetGqA/DYRNAjn/yf3rZM5O+zY/Od66ausub9iRSmKa50R\r\nMff08bAkPxW6rJkUripEhJa3XF9pkU3kr/jQVbKHzfT7JCZrm0oLwuw+u21olbbm\r\niS2r67fxAoGBAPr3MIY8jBpCW4bPSoF+pPO2Hii7Bt9EhInGoTq+mDTthDz9plKr\r\nWVI13fWziWWHRZsV1oKEwhC7yye4Mh9sfl9EUpcv8VUqkIRj5ihlb+UFnMDYXZQs\r\nDrFg4oFPWR5JaxX7gPmjdDLLNgeYDIXkGpkCwWSTNODrwEDIeHb8+KhDAoGBAPTd\r\n15DaN2Zkx08JWto+5h1PACPy7Y+lm6CvqZE3LFiQZWcsRtFlBsQKeAhaS6KALEHf\r\n6KMtSkh4Qa8+y+dyUsq3O8PBDGhCn718SB/SGI7sQ8qkbDaQu4aSyUvRnjT0hiVc\r\nsTqze06V7+mflQjD0PHBi5VajkP73sLbeSRhxZjJAoGAcoVuPTNP84OoZIIfS6xQ\r\n9W17obaG0kdf+8cKN9ZVeoGQQIy24y6R2fP+z2oYHp514uk6M+EE9cHcWMmzBafq\r\nmuqAjcEw7V45CFDV7EUtpGLFPzL8sOrR4ZuGgN+GmU2DckqMdl5iXfNhOmHmBQss\r\nH/qj6ZNLJAAwgN96KUIS7iUCgYAD0YnRCnYetKefBehSyvRPtLGt3dXyjYSVxueA\r\nCjo4z1elej1IeqjWWctxZecUC6elB1bbZJNp+eYcU4BehZvg6WaXMOV+ortW+x8s\r\nz9vuLqUH/fRqDWu/N37IHea3sLB+2Kky3yWnHhN1szVhw5v4iSoiFB1v1fetVjrX\r\nZGbucQKBgCaUzlSDTJltK532PeiTox/2qfyr97EsI1ClhqqOoKLoHJYXuje4Ccr+\r\njeSzA1w/c/PUUebQStMIWfPVKy85El/ObhZ8BhW7/e/vuuE250rqJYwzgq7TASWc\r\nLdRAIgQlDSo1p/QnsIwIJBnLi52uL8utOa50qeJfRDknHCtcNFXh\r\n-----END RSA PRIVATE KEY-----\r\n",
+  "transport_public": "-----BEGIN CERTIFICATE-----\r\nMIIDbTCCAlWgAwIBAgIBATANBgkqhkiG9w0BAQUFADB6MQswCQYDVQQGEwJTQTEN\r\nMAsGA1UEChMEU0FNQTEtMCsGA1UEAxMkMDQ5OGQ3MjYtMTJlNy00ZjE3LTk5NDYt\r\nZjJhMzQyY2FjZjA0MS0wKwYDVQQLEyQ0ZDUxYmYzNy00OWVkLTRhZWYtYjZjYS04\r\nMTg0ZWNmYzM4NzQwHhcNMjIxMTE4MTAyODM0WhcNMjMxMTE4MTAyODM0WjB6MQsw\r\nCQYDVQQGEwJTQTENMAsGA1UEChMEU0FNQTEtMCsGA1UEAxMkMDQ5OGQ3MjYtMTJl\r\nNy00ZjE3LTk5NDYtZjJhMzQyY2FjZjA0MS0wKwYDVQQLEyQ0ZDUxYmYzNy00OWVk\r\nLTRhZWYtYjZjYS04MTg0ZWNmYzM4NzQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\r\nggEKAoIBAQDwDRT4cFClJKkQZFdeG1zVHTHYqvuBpoyfnZkcUJlrTvSiYDnH9eIe\r\nh88fdivnMXd2Gh3W6k/vVik8AXiEdha1IRbdS90aMyogaxIg8x28jGtnFNHNSbYI\r\ncti/9PjDYA4wn/prlraX6LpTjpmFLwoVlvUttvyy3Atplnd3PoREOh/ETsUF4r7h\r\n8iZVEOaLLJFOQhBD5H1FyLgfdk8mj57kxG4tvJS9YG9gBfuKzJbpmRbf7pUR8yl5\r\nJgOJW8+zkSwTxyanrp7wunrJLdrUNn2ouBPKX2geWor4hwxzcW+Hbi3Ob02gDJl5\r\nLkqWvCKc5QATpRACytWx9YAocychsuSbAgMBAAEwDQYJKoZIhvcNAQEFBQADggEB\r\nADMIbar0UfpTJfPFRkfaIV/Id0ZgiYwH/UeLn8ck45/kltB1urfl9HcJCXDYO4jb\r\nOxli3KBWgMigV/WrSPHu7hDHCBF7DKxmVDrvUbFlEPpIvLfyAACX5lnbnh2+dXsU\r\nngwWGXg/sEfDljY7u+M4Y4UVteNDq1jd882almIySo47S4pk6QzjoqTgk8araMMe\r\n8HrsFH6aRkF1ZCwpjG7hUtcJaJZgCBhLNTlTaKbTLFH3sQYSIEoPaRx+wo9N/XQh\r\nrbxKVuwXgu2txoLChpwUGC4wMKJg1zFdo7h2cw+kDTi5Qf19yZTBQRwX+olmn0Fa\r\n03zhWZvyazSuptbbj3CyXRo=\r\n-----END CERTIFICATE-----\r\n",
+  "tpp_signature_kid": "oIK6MRunc94ioZYd9g3X0OvwZytAw0VhlgcdmH5WC-8",
+  "tpp_signature_issuer": "0015800001041RHAAY/HQuZPIt3ipkh33Uxytox1E",
+  "tpp_signature_tan": "openbanking.sa",
+  "transaction_from_date": "2016-01-01T10:40:00+02:00",
+  "transaction_to_date": "2025-12-31T10:40:00+02:00",
+  "client_id": "41009136-8af5-4c7c-9bf9-2f69802be664",
+  "client_secret": "33b700b4-7f66-421b-9bc5-ffb40a370884",
+  "token_endpoint": "https://as1.uat.openbanking.sa/token",
+  "response_type": "code id_token",
+  "token_endpoint_auth_method": "client_secret_basic",
+  "request_object_signing_alg": "none",
+  "authorization_endpoint": "https://auth1.uat.openbanking.sa/auth",
+  "resource_base_url": "https://rs1.uat.openbanking.sa",
+  "x_fapi_financial_id": "123",
+  "send_x_fapi_customer_ip_address": false,
+  "x_fapi_customer_ip_address": "",
+  "issuer": "https://auth1.uat.openbanking.sa",
+  "redirect_url": "https://127.0.0.1:8443/conformancesuite/callback",
+  "resource_ids": {
+    "account_ids": [
+      {
+        "account_id": "100004000000000000000002"
+      }
+    ],
+    "statement_ids": [
+      {
+        "statement_id": "0"
+      }
+    ]
+  },
+  "creditor_account": {
+    "scheme_name": "UK.OBIE.SortCodeAccountNumber",
+    "identification": "70000170000002",
+    "name": "Mr. Roberto Rastapopoulos & Ivan Sakharine & mits"
+  },
+  "international_creditor_account": {
+    "scheme_name": "UK.OBIE.SortCodeAccountNumber",
+    "identification": "70000170000002",
+    "name": "Mr. Roberto Rastapopoulos & Ivan Sakharine & mits"
+  },
+  "instructed_amount": {
+    "value": "1.00",
+    "currency": "GBP"
+  },
+  "currency_of_transfer": "USD",
+  "acr_values_supported": [],
+  "payment_frequency": "EvryDay",
+  "first_payment_date_time": "2022-12-01T00:00:00+01:00",
+  "requested_execution_date_time": "2022-12-01T00:00:00+01:00",
+  "conditional_properties": []
+}

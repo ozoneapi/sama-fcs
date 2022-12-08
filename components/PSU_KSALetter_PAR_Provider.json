@@ -1,0 +1,169 @@
+{
+    "id": "comacctp02",
+    "name": "accounts.PSUConsentProvider",
+    "description": "Provides PSU Consent Access Tokens for Letter of Gurantee API",
+    "inputParameters": {
+      "client_id": "",
+      "x-fapi-financial-id": "",
+      "basic_authentication": "",
+      "token_endpoint": "",
+      "resource_server": "",
+      "permission_list": ""
+    },
+    "outputParameters": {
+      "consent_id": ""
+    },
+    "testcases": [
+      {
+        "@id": "#compPsuConsent01",
+        "name": "ClientCredential Grant",
+        "input": {
+          "method": "POST",
+          "endpoint": "$token_endpoint",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "accept": "application/json"
+          },
+          "formData": {
+            "grant_type": "client_credentials",
+            "scope": "lg openid"
+          }
+        },
+        "context": {
+          "baseurl": ""
+        },
+        "expect": {
+          "status-code": 200,
+          "contextPut": {
+            "matches": [
+              {
+                "name": "client_access_token",
+                "description": "Access Token",
+                "json": "access_token"
+              },
+              {
+                "name": "letter_ccg_token",
+                "description": "Access Token",
+                "json": "access_token"
+              }
+
+            ]
+          }
+        }
+      },
+      {
+        "@id": "#compPsuConsent02",
+        "name": "PostAccount Request",
+        "input": {
+          "method": "POST",
+          "endpoint": "$letter_access_consent_endpoint",
+          "headers": {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "x-fapi-interaction-id": "c4405450-febe-11e8-80a5-0fcebb157400",
+            "x-fapi-financial-id": "$x-fapi-financial-id",
+            "authorization": "Bearer $client_access_token"
+          },
+          "bodyData": "$lg-consentdata"
+        },
+        "context": {
+          "baseurl": "$resource_server"
+        },
+        "expect": {
+          "status-code": 201,
+          "schema-validation": true,
+          "matches": [
+            {
+              "description": "Check we get Status:AwaitingAuthorisation",
+              "json": "message.Data.Status",
+              "value": "AwaitingAuthorization"
+            }
+          ],
+          "contextPut": {
+            "matches": [
+              {
+                "name": "post-letter-consent-id",
+                "description": "gets the consentid from PostAccountRequest ",
+                "json": "message.Data.ConsentId"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "@id": "parAuth",
+        "name": "Ozone Headless Consent Flow",
+        "input": {
+          "generation": {
+            "strategy": "parJwt"
+          },
+          "method": "POST",
+          "endpoint": "$par_authorization_endpoint",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "accept": "application/json"
+          },
+          "formData": {
+            "request": "$par_jwt"
+          },
+          "claims": {
+            "aud": "$issuer",
+            "iss": "$client_id",
+            "scope": "openid lg:$post-letter-consent-id",
+            "redirect_url": "$redirect_url",
+            "consentId": "$post-letter-consent-id",
+            "responseType": "$responseType",
+            "state": "$token_name",
+            "nonce": "true",
+            "exp": "true"
+          }
+        },
+        "context": {
+          "baseurl": "$par_authorization_endpoint"
+        },
+        "expect": {
+          "status-code": 201,
+          "contextPut": {
+            "matches": [
+              {
+                "name": "par_request_uri",
+                "description": "PAR request uri",
+                "json": "request_uri"
+              }
+            ]  
+          }
+        }
+      },
+      {
+        "@id": "#ParConsentGenerate04",
+        "name": "Par Consent Generation",
+        "input": {
+          "method": "GET",
+          "endpoint": "?clientid",
+          "generation": {
+            "strategy": "parConsentUrl"
+          },
+          "claims": {
+            "request_uri": "$par_request_uri",
+            "aud": "$issuer",
+            "iss": "$client_id",
+            "scope": "openid lg:$post-letter-consent-id",
+            "redirect_url": "$redirect_url",
+            "consentId": "$post-letter-consent-id",
+            "responseType": "$responseType",
+            "state": "$token_name",
+            "nonce": "true",
+            "exp": "true"
+          }
+        },
+        "context": {
+          "baseurl": "$authorisation_endpoint"
+        },
+        "do_not_call_endpoint": true,
+        "expect": {
+          "status-code": -1
+        }
+      }    
+    ]
+  }
+  

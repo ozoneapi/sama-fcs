@@ -1,0 +1,182 @@
+package main
+
+import (
+	"crypto/tls"
+	"fmt"
+	"os"
+	"strings"
+	"time"
+
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/discovery"
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/generation"
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/httpclient"
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/testlist"
+
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/model"
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/server"
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/tracer"
+	"bitbucket.org/ozoneapi/sama-conformance-suite/pkg/version"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	prefixed "github.com/x-cray/logrus-prefixed-formatter"
+)
+
+const (
+	certFile = "./certs/conformancesuite_cert.pem"
+	keyFile  = "./certs/conformancesuite_key.pem"
+)
+
+var (
+	logger  = logrus.StandardLogger()
+	rootCmd = &cobra.Command{
+		Use:   "fcs_server",
+		Short: "Functional Conformance Suite Server",
+		Long: `A Fast and Flexible tool that enables implementers to test
+interfaces and data endpoints against the Functional API
+standard built with love by Open Banking and friends in Go.
+
+Complete documentation is available at https://bitbucket.org/ozoneapi/sama-conformance-suite`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			logger := logger.WithField("app", "server")
+			ver := version.NewGitHub(version.GitHubAPIRepository)
+
+			printVersionInfo(ver, logger)
+
+			validatorEngine := discovery.NewFuncValidator(model.NewConditionalityChecker())
+			testGenerator := generation.NewGenerator()
+			tlsValidator := discovery.NewStdTLSValidator(tls.VersionTLS11)
+			journey := server.NewJourney(logger, testGenerator, validatorEngine, tlsValidator, viper.GetBool("dynres"))
+
+			echoServer := server.NewServer(journey, logger, ver)
+			address := fmt.Sprintf("%s:%d", server.ListenHost, viper.GetInt("port"))
+			logger.Infof("listening on https://%s", address)
+			return echoServer.StartTLS(address, certFile, keyFile)
+		},
+	}
+)
+
+func printVersionInfo(ver version.GitHub, logger *logrus.Entry) {
+	// v, err := ver.VersionFormatter(version.FullVersion)
+	// if err != nil {
+	// 	logger.Error(errors.Wrap(err, "version.VersionFormatter()"))
+	// 	return
+	// }
+	// msg, _, err := ver.UpdateWarningVersion(v)
+	// if err != nil {
+	// 	logger.Error(errors.Wrap(err, "version.UpdateWarningVersion()"))
+	// 	return
+	// }
+	//logger.Info(msg)
+}
+
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, "\n")
+		os.Exit(1)
+	}
+}
+
+func init() {
+	rootCmd.PersistentFlags().String("log_level", "INFO", "Log level")
+	rootCmd.PersistentFlags().Bool("log_tracer", false, "Enable tracer logging")
+	rootCmd.PersistentFlags().Bool("log_http_trace", false, "Enable HTTP logging")
+	rootCmd.PersistentFlags().Int("port", 8443, "Server port")
+	rootCmd.PersistentFlags().Bool("disable_jws", false, "Disable JWS Signatures")
+	rootCmd.PersistentFlags().Bool("dynres", false, "Use Dynamic Resource IDs - accounts")
+	rootCmd.PersistentFlags().Bool("dumpcontexts", false, "Dump contexts when trace enabled")
+	rootCmd.PersistentFlags().Bool("tlscheck", true, "enable tls version checking - default enabled")
+	rootCmd.PersistentFlags().Bool("export_testcases", false, "Dump all testcases to console in CSV format")
+
+	if err := viper.BindPFlags(rootCmd.PersistentFlags()); err != nil {
+		fmt.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, "\n")
+		os.Exit(1)
+	}
+
+	viper.SetEnvPrefix("")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.AutomaticEnv()
+
+	cobra.OnInitialize(initConfig)
+}
+
+func initConfig() {
+	logger.SetNoLock()
+	logger.SetFormatter(&prefixed.TextFormatter{
+		DisableColors:    false,
+		ForceColors:      true,
+		TimestampFormat:  time.RFC3339,
+		FullTimestamp:    true,
+		DisableTimestamp: false,
+		ForceFormatting:  true,
+	})
+	level, err := logrus.ParseLevel(viper.GetString("log_level"))
+	if err != nil {
+		printConfigurationFlags()
+		fmt.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, "\n")
+		os.Exit(1)
+	}
+	logger.SetLevel(level)
+
+	if viper.GetBool("export_testcases") {
+		testlist.GenerateTestCaseListCSV()
+		os.Exit(0)
+	}
+
+	tracer.Silent = !viper.GetBool("log_tracer")
+	if viper.GetBool("log_to_file") {
+		f, err := os.OpenFile("suite.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+		if err != nil {
+			// continue as normal
+		} else {
+			mw := f // io.MultiWriter(os.Stdout, f)
+			logrus.SetOutput(mw)
+			logger.SetFormatter(&prefixed.TextFormatter{
+				DisableColors:    true,
+				ForceColors:      false,
+				TimestampFormat:  time.RFC3339,
+				FullTimestamp:    true,
+				DisableTimestamp: false,
+				ForceFormatting:  true,
+			})
+			os.Remove("http-trace.log")
+		}
+	}
+	if viper.GetBool("log_http_file") {
+		httpclient.SetDebug(true)
+	}
+
+	if viper.GetBool("disable_jws") {
+		model.DisableJWS()
+	}
+
+	if viper.GetBool("dumpcontexts") {
+		model.EnableContextDumps()
+	}
+
+	if viper.GetBool("tlscheck") == false {
+		server.EnableTLSCheck(false)
+	}
+
+	printConfigurationFlags()
+}
+
+func printConfigurationFlags() {
+	logger.WithFields(logrus.Fields{
+		"log_level":        viper.GetString("log_level"),
+		"log_tracer":       viper.GetBool("log_tracer"),
+		"log_http_trace":   viper.GetBool("log_http_trace"),
+		"log_http_file":    viper.GetBool("log_http_file"),
+		"log_to_file":      viper.GetBool("log_to_file"),
+		"port":             viper.GetInt("port"),
+		"tracer.Silent":    tracer.Silent,
+		"disable_jws":      viper.GetBool("disable_jws"),
+		"dynres":           viper.GetBool("dynres"),
+		"dumpcontexts":     viper.GetBool("dumpcontexts"),
+		"tlscheck":         viper.GetBool("tlscheck"),
+		"export_testcases": viper.GetString("export_testcases"),
+	}).Info("configuration flags")
+}

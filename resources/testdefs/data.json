@@ -1,0 +1,422 @@
+{
+  "references": {
+    "ksaLetterBody": {
+      "body":        
+            {"iss":"","exp":0,"nbf":0,"aud":["string"],
+            "message":{"Data":{"AuthExpirationDateTime":"2023-11-29T06:49:19.659Z",
+            "mt798":{"CustomerReferenceNumber":"XYZ999","MessageCreationDateTime":"2022-11-29T06:49:19.659Z","KindOfGuarantee":"GUAR",
+            "TypeOfGuarantee":"TEND","FormOfGuarantee":"DIRC","WordingOfGuarantee":"STND","SpecialTerms":"EFCT","LanguageOfStandardWording":"en",
+            "ProjectName":"string","ProjectNumber":"string","Applicant":{"Name":"string","CommercialRegistrationNumber":0,
+            "ApplicantIdentifierType":"string","ApplicantNumber":"string","Address":{"AddressType":"KSAOB.Business",
+            "ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string",
+            "SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"MM"}},
+            "GuaranteeAmount":{"Type":"PRIN","Amount":"4","Currency":"SAR"},"ValidityType":"LIMT","ValidityExpiryDate":"2022-11-29T06:49:19.659Z",
+            "DeliveryOfOriginalGuarantee":"COUR","DeliveryTo":"BENE","DeliveryAddress":{"Name":"string",
+            "Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,
+            "StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"VW"}},
+            "Beneficiary":{"Name":"string","CommercialRegistrationNumber":0,"BeneficiaryIdentifierType":"string","BeneficiaryNumber":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"WC"}},
+            "LiabilityDetails":"Pumps and Equipment","Reference":"TEND","ReferenceDate":"2022-11-29T06:49:19.659Z","ReferenceDate1":"2022-11-29T06:49:19.659Z","ReferenceDate2":"2022-11-29T06:49:19.659Z",
+            "TotalOrderAmount":{"Amount":"86436476429","Currency":"SAR"},
+            "GuaranteeValueInPercent":10,"CustomerContact":"John Doe","BeneficiaryContact":"Jane Bloggs","BankReferenceNumber":"string","TransactionReferenceNumber":"NONREF","FurtherIdentification":"ISSUE","ApplicableRules":"NONE","ChargesAndFees":"string",
+            "DetailsOfGuarantee":"Performance Guarantee No . PGFFA0815.We have been informed that you, Mining PLC, Main Road, Riyadh, hereinafter called the BUYER have concluded the contract No. ABC123 of 05th February 2022, hereinafter called the CONTRACT, with Pumps Riyadh, KSA, hereinafter called the SELLER",
+            "TermsAndConditions":"string","LetterOfGuaranteeStartDate":"2022-11-29T06:49:19.660Z"}},"Subscription":{"Webhook":{"Url":"https://api.tpp.com/webhook/callbackUrl","IsActive":false}}}}      
+    },
+    "ksaLetterMinimumBody": {
+        "body":{"iss":"","exp":0,"nbf":0,"message":
+        {"Data":{"mt798":{"ReferenceDate":"2023-11-29T06:49:19.659Z","CustomerReferenceNumber":"XYZ999","MessageCreationDateTime":"2022-12-06T06:49:19.659Z","KindOfGuarantee":"GUAR","TypeOfGuarantee":"TEND","FormOfGuarantee":"DIRC","WordingOfGuarantee":"STND","LanguageOfStandardWording":"en","Applicant":{"Name":"string",
+        "CommercialRegistrationNumber":0,"ApplicantIdentifierType":"string","ApplicantNumber":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"MM"}},"GuaranteeAmount":{"Type":"PRIN","Amount":"4","Currency":"SAR"},"ValidityType":"LIMT","ValidityExpiryDate":"2022-11-29T06:49:19.659Z","DeliveryOfOriginalGuarantee":"COUR","DeliveryTo":"BENE","DeliveryAddress":{"Name":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"VW"}},"Beneficiary":{"Name":"string","CommercialRegistrationNumber":0,"BeneficiaryIdentifierType":"string","BeneficiaryNumber":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"WC"}},"LiabilityDetails":"Pumps and Equipment","Reference":"TEND","TotalOrderAmount":{"Amount":"86436476429","Currency":"SAR"},"GuaranteeValueInPercent":10,"CustomerContact":"John Doe","BeneficiaryContact":"Jane Bloggs","TransactionReferenceNumber":"NONREF","FurtherIdentification":"ISSUE","ApplicableRules":"NONE","DetailsOfGuarantee":"Performance Guarantee No . PGFFA0815.We have been informed that you, Mining PLC, Main Road, Riyadh, hereinafter called the BUYER have concluded the contract No. ABC123 of 05th February 2022, hereinafter called the CONTRACT, with Pumps Riyadh, KSA, hereinafter called the SELLER","TermsAndConditions":"string","LetterOfGuaranteeStartDate":"2022-11-29T06:49:19.660Z"}}}}
+    },
+    "ksaLetterIncompleteBodyNoApplicant":{
+      "body":{"iss":"","exp":0,"nbf":0,"message":
+      {"Data":{"mt798":{"ReferenceDate":"2023-11-29T06:49:19.659Z","CustomerReferenceNumber":"XYZ999","MessageCreationDateTime":"2022-12-06T06:49:19.659Z","KindOfGuarantee":"GUAR","TypeOfGuarantee":"TEND","FormOfGuarantee":"DIRC","WordingOfGuarantee":"STND","LanguageOfStandardWording":"en","Applicant":{"Name":"string",
+      "CommercialRegistrationNumber":0,"ApplicantIdentifierType":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"MM"}},"GuaranteeAmount":{"Type":"PRIN","Amount":"4","Currency":"SAR"},"ValidityType":"LIMT","ValidityExpiryDate":"2022-11-29T06:49:19.659Z","DeliveryOfOriginalGuarantee":"COUR","DeliveryTo":"BENE","DeliveryAddress":{"Name":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"VW"}},"Beneficiary":{"Name":"string","CommercialRegistrationNumber":0,"BeneficiaryIdentifierType":"string","BeneficiaryNumber":"string","Address":{"AddressType":"KSAOB.Business","ShortAddress":"string","BuildingNumber":"string","UnitNumber":10,"StreetName":"string","SecondaryNumber":"stri","District":"string","PostalCode":"string","City":"string","Country":"WC"}},"LiabilityDetails":"Pumps and Equipment","Reference":"TEND","TotalOrderAmount":{"Amount":"86436476429","Currency":"SAR"},"GuaranteeValueInPercent":10,"CustomerContact":"John Doe","BeneficiaryContact":"Jane Bloggs","TransactionReferenceNumber":"NONREF","FurtherIdentification":"ISSUE","ApplicableRules":"NONE","DetailsOfGuarantee":"Performance Guarantee No . PGFFA0815.We have been informed that you, Mining PLC, Main Road, Riyadh, hereinafter called the BUYER have concluded the contract No. ABC123 of 05th February 2022, hereinafter called the CONTRACT, with Pumps Riyadh, KSA, hereinafter called the SELLER","TermsAndConditions":"string","LetterOfGuaranteeStartDate":"2022-11-29T06:49:19.660Z"}}}}
+    },
+    "ksaLetterEmptyBody":{
+      "body":{"iss":"","exp":0,"nbf":0,"message":{"Data":{}}}
+    },
+    "ksaLetterPatchAuthorized":{
+      "body":{"iss":"string","exp":0,"nbf":0,"aud":["string"],"iat":0,"message":{"Data":{"Status":"Authorized"}}}
+    },
+    "ksaLetterPatchRejected":{
+      "body":{"iss":"string","exp":0,"nbf":0,"aud":["string"],"iat":0,"message":{"Data":{"Status":"Rejected"}}}
+    },
+    "ksaLetterPatchExpired":{
+      "body":{"iss":"string","exp":0,"nbf":0,"aud":["string"],"iat":0,"message":{"Data":{"Status":"Expired"}}}
+    },
+    "ksaLetterPatchAwaiting":{
+      "body":{"iss":"string","exp":0,"nbf":0,"aud":["string"],"iat":0,"message":{"Data":{"Status":"AwaitingAuthorization"}}}
+    },
+    "ksaLetterPost":{
+      "body":{"iss":"string","exp":0,"nbf":0,"aud":["string"],"iat":0,"message":{"Data":{"ConsentId":"$consentId"}}}
+    },
+
+    "minimalDomesticVRPConfirmation": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "Reference": "$creditorIdentification",
+          "InstructedAmount": {
+            "Amount": "$instructedAmountValue",
+            "Currency": "$instructedAmountCurrency"
+          }
+        }
+      }
+    },
+    "minimalDomesticVRPConsent": {
+      "body": {
+        "Data": {
+          "ControlParameters": {
+            "PSUAuthenticationMethods": [ "UK.OBIE.SCANotRequired" ],
+            "VRPType": ["UK.OBIE.VRPType.Sweeping"],
+            "ValidFromDateTime": "$transactionFromDate",
+            "ValidToDateTime": "$transactionToDate",
+            "MaximumIndividualAmount": {
+              "Amount": "10.00",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "PeriodicLimits": [{
+              "Amount": "10.00",
+              "Currency": "GBP",
+              "PeriodAlignment": "Consent",
+              "PeriodType": "Week"
+            }]            
+          },
+          "Initiation": {           
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            },
+            "RemittanceInformation": {
+              "Reference": "$creditorIdentification",
+              "Unstructured": "Test Unstructured Data"
+            }
+          }
+        },
+        "Risk": {
+        }
+      }
+    },
+    "minimalDomesticVRP": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "PSUAuthenticationMethod": "UK.OBIE.SCANotRequired",
+          "Initiation": {           
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            },
+            "RemittanceInformation": {
+              "Reference": "$creditorIdentification",
+              "Unstructured": "Test Unstructured Data"
+            }
+          },
+          "Instruction": {
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            },
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "RemittanceInformation": {
+              "Reference": "$creditorIdentification",
+              "Unstructured": "Test Unstructured Data"
+            }
+          }
+        },
+        "Risk": {
+        }
+      }
+    },
+    "minimalDomesticPaymentConsent": {
+      "body": {
+        "Data": {
+          "Initiation": {
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalDomesticPaymentPost": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "Initiation": {
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalDomesticScheduledPaymentPost": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "Initiation": {
+            "RequestedExecutionDateTime": "$requestedExecutionDateTime",
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalScheduledDomesticPaymentConsent": {
+      "body": {
+        "Data": {
+          "Permission": "Create",
+          "Initiation": {
+            "RequestedExecutionDateTime": "$requestedExecutionDateTime",
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "scheduledDomesticPaymentConsentISO8601Test": {
+      "body": {
+        "Data": {
+          "Permission": "Create",
+          "Initiation": {
+            "RequestedExecutionDateTime": "$replacementDateTime",
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalDomesticStandingOrderConsent": {
+      "body": {
+        "Data": {
+          "Permission": "Create",
+          "Initiation": {
+            "Frequency": "$frequency",
+            "FirstPaymentDateTime": "$firstPaymentDateTime",
+            "FirstPaymentAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalDomesticStandingOrder": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "Initiation": {
+            "Frequency": "$frequency",
+            "FirstPaymentDateTime": "$firstPaymentDateTime",
+            "FirstPaymentAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalDomesticStandingOrderInvalid": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "Initiation": {
+            "Frequency": "foobar",
+            "FirstPaymentDateTime": "$firstPaymentDateTime",
+            "FirstPaymentAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$creditorScheme",
+              "Identification": "$creditorIdentification",
+              "Name": "$creditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalInternationalPaymentConsent": {
+      "body": {
+        "Data": {
+          "Initiation": {
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "CurrencyOfTransfer": "$currencyOfTransfer",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$internationalCreditorScheme",
+              "Identification": "$internationalCreditorIdentification",
+              "Name": "$internationalCreditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalInternationalPayment": {
+      "body": {
+        "Data": {
+          "ConsentId": "$OB-301-DOP-101600-ConsentId",
+          "Initiation": {
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "CurrencyOfTransfer": "$currencyOfTransfer",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$internationalCreditorScheme",
+              "Identification": "$internationalCreditorIdentification",
+              "Name": "$internationalCreditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalInternationalScheduledPaymentConsent": {
+      "body": {
+        "Data": {
+          "Permission": "Create",
+          "Initiation": {
+            "RequestedExecutionDateTime": "$requestedExecutionDateTime",
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "CurrencyOfTransfer": "$currencyOfTransfer",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$internationalCreditorScheme",
+              "Identification": "$internationalCreditorIdentification",
+              "Name": "$internationalCreditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "minimalInternationalScheduledPayment": {
+      "body": {
+        "Data": {
+          "ConsentId": "$OB-301-DOP-102000-ConsentId",
+          "Initiation": {
+            "RequestedExecutionDateTime": "$requestedExecutionDateTime",
+            "InstructionIdentification": "$instructionIdentification",
+            "EndToEndIdentification": "$endToEndIdentification",
+            "CurrencyOfTransfer": "$currencyOfTransfer",
+            "InstructedAmount": {
+              "Amount": "$instructedAmountValue",
+              "Currency": "$instructedAmountCurrency"
+            },
+            "CreditorAccount": {
+              "SchemeName": "$internationalCreditorScheme",
+              "Identification": "$internationalCreditorIdentification",
+              "Name": "$internationalCreditorName"
+            }
+          }
+        },
+        "Risk": {}
+      }
+    },
+    "OBFundsConfirmationConsent1": {
+      "body": {
+        "Data": {
+          "ExpirationDateTime": "$expirationDateTime",
+          "DebtorAccount": {
+            "SchemeName": "$debtorAccountSchemeName",
+            "Identification": "$debtorAccountIdentification",
+            "Name": "$debtorAccountName"
+          }
+        }
+      }
+    },
+    "OBFundsConfirmation1": {
+      "body": {
+        "Data": {
+          "ConsentId": "$consentId",
+          "Reference": "$uniqueCbpiiReference",
+          "InstructedAmount": {
+            "Amount": "$instructedAmountValue",
+            "Currency": "$instructedAmountCurrency"
+          }
+        }
+      }
+    }
+  }
+}
